@@ -1,0 +1,22 @@
+.NavigationLinks{
+    text-decoration: none;
+    list-style: none;
+    background-color: #ff6423;
+}
+
+.NavigationLinks li{
+    display: inline-block;
+    padding: 5px;
+}
+
+.NavigationLinks li a{
+    color: white;
+}
+
+.NavigationLinks li:hover{
+    background-color: #cd4b17;
+}
+
+.Logo{
+    font-size: xx-large;
+}
