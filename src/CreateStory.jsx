@@ -1,4 +1,5 @@
 import {useState} from "react";
+import './assets/styles/CreateStory.css';
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -62,28 +63,36 @@ export default function CreateStory() {
         <>
             <h1>Create Story</h1>
 
-            <p>
-                <label>Title </label>
-                <input name="title" type="text" value={title} onChange={onTitleChange} required/>
-            </p>
+            <div className='container'>
+                <div className='TextContainer'>
+                    <p>
+                        <label>Title </label>
+                        <input name="title" type="text" value={title} onChange={onTitleChange} required/>
+                    </p>
 
-            <p>
-                <label>Plot </label>
-                <input name="plot" type="text" value={plot} onChange={onPlotChange} required/>
-            </p>
+                    <p>
+                        <label>Plot </label>
+                        <textarea name="plot" value={plot} onChange={onPlotChange} required/>
+                    </p>
 
-            <p>
-                <label>Genre </label>
-                <input name="genre" type="text" value={genre} onChange={onGenreChange} required/>
-            </p>
+                    <p>
+                        <label>Genre </label>
+                        <input name="genre" type="text" value={genre} onChange={onGenreChange} required/>
+                    </p>
+                </div>
 
-            <p>
-                <label>Cover </label>
-                <br/>
-                <img src={cover} width="100" height="100"/>
-                <br/>
-                <input name="cover" type="file" onChange={onCoverChange}/>
-            </p>
+
+                <div className='imageContainer'>
+                    <p>
+                        <label>Cover </label>
+                        <br/>
+                        <img src={cover} width="100" height="100"/>
+                        <br/>
+                        <input name="cover" type="file" onChange={onCoverChange}/>
+                    </p>
+                </div>
+            </div>
+
 
             <p>
                 <button onClick={saveStory}>Save Story</button>

@@ -1,0 +1,18 @@
+.myStories{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: max-content;
+    grid-gap: 10px;
+}
+
+.StoryCard{
+    background-color: grey;
+    padding: 20px;
+    border-radius: 8px;
+    width: 10%;
+    text-align: center;
+}
+
+.StoryPlot{
+    font-size: small;
+}

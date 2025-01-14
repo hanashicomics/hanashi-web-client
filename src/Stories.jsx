@@ -1,6 +1,25 @@
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import './assets/styles/Stories.css';
 
 export default function Stories(){
+    const[storyArr, setStoryArr] = useState([]);
+
+
+    useEffect(() => {
+        const getStories = ()=>{
+            const stories = [];
+            Object.keys(sessionStorage).forEach((key) =>{
+                const storyItem = sessionStorage.getItem(key);
+                stories.push(storyItem);
+            })
+            setStoryArr(stories);
+        };
+
+        getStories();
+    }, []);
+
+
 
     return(
         <>
@@ -9,8 +28,24 @@ export default function Stories(){
                 <Link to={'/createstory'}> Create a story +</Link>
             </div>
 
-            <div className="myStories">
+            <br/>
 
+            <div className="myStories">
+                {
+                    storyArr.map((story,key)=>{
+                        const storyJson = JSON.parse(story);
+                        return(
+                            <>
+                                <div className='StoryCard'>
+                                    <img src={storyJson.cover} width={100} height={200} className='StoryCover' />
+                                    <h4 className='StoryTitle' >{storyJson.title}</h4>
+                                    {/*<p className='StoryPlot'>{storyJson.plot}</p>*/}
+                                    <button className='StoryButton'>Edit</button>
+                                </div>
+                            </>
+                        )
+                    })
+                }
             </div>
         </>
     )
