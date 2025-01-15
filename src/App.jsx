@@ -11,6 +11,7 @@ import Timeline from './Timeline.jsx'
 import Arcs from './Arcs.jsx'
 import Characters from './Characters.jsx'
 import Home from './Home.jsx'
+import EditStory from './EditStory.jsx'
 
 function App() {
   return (
@@ -20,14 +21,16 @@ function App() {
 
               <Routes>
                   <Route path="/" element={<Home/>}/>
+                  <Route path="/story/:storyName" element={<EditStory/>}/>
                   <Route path="/stories" element={<Stories/>}/>
                   <Route path="/createstory" element={<CreateStory/>}/>
                   <Route path="/account" element={<Account/>}/>
                   <Route path="/settings" element={<Settings/>}/>
-                  <Route path="/info" element={<StoryInfo/>}/>
-                  <Route path="/timeline" element={<Timeline/>}/>
-                  <Route path="/arcs" element={<Arcs/>}/>
-                  <Route path="/characters" element={<Characters/>}/>
+
+                  <Route path="/:storyName/info" element={<StoryInfo/>}/>
+                  <Route path="/:storyName/timeline" element={<Timeline/>}/>
+                  <Route path="/:storyName/arcs" element={<Arcs/>}/>
+                  <Route path="/:storyName/characters" element={<Characters/>}/>
               </Routes>
           </Router>
       </>

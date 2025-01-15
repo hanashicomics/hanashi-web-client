@@ -6,13 +6,17 @@
 }
 
 .StoryCard{
-    background-color: grey;
+    background-color: #bdbdbd;
     padding: 20px;
     border-radius: 8px;
-    width: 10%;
+    width: 70%;
     text-align: center;
 }
 
 .StoryPlot{
     font-size: small;
+}
+
+.StoryCover{
+    border-radius: 15px;
 }

@@ -16,10 +16,14 @@ export default function Stories(){
             setStoryArr(stories);
         };
 
+
         getStories();
     }, []);
 
 
+    const getStoryKey = (key)=>{
+
+    }
 
     return(
         <>
@@ -32,16 +36,19 @@ export default function Stories(){
 
             <div className="myStories">
                 {
+
                     storyArr.map((story,key)=>{
                         const storyJson = JSON.parse(story);
                         return(
                             <>
-                                <div className='StoryCard'>
-                                    <img src={storyJson.cover} width={100} height={200} className='StoryCover' />
-                                    <h4 className='StoryTitle' >{storyJson.title}</h4>
-                                    {/*<p className='StoryPlot'>{storyJson.plot}</p>*/}
-                                    <button className='StoryButton'>Edit</button>
-                                </div>
+                                    <div className='StoryCard'>
+                                        <img src={storyJson.cover} width={'200'} height={'300'} className='StoryCover' />
+                                        <h4 className='StoryTitle' >{storyJson.title}</h4>
+
+                                        <Link to={`/story/${storyJson.title}`}>
+                                            <button className='StoryButton' onClick={()=> getStoryKey(key)}>Edit</button>
+                                        </Link>
+                                    </div>
                             </>
                         )
                     })

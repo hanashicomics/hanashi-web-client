@@ -1,13 +1,25 @@
 import './assets/styles/Navigation.css'
+import {Link} from "react-router-dom";
 
-export default function RootNavigation(){
+export default function RootNavigation({storyName}){
     return(
         <>
             <div className="NavigationLinks">
-                <li><a href="#home">Info</a></li>
-                <li><a href="#news">Timeline</a></li>
-                <li><a href="#contact">Arcs</a></li>
-                <li><a href="#contact">Characters</a></li>
+               <li>
+                    <Link to={`/${storyName}/info`}>Info</Link>
+                </li>
+
+                <li>
+                    <Link to={`/${storyName}/timeline`}>Timeline</Link>
+                </li>
+
+                <li>
+                    <Link to={`/${storyName}/arcs`}>Arcs</Link>
+                </li>
+
+                <li>
+                    <Link to={`/${storyName}/characters`}>Characters</Link>
+                </li>
             </div>
         </>
     )
