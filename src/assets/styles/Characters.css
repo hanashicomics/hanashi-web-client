@@ -1,0 +1,22 @@
+.myChars{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: max-content;
+    grid-gap: 10px;
+}
+
+.CharCard{
+    background-color: #bdbdbd;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    text-align: center;
+}
+
+.CharRole{
+    font-size: small;
+}
+
+.CharCover{
+    border-radius: 15px;
+}

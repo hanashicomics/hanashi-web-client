@@ -5,7 +5,6 @@ import './assets/styles/Stories.css';
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
 
-
     useEffect(() => {
         const getStories = ()=>{
             const stories = [];
@@ -30,6 +29,7 @@ export default function Stories(){
             <div className="createStoryLine">
                 <h1>Stories</h1>
                 <Link to={'/createstory'}> Create a story +</Link>
+                <Link to={'/loadstory'}> Load a story from JSON +</Link>
             </div>
 
             <br/>
@@ -45,7 +45,7 @@ export default function Stories(){
                                         <img src={storyJson.cover} width={'200'} height={'300'} className='StoryCover' />
                                         <h4 className='StoryTitle' >{storyJson.title}</h4>
 
-                                        <Link to={`/story/${storyJson.title}`}>
+                                        <Link to={`/${storyJson.title}/info`}>
                                             <button className='StoryButton' onClick={()=> getStoryKey(key)}>Edit</button>
                                         </Link>
                                     </div>

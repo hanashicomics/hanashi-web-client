@@ -12,6 +12,7 @@ import Arcs from './Arcs.jsx'
 import Characters from './Characters.jsx'
 import Home from './Home.jsx'
 import EditStory from './EditStory.jsx'
+import LoadStory from "./LoadStory.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                   <Route path="/story/:storyName" element={<EditStory/>}/>
                   <Route path="/stories" element={<Stories/>}/>
                   <Route path="/createstory" element={<CreateStory/>}/>
+                  <Route path="/loadstory" element={<LoadStory/>}/>
                   <Route path="/account" element={<Account/>}/>
                   <Route path="/settings" element={<Settings/>}/>
 
