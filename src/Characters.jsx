@@ -1,6 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import './assets/styles/Characters.css'
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 export default function Characters() {
     const {storyName} = useParams();
     const[characters, setCharacters] = useState([]);
@@ -9,6 +10,7 @@ export default function Characters() {
         const storyData = sessionStorage.getItem(storyName);
         if (storyData) {
             const storyJson = JSON.parse(storyData);
+            if(storyJson.characters)
             setCharacters(storyJson.characters);
         }
         else{
@@ -17,18 +19,23 @@ export default function Characters() {
     },[])
     return (
         <>
+            <StoryFooterNavigation storyName={storyName}/>
+
             <div className="createCharacterHeader">
                 <h1>Characters</h1>
-                <Link to={'/createstory'}> Create a character +</Link>
+                <Link to={`/${storyName}/createcharacter`}> Create a character +</Link>
             </div>
 
             <div className={'myChars'}>
                 {characters.map((character, index) => (
                     <div key={index} className={'CharCard'}>
                         <h5>{character.name}</h5>
-                        <img src={character.cover} width={100} height={200} alt="" className={'CharCover'}/>
+                        <img src={character.cover} width={'50%'} height={'50%'} alt="" className={'CharCover'}/>
                         <p className={'CharRole'}>{character.role}</p>
-                        <button>Edit</button>
+
+                        <Link to={`/${storyName}/characters/${character.name}`}>
+                            <button>Edit</button>
+                        </Link>
                     </div>
                 )
                 )}

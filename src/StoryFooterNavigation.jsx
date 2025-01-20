@@ -5,7 +5,7 @@ export default function RootNavigation({storyName}){
     return(
         <>
             <div className="NavigationLinks">
-               <li>
+                <li>
                     <Link to={`/${storyName}/info`}>Info</Link>
                 </li>
 
@@ -19,6 +19,10 @@ export default function RootNavigation({storyName}){
 
                 <li>
                     <Link to={`/${storyName}/characters`}>Characters</Link>
+                </li>
+
+                <li>
+                    <Link to={`/${storyName}/export`}>Export</Link>
                 </li>
             </div>
         </>

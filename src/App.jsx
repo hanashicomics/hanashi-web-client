@@ -13,6 +13,10 @@ import Characters from './Characters.jsx'
 import Home from './Home.jsx'
 import EditStory from './EditStory.jsx'
 import LoadStory from "./LoadStory.jsx";
+import CreateCharacter from './CreateCharacter.jsx';
+import EditCharacter from "./EditCharacter.jsx";
+import CreateArc from './CreateArc.jsx';
+import ExportStory from "./ExportStory.jsx";
 
 function App() {
   return (
@@ -26,13 +30,19 @@ function App() {
                   <Route path="/stories" element={<Stories/>}/>
                   <Route path="/createstory" element={<CreateStory/>}/>
                   <Route path="/loadstory" element={<LoadStory/>}/>
+                  <Route path="/:storyName/export" element={<ExportStory/>}/>
+
                   <Route path="/account" element={<Account/>}/>
                   <Route path="/settings" element={<Settings/>}/>
 
                   <Route path="/:storyName/info" element={<StoryInfo/>}/>
                   <Route path="/:storyName/timeline" element={<Timeline/>}/>
                   <Route path="/:storyName/arcs" element={<Arcs/>}/>
+                  <Route path="/:storyName/createarc" element={<CreateArc/>}/>
+
+                  <Route path="/:storyName/createcharacter" element={<CreateCharacter/>}/>
                   <Route path="/:storyName/characters" element={<Characters/>}/>
+                  <Route path="/:storyName/characters/:characterName" element={<EditCharacter/>}/>
               </Routes>
           </Router>
       </>

@@ -1,13 +1,13 @@
-import {useParams} from "react-router-dom";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {useParams} from "react-router-dom";
 
-export default function Timeline() {
-    const {storyName} = useParams();
+export default function createArc() {
+    const {storyName} =useParams();
 
     return(
         <>
             <StoryFooterNavigation storyName={storyName}/>
-            <h1>Timeline</h1>
+            <h1>Create New Arc</h1>
         </>
     )
 }

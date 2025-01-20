@@ -1,9 +1,10 @@
-import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {Navigate} from 'react-router-dom';
+import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 
-export default function CreateCharacter(){
+
+export default function EditCharacter(){
+    const {characterName} = useParams();
     const {storyName} = useParams();
 
     const[name, setName] = useState("");
@@ -12,6 +13,25 @@ export default function CreateCharacter(){
     const[abilities,setAbilities] = useState("");
     const[cover,setCover] = useState("");
     const navigate = useNavigate();
+
+    const storyObj = JSON.parse(sessionStorage.getItem(storyName));
+    const arrCharacters = storyObj.characters;
+
+    useEffect(() => {
+        let foundChar;
+
+        for(let i = 0; i<arrCharacters.length; i++){
+            if(arrCharacters[i].name === characterName){
+                foundChar = arrCharacters[i];
+                setName(foundChar.name);
+                setAge(foundChar.age);
+                setDescription(foundChar.description);
+                setCover(foundChar.cover);
+                setAbilities(foundChar.abilities);
+                return;
+            }
+        }
+    }, []);
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -51,14 +71,14 @@ export default function CreateCharacter(){
             cover: cover
         }
 
-        const story = sessionStorage.getItem(storyName);
-        const jsonStory = JSON.parse(story);
-         jsonStory.characters.push(newCharacter);
-         console.log(jsonStory);
-        sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        alert('Character Saved Successfully.');
-        navigate(`/${storyName}/characters`)
-
+        for(let i = 0; i<arrCharacters.length; i++){
+            if(arrCharacters[i].name === characterName) {
+                arrCharacters[i] = newCharacter;
+                sessionStorage.setItem(storyName, JSON.stringify(storyObj));
+                alert('Character Saved Successfully.');
+                navigate(`/${storyName}/characters`);
+            }
+        }
     }
 
     return(
@@ -100,7 +120,7 @@ export default function CreateCharacter(){
             </div>
 
             <p>
-                <button onClick={saveCharacter}>Save Story</button>
+                <button onClick={saveCharacter}>Save Character</button>
             </p>
         </>
     )

@@ -44,6 +44,9 @@ export default function CreateStory() {
                 plot: plot,
                 genre: genre,
                 cover: cover,
+                characters: [],
+                arcs: [],
+                timeline:[]
             }
 
             const storyJson = JSON.stringify(story);
