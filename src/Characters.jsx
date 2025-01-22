@@ -28,16 +28,15 @@ export default function Characters() {
 
             <div className={'myChars'}>
                 {characters.map((character, index) => (
-                    <div key={index} className={'CharCard'}>
-                        <h5>{character.name}</h5>
-                        <img src={character.cover} width={'50%'} height={'50%'} alt="" className={'CharCover'}/>
-                        <p className={'CharRole'}>{character.role}</p>
-
                         <Link to={`/${storyName}/characters/${character.name}`}>
-                            <button>Edit</button>
+                            <div key={index} className={'CharCard'}>
+                                <h5>{character.name}</h5>
+                                <img src={character.cover} width={'50%'} height={'50%'} alt="" className={'CharCover'}/>
+                                <p className={'CharRole'}>{character.role}</p>
+                            </div>
                         </Link>
-                    </div>
-                )
+
+                    )
                 )}
             </div>
         </>

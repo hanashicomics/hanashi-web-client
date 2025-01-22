@@ -1,9 +1,9 @@
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
-export default function createArc() {
+export default function EditArc(){
     const {storyName} =useParams();
+    const{arcName} = useParams();
 
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
@@ -21,7 +21,14 @@ export default function createArc() {
     const arrArcs = storyObj.arcs;
 
     useEffect(() => {
-        console.log(arrArcs);
+        for(let i = 0; i<arrArcs.length; i++){
+            if(arrArcs[i].name === arcName){
+                let foundArc = arrArcs[i];
+                setName(foundArc.name);
+                setDescription(foundArc.description);
+                return;
+            }
+        }
     }, []);
 
     const saveArc = ()=>{
@@ -40,12 +47,9 @@ export default function createArc() {
         navigate(`/${storyName}/arcs`)
 
     }
-
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
-            <h1>Create New Arc</h1>
-
+            <h1>Edit Arc</h1>
             <div className='TextContainer'>
                 <p>
                     <label>Name </label>

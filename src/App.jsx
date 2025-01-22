@@ -17,6 +17,7 @@ import CreateCharacter from './CreateCharacter.jsx';
 import EditCharacter from "./EditCharacter.jsx";
 import CreateArc from './CreateArc.jsx';
 import ExportStory from "./ExportStory.jsx";
+import EditArc from "./EditArc.jsx";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                   <Route path="/:storyName/timeline" element={<Timeline/>}/>
                   <Route path="/:storyName/arcs" element={<Arcs/>}/>
                   <Route path="/:storyName/createarc" element={<CreateArc/>}/>
+                  <Route path="/:storyName/arcs/:arcName/edit" element={<EditArc/>}/>
 
                   <Route path="/:storyName/createcharacter" element={<CreateCharacter/>}/>
                   <Route path="/:storyName/characters" element={<Characters/>}/>

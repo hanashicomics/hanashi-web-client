@@ -1,5 +1,6 @@
 import {useState} from "react";
 import './assets/styles/CreateStory.css';
+import {useNavigate} from "react-router-dom";
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -18,6 +19,8 @@ export default function CreateStory() {
     const onGenreChange = (e) => {
         setGenre(e.target.value);
     }
+
+    const genreList = ['','Shonen', 'Romance', 'Comedy','Slice of life', 'Horror', 'Thriller','Fantasy', 'Isekai']
 
     const onCoverChange = (e) => {
         const file = e.target.files[0];
@@ -59,6 +62,8 @@ export default function CreateStory() {
             setGenre('');
             setPlot('');
             setCover('');
+            useNavigate('/stories');
+            
         }
     }
 

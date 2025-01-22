@@ -32,6 +32,8 @@ export default function EditStory() {
         setGenre(e.target.value);
     }
 
+    const genreList = ['','Shonen', 'Romance', 'Comedy','Slice of life', 'Horror', 'Thriller','Fantasy', 'Isekai']
+
     const onCoverChange = (e) => {
         const file = e.target.files[0];
         if(file){

@@ -36,19 +36,18 @@ export default function Stories(){
 
             <div className="myStories">
                 {
+                    storyArr.length <1 ? <div>No stories found. Create one now!</div> :
 
                     storyArr.map((story,key)=>{
                         const storyJson = JSON.parse(story);
                         return(
                             <>
+                                <Link to={`/${storyJson.title}/info`}>
                                     <div className='StoryCard' key={key}>
                                         <img src={storyJson.cover} width={'200'} height={'300'} className='StoryCover' />
                                         <h4 className='StoryTitle' >{storyJson.title}</h4>
-
-                                        <Link to={`/${storyJson.title}/info`}>
-                                            <button className='StoryButton'>Edit</button>
-                                        </Link>
                                     </div>
+                                </Link>
                             </>
                         )
                     })
