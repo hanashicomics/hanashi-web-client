@@ -1,5 +1,6 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import './assets/styles/Chapters.css';
 
 export default function EditArc(){
     const {storyName} =useParams();
@@ -8,6 +9,8 @@ export default function EditArc(){
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const navigate = useNavigate();
+
+    const[chapters, setChapters] = useState([]);
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -24,6 +27,7 @@ export default function EditArc(){
         for(let i = 0; i<arrArcs.length; i++){
             if(arrArcs[i].name === arcName){
                 let foundArc = arrArcs[i];
+                setChapters(foundArc.chapters);
                 setName(foundArc.name);
                 setDescription(foundArc.description);
                 return;
@@ -41,8 +45,9 @@ export default function EditArc(){
         const story = sessionStorage.getItem(storyName);
         const jsonStory = JSON.parse(story);
         jsonStory.arcs.push(newArc);
-        console.log(jsonStory);
+
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+
         alert('Arc Saved Successfully.');
         navigate(`/${storyName}/arcs`)
 
@@ -62,8 +67,20 @@ export default function EditArc(){
                 </p>
 
                 <h2>Chapters</h2>
-                <ul>
+                <Link to={`/${storyName}/arcs/${name}/createchapter`}> Create new chapter +</Link>
 
+                <ul>
+                    {
+                        chapters.map((chapter,key)=>{
+                            return(
+                                    <Link key={key} to={`/${storyName}/arcs/${arcName}/chapter/${chapter.name}`}>
+                                        <li className={'chapter'}>
+                                            <div>{chapter.name}</div>
+                                        </li>
+                                    </Link>
+                            )
+                        })
+                    }
                 </ul>
             </div>
 

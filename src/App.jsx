@@ -1,5 +1,4 @@
 import './assets/styles/App.css'
-
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import RootNavigation from "./RootNavigation.jsx";
 import Stories from "./Stories.jsx";
@@ -18,6 +17,8 @@ import EditCharacter from "./EditCharacter.jsx";
 import CreateArc from './CreateArc.jsx';
 import ExportStory from "./ExportStory.jsx";
 import EditArc from "./EditArc.jsx";
+import CreateChapter from './CreateChapter.jsx';
+import EditChapter from "./EditChapter.jsx";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
                   <Route path="/:storyName/arcs" element={<Arcs/>}/>
                   <Route path="/:storyName/createarc" element={<CreateArc/>}/>
                   <Route path="/:storyName/arcs/:arcName/edit" element={<EditArc/>}/>
+                  <Route path="/:storyName/arcs/:arcName/createchapter" element={<CreateChapter/>}/>
+                  <Route path="/:storyName/arcs/:arcName/chapter/:chapterName/" element={<EditChapter/>}/>
 
                   <Route path="/:storyName/createcharacter" element={<CreateCharacter/>}/>
                   <Route path="/:storyName/characters" element={<Characters/>}/>

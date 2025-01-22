@@ -63,7 +63,7 @@ export default function CreateStory() {
             setPlot('');
             setCover('');
             useNavigate('/stories');
-            
+
         }
     }
 
