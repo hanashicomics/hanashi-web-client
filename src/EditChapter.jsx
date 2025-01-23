@@ -81,7 +81,7 @@ export default function EditChapter(){
             </p>
 
             <h3>Script </h3>
-            <textarea value={script} onChange={onScriptChange} required/>
+            <textarea value={script} onChange={onScriptChange} rows={10} required/>
 
             <p>
                 <button onClick={saveChapter}>Save Chapter</button>

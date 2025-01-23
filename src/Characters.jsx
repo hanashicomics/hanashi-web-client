@@ -28,8 +28,8 @@ export default function Characters() {
 
             <div className={'myChars'}>
                 {characters.map((character, index) => (
-                        <Link to={`/${storyName}/characters/${character.name}`}>
-                            <div key={index} className={'CharCard'}>
+                        <Link to={`/${storyName}/characters/${character.name}`} key={index}>
+                            <div className={'CharCard'}>
                                 <h5>{character.name}</h5>
                                 <img src={character.cover} width={'50%'} height={'50%'} alt="" className={'CharCover'}/>
                                 <p className={'CharRole'}>{character.role}</p>

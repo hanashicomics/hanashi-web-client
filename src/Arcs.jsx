@@ -25,8 +25,8 @@ export default function Arcs(){
 
                     arrArcs.map((arc, index)=>{
                         return (
-                            <Link to={`/${storyName}/arcs/${arc.name}/edit`}>
-                                <div key={index} className={'arc'}>
+                            <Link to={`/${storyName}/arcs/${arc.name}/edit`} key={index}>
+                                <div className={'arc'}>
                                     <h4>{arc.name}</h4>
                                 </div>
                             </Link>

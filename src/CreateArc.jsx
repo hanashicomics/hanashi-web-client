@@ -24,8 +24,15 @@ export default function createArc() {
         console.log(arrArcs);
     }, []);
 
+
+    const story = sessionStorage.getItem(storyName);
+    const jsonStory = JSON.parse(story);
+    const arcListLength = jsonStory.arcs.length;
+    const orderNum = arcListLength +1;
+
     const saveArc = ()=>{
         const newArc = {
+            order: orderNum ,
             name: name,
             description: description,
             chapters: []
@@ -33,6 +40,7 @@ export default function createArc() {
 
         const story = sessionStorage.getItem(storyName);
         const jsonStory = JSON.parse(story);
+
         jsonStory.arcs.push(newArc);
         console.log(jsonStory);
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));

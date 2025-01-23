@@ -53,7 +53,6 @@ export default function CreateStory() {
             }
 
             const storyJson = JSON.stringify(story);
-            console.log(storyJson);
             alert('Story Saved Successffully.');
 
             sessionStorage.setItem(story.title, storyJson);

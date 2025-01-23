@@ -41,9 +41,10 @@ export default function CreateChapter() {
         foundArc.chapters.push(chapter);
 
         sessionStorage.setItem(storyName, JSON.stringify(story));
-        console.log(story);
-
-        console.log("Chapter saved:", chapter);
+        alert("Chapter saved successfully.");
+        setName("");
+        setPlot("");
+        setScript("");
     };
 
     useEffect(() => {
