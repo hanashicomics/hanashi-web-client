@@ -41,14 +41,12 @@ export default function Stories(){
                     storyArr.map((story,key)=>{
                         const storyJson = JSON.parse(story);
                         return(
-                            <>
-                                <Link to={`/${storyJson.title}/info`}>
-                                    <div className='StoryCard' key={key}>
+                                <Link to={`/${storyJson.title}/info`} key={key}>
+                                    <div className='StoryCard'>
                                         <img src={storyJson.cover} width={'200'} height={'300'} className='StoryCover' />
                                         <h4 className='StoryTitle' >{storyJson.title}</h4>
                                     </div>
                                 </Link>
-                            </>
                         )
                     })
                 }

@@ -22,6 +22,10 @@ export default function RootNavigation({storyName}){
                 </li>
 
                 <li>
+                    <Link to={`/${storyName}/locations`}>Locations</Link>
+                </li>
+
+                <li>
                     <Link to={`/${storyName}/export`}>Export</Link>
                 </li>
             </div>

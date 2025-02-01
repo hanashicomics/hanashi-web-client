@@ -49,7 +49,8 @@ export default function CreateStory() {
                 cover: cover,
                 characters: [],
                 arcs: [],
-                timeline:[]
+                timeline:[],
+                locations:[]
             }
 
             const storyJson = JSON.stringify(story);

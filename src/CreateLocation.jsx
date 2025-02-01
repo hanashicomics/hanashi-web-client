@@ -1,0 +1,84 @@
+import {useNavigate, useParams} from "react-router-dom";
+import {useState} from "react";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+
+
+export default function createLocation() {
+    const {storyName} = useParams();
+    const[name, setName] = useState("");
+    const[description, setDescription] = useState("");
+    const[cover,setCover] = useState("");
+
+    const navigate = useNavigate();
+
+    const onNameChange = (e) => {
+        setName(e.target.value);
+    }
+
+    const onDescriptionChange = (e) => {
+        setDescription(e.target.value);
+    }
+
+    const onImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        if(file){
+            reader.readAsDataURL(file);
+            reader.onloadend = ()=>{
+                const cover64 = reader.result;
+                setCover(cover64);
+            }
+        }
+        else{
+            alert('Something went wrong. Please select an image.');
+        }
+    }
+
+    const saveLocation = ()=>{
+        const newLocation = {
+            name: name,
+            description: description,
+            cover: cover
+        }
+
+        const story = sessionStorage.getItem(storyName);
+        const jsonStory = JSON.parse(story);
+        jsonStory.locations.push(newLocation);
+        sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        alert('Location Saved Successfully.');
+        navigate(`/${storyName}/locations`)
+
+    }
+
+    return(
+        <>
+            <StoryFooterNavigation storyName={storyName}/>
+
+            <div className='TextContainer'>
+                <p>
+                    <label>Name </label>
+                    <input name="name" type="text" value={name} onChange={onNameChange} required/>
+                </p>
+
+                <p>
+                    <label>Description </label>
+                    <textarea name="description" value={description} onChange={onDescriptionChange} required/>
+                </p>
+            </div>
+
+            <div className='imageContainer'>
+                <p>
+                    <label>Image </label>
+                    <br/>
+                    <img src={cover} width="50%" height="50%"/>
+                    <br/>
+                    <input name="image" type="file" onChange={onImageChange}/>
+                </p>
+            </div>
+
+            <p>
+                <button onClick={saveLocation}>Save  Location</button>
+            </p>
+        </>
+    )
+}

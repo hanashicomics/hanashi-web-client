@@ -19,6 +19,9 @@ import ExportStory from "./ExportStory.jsx";
 import EditArc from "./EditArc.jsx";
 import CreateChapter from './CreateChapter.jsx';
 import EditChapter from "./EditChapter.jsx";
+import Locations from "./Locations.jsx";
+import CreateLocation from "./CreateLocation.jsx";
+import EditLocation from "./EditLocation.jsx";
 
 function App() {
   return (
@@ -48,6 +51,10 @@ function App() {
                   <Route path="/:storyName/createcharacter" element={<CreateCharacter/>}/>
                   <Route path="/:storyName/characters" element={<Characters/>}/>
                   <Route path="/:storyName/characters/:characterName" element={<EditCharacter/>}/>
+
+                  <Route path="/:storyName/locations" element={<Locations/>}/>
+                  <Route path="/:storyName/locations/:locationName" element={<EditLocation/>}/>
+                  <Route path="/:storyName/createlocation" element={<CreateLocation/>}/>
               </Routes>
           </Router>
       </>
