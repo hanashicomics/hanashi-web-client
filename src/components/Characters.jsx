@@ -23,22 +23,25 @@ export default function Characters() {
 
             <div className="createCharacterHeader">
                 <h1>Characters</h1>
-                <Link to={`/${storyName}/createcharacter`}> Create a character +</Link>
+                <Link to={`/${storyName}/createcharacter`} className={"LinkButton"}> Create a character +</Link>
             </div>
-
-            <div className={'myChars'}>
-                {characters.map((character, index) => (
+<br/>
+            <div className="cards-grid">
+                {characters.length < 1 ? <div>No characters found.</div> :
+                    characters.map((character, index) => (
                         <Link to={`/${storyName}/characters/${character.name}`} key={index}>
-                            <div className={'CharCard'}>
-                                <h5>{character.name}</h5>
-                                <img src={character.cover} width={'50%'} height={'50%'} alt="" className={'CharCover'}/>
-                                <p className={'CharRole'}>{character.role}</p>
+                            <div className="card">
+                                <img src={character.cover} alt={`${character.name} Cover`} className="card-img" />
+                                <div className="card-text">
+                                    <h3 className="card-title">{character.name}</h3>
+                                    <p className="card-role">{character.role}</p>
+                                </div>
                             </div>
                         </Link>
-
-                    )
-                )}
+                    ))
+                }
             </div>
+
         </>
     )
 }

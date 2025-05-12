@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import RootNavigation from "./components/RootNavigation.jsx";
 import Stories from "./components/Stories.jsx";
 import CreateStory from "./components/CreateStory.jsx";
-import Account from './components/Account.jsx'
 import Settings from './components/Settings.jsx'
 import StoryInfo from './components/StoryInfo.jsx'
 import Timeline from './components/Timeline.jsx'

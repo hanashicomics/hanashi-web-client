@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx'
+import {updateDocument} from "../firebase/firebase.js";
 
 export default function EditStory() {
     const {storyName} = useParams();
@@ -49,7 +50,7 @@ export default function EditStory() {
         }
     }
 
-    const saveStory =  ()=>{
+    const saveStory =  async ()=>{
         if(title ==='' || plot==='' || cover ==='' || genre===''){
             alert('Please complete all story details.');
         }
@@ -65,6 +66,7 @@ export default function EditStory() {
             alert('Story Saved Successffully.');
 
             sessionStorage.setItem(story.title, storyJson);
+            await updateDocument("stories",story.id,story);
             sessionStorage.removeItem(storyName);
             navigate('/stories');
         }

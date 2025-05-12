@@ -1,9 +1,10 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {updateDocument} from "../firebase/firebase.js";
 
 
-export default function createLocation() {
+export default function CreateLocation() {
     const {storyName} = useParams();
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
@@ -34,7 +35,7 @@ export default function createLocation() {
         }
     }
 
-    const saveLocation = ()=>{
+    const saveLocation = async ()=>{
         const newLocation = {
             name: name,
             description: description,
@@ -45,6 +46,7 @@ export default function createLocation() {
         const jsonStory = JSON.parse(story);
         jsonStory.locations.push(newLocation);
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        await updateDocument("stories",jsonStory.id,jsonStory);
         alert('Location Saved Successfully.');
         navigate(`/${storyName}/locations`)
 

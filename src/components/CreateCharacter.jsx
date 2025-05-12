@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Navigate} from 'react-router-dom';
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {saveStoryToFirestore, updateDocument} from "../firebase/firebase.js";
 
 export default function CreateCharacter(){
     const {storyName} = useParams();
@@ -42,7 +43,7 @@ export default function CreateCharacter(){
         }
     }
 
-    const saveCharacter = ()=>{
+    const saveCharacter = async ()=>{
         const newCharacter = {
             name: name,
             age: age,
@@ -53,10 +54,11 @@ export default function CreateCharacter(){
 
         const story = sessionStorage.getItem(storyName);
         const jsonStory = JSON.parse(story);
-         jsonStory.characters.push(newCharacter);
-         console.log(jsonStory);
+        jsonStory.characters.push(newCharacter);
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        alert('Character Saved Successfully.');
+
+        await updateDocument("stories",jsonStory.id,jsonStory);
+
         navigate(`/${storyName}/characters`)
 
     }

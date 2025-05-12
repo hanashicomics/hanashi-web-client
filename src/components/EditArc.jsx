@@ -1,6 +1,8 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import '../assets/styles/Chapters.css';
+import '../assets/styles/Arcs.css';
+import {updateDocument} from "../firebase/firebase.js";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 
 export default function EditArc(){
     const {storyName} =useParams();
@@ -35,7 +37,7 @@ export default function EditArc(){
         }
     }, []);
 
-    const saveArc = ()=>{
+    const saveArc =async  ()=>{
         const newArc = {
             name: name,
             description: description,
@@ -47,6 +49,7 @@ export default function EditArc(){
         jsonStory.arcs.push(newArc);
 
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        await updateDocument("stories",jsonStory.id,jsonStory);
 
         alert('Arc Saved Successfully.');
         navigate(`/${storyName}/arcs`)
@@ -54,6 +57,7 @@ export default function EditArc(){
     }
     return(
         <>
+            <StoryFooterNavigation storyName={storyName} />
             <h1>Edit Arc</h1>
             <div className='TextContainer'>
                 <p>
@@ -66,22 +70,29 @@ export default function EditArc(){
                     <textarea name="description" value={description} onChange={onDescriptionChange} required/>
                 </p>
 
-                <h2>Chapters</h2>
-                <Link to={`/${storyName}/arcs/${name}/createchapter`}> Create new chapter +</Link>
+                <div className="chaptersSection">
+                    <div className="chaptersHeader">
+                        <h2>Chapters</h2>
+                        <Link to={`/${storyName}/arcs/${name}/createchapter`} className="linkButton">
+                            + Create New Chapter
+                        </Link>
+                    </div>
 
-                <ul>
-                    {
-                        chapters.map((chapter,key)=>{
-                            return(
-                                    <Link key={key} to={`/${storyName}/arcs/${arcName}/chapter/${chapter.name}`}>
-                                        <li className={'chapter'}>
-                                            <div>{chapter.name}</div>
-                                        </li>
+                    {chapters.length === 0 ? (
+                        <p className="noChapters">No chapters yet. Start writing!</p>
+                    ) : (
+                        <ul className="chapterList">
+                            {chapters.map((chapter, key) => (
+                                <li key={key} className="chapterItem">
+                                    <Link to={`/${storyName}/arcs/${arcName}/chapter/${chapter.name}`}>
+                                        {chapter.name}
                                     </Link>
-                            )
-                        })
-                    }
-                </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
             </div>
 
             <button onClick={saveArc}>Save Arc</button>

@@ -1,6 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {updateDocument} from "../firebase/firebase.js";
 
 
 export default function EditCharacter(){
@@ -62,7 +63,7 @@ export default function EditCharacter(){
         }
     }
 
-    const saveCharacter = ()=>{
+    const saveCharacter = async ()=>{
         const newCharacter = {
             name: name,
             age: age,
@@ -75,6 +76,8 @@ export default function EditCharacter(){
             if(arrCharacters[i].name === characterName) {
                 arrCharacters[i] = newCharacter;
                 sessionStorage.setItem(storyName, JSON.stringify(storyObj));
+
+                await updateDocument("stories",storyObj.id,storyObj);
                 alert('Character Saved Successfully.');
                 navigate(`/${storyName}/characters`);
             }

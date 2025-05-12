@@ -1,6 +1,8 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {updateDocument} from "../firebase/firebase.js";
+import "../assets/styles/Chapters.css"
 
 export default function EditChapter(){
     const { storyName, arcName, chapterName } = useParams();
@@ -24,7 +26,7 @@ export default function EditChapter(){
     const story = JSON.parse(sessionStorage.getItem(storyName));
     const arrArcs = story.arcs;
 
-    const saveChapter = () => {
+    const saveChapter = async () => {
         let foundArc;
         for(let i = 0; i<arrArcs.length; i++){
             if(arrArcs[i].name === arcName){
@@ -41,9 +43,9 @@ export default function EditChapter(){
         foundArc.chapters.push(chapter);
 
         sessionStorage.setItem(storyName, JSON.stringify(story));
-        console.log(story);
+        await updateDocument("stories",story.id,story);
 
-        console.log("Chapter saved:", chapter);
+       alert("Chapter saved");
     };
 
     useEffect(() => {
@@ -70,22 +72,32 @@ export default function EditChapter(){
             <StoryFooterNavigation storyName={storyName} />
             <h1>Edit Chapter</h1>
 
-            <p>
-                <label>Title </label>
-                <input type="text" value={name} onChange={onNameChange} />
-            </p>
+            <div className="chapterForm">
+                <div className="chapterInputs">
+                    <div className="formGroup">
+                        <label>Title</label>
+                        <input type="text" value={name} onChange={onNameChange} />
+                    </div>
 
-            <p>
-                <label>Plot </label>
-                <input type="text" value={plot} onChange={onPlotChange} />
-            </p>
+                    <div className="formGroup">
+                        <label>Plot</label>
+                        <input type="text" value={plot} onChange={onPlotChange} />
+                    </div>
 
-            <h3>Script </h3>
-            <textarea value={script} onChange={onScriptChange} rows={10} required/>
+                    <button className="task_addbutton" onClick={saveChapter}>Save Chapter</button>
+                </div>
 
-            <p>
-                <button onClick={saveChapter}>Save Chapter</button>
-            </p>
+                <div className="chapterScript">
+                    <label>Script</label>
+                    <textarea
+                        value={script}
+                        onChange={onScriptChange}
+                        rows={15}
+                        required
+                    />
+                </div>
+            </div>
         </>
+
     );
 }

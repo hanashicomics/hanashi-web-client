@@ -1,8 +1,9 @@
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {updateDocument} from "../firebase/firebase.js";
 
-export default function createArc() {
+export default function CreateArc() {
     const {storyName} =useParams();
 
     const[name, setName] = useState("");
@@ -20,17 +21,13 @@ export default function createArc() {
     const storyObj = JSON.parse(sessionStorage.getItem(storyName));
     const arrArcs = storyObj.arcs;
 
-    useEffect(() => {
-        console.log(arrArcs);
-    }, []);
-
 
     const story = sessionStorage.getItem(storyName);
     const jsonStory = JSON.parse(story);
     const arcListLength = jsonStory.arcs.length;
     const orderNum = arcListLength +1;
 
-    const saveArc = ()=>{
+    const saveArc = async ()=>{
         const newArc = {
             order: orderNum ,
             name: name,
@@ -42,8 +39,9 @@ export default function createArc() {
         const jsonStory = JSON.parse(story);
 
         jsonStory.arcs.push(newArc);
-        console.log(jsonStory);
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        await updateDocument("stories",jsonStory.id,jsonStory);
+
         alert('Arc Saved Successfully.');
         navigate(`/${storyName}/arcs`)
 

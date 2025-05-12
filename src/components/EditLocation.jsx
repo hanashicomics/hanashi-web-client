@@ -1,6 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {updateDocument} from "../firebase/firebase.js";
 
 
 export default function EditLocation(){
@@ -51,7 +52,7 @@ export default function EditLocation(){
         }
     }, []);
 
-    const saveLocation = ()=>{
+    const saveLocation = async ()=>{
         const newCharacter = {
             name: name,
             description: description,
@@ -63,6 +64,7 @@ export default function EditLocation(){
         jsonStory.characters.push(newCharacter);
         console.log(jsonStory);
         sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        await updateDocument("stories",jsonStory.id,jsonStory);
         alert('Character Saved Successfully.');
         navigate(`/${storyName}/characters`)
 

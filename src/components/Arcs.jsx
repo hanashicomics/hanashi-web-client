@@ -16,24 +16,30 @@ export default function Arcs(){
 
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
+            <StoryFooterNavigation storyName={storyName} />
             <h1>Arcs</h1>
-            <Link to={`/${storyName}/createarc`}> Create new arc +</Link>
 
+            <div className="arcHeader">
+                <Link to={`/${storyName}/createarc`} className="linkButton">
+                    + Create New Arc
+                </Link>
+            </div>
+
+            <div className="arcList">
                 {
-                    arrArcs.length <1 ? (<div>No Arcs found. Create one now!</div>):
-
-                    arrArcs.map((arc, index)=>{
-                        return (
-                            <Link to={`/${storyName}/arcs/${arc.name}/edit`} key={index}>
-                                <div className={'arc'}>
+                    arrArcs.length < 1 ? (
+                        <p className="noArcs">No arcs found. Create one now!</p>
+                    ) : (
+                        arrArcs.map((arc, index) => (
+                            <Link to={`/${storyName}/arcs/${arc.name}/edit`} key={index} className="arcItem">
+                                <div className="arcCard">
                                     <h4>{arc.name}</h4>
                                 </div>
                             </Link>
-                        )
-                    })
+                        ))
+                    )
                 }
-
+            </div>
         </>
     )
 }

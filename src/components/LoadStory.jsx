@@ -1,6 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {saveStoryToFirestore} from "../firebase/firebase.js";
 
 
 export default function LoadStory(){
@@ -70,7 +71,10 @@ export default function LoadStory(){
             fr.readAsText(file);
         }
 
-        const saveStory =  ()=>{
+        const saveStoryToFb = async (storydata)=>{
+            await saveStoryToFirestore(storydata);
+        }
+        const saveStory =  async ()=>{
             if(title ==='' || plot==='' || genre===''){
                 alert('Please complete all story details.');
             }
@@ -82,13 +86,21 @@ export default function LoadStory(){
                     cover: cover,
                     characters: characters,
                     arcs: arcs,
-                    timeline: timeline
+                    timeline: timeline,
+                    userid: sessionStorage.getItem("userid")
                 }
 
                 const storyJson = JSON.stringify(story);
                 alert('Story Saved Successffully.');
 
-                sessionStorage.setItem(title, storyJson);
+                await saveStoryToFb(story);
+                alert('Story Saved to FB Successffully.');
+                sessionStorage.setItem(story.title, storyJson);
+
+                setTitle('');
+                setGenre('');
+                setPlot('');
+                setCover('');
                 navigate('/stories');
             }
         }

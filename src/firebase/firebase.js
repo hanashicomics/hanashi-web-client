@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getFirestore, collection, addDoc,  query, where, getDocs} from "firebase/firestore";
+import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -25,6 +25,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
+
 export async function saveStoryToFirestore(storyObject) {
     try {
         const docRef = await addDoc(collection(db, "stories"), storyObject);
@@ -80,5 +81,17 @@ export async function getDocumentsByField(collectionName, fieldName, value) {
     } catch (error) {
         console.error("Error getting documents:", error);
         throw error;
+    }
+}
+
+export async function updateDocument(collectionName, docId, updatedData) {
+    const db = getFirestore();
+    const docRef = doc(db, collectionName, docId);
+
+    try {
+        await updateDoc(docRef, updatedData);
+        console.log("Document updated successfully.");
+    } catch (error) {
+        console.error("Error updating document:", error);
     }
 }

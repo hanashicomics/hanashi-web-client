@@ -1,5 +1,93 @@
-.arc{
-    background-color: #bdbdbd;
-    border-radius: 5px;
-    padding: 2px;
+.arcHeader {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
+.linkButton {
+    background-color: #ff6423;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.linkButton:hover {
+    background-color: #d6551a;
+}
+
+.arcList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.arcItem {
+    text-decoration: none;
+}
+
+.arcCard {
+    background-color: #323232;
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.arcCard:hover {
+    transform: translateY(-2px);
+    background-color: #d6551a;
+}
+
+.arcCard h4 {
+    margin: 0;
+    color: #ffffff;
+}
+
+.noArcs {
+    text-align: center;
+    color: #888;
+    margin-top: 20px;
+}
+
+.chaptersSection {
+    margin-top: 20px;
+}
+
+.chaptersHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chapterList {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.chapterItem {
+    margin-bottom: 10px;
+}
+
+.chapterItem a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 14px;
+    display: block;
+    border-radius: 6px;
+    background-color: #323232;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.chapterItem a:hover {
+    background-color: #e0e0e0;
+}
+
+.noChapters {
+    color: #888;
+    font-style: italic;
 }

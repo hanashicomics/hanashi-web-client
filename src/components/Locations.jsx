@@ -1,6 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx';
 import {useEffect, useState} from "react";
+import "../assets/styles/App.css"
 
 export default function Locations(){
     const {storyName} = useParams();
@@ -26,19 +27,21 @@ export default function Locations(){
 
             <h1>Locations</h1>
 
-            <Link to={`/${storyName}/createlocation`}> Create a location +</Link>
+            <Link to={`/${storyName}/createlocation`} className={"LinkButton"}> Create a location +</Link>
 
-            <div className={'myLocations'}>
-                {locations.map((location, index) => (
+            <div className="cards-grid">
+                {locations.length < 1 ? <div>No locations found.</div> :
+                    locations.map((location, index) => (
                         <Link to={`/${storyName}/locations/${location.name}`} key={index}>
-                            <div className={'CharCard'}>
-                                <h5>{location.name}</h5>
-                                <img src={location.cover} width={'25%'} height={'25%'} alt="" className={'CharCover'}/>
+                            <div className="card">
+                                <img src={location.cover} alt={`${location.name} Cover`} className="card-img" />
+                                <div className="card-text">
+                                    <h3 className="card-title">{location.name}</h3>
+                                </div>
                             </div>
                         </Link>
-
-                    )
-                )}
+                    ))
+                }
             </div>
         </>
     )

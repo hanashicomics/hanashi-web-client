@@ -1,11 +1,12 @@
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import '../assets/styles/App.css';
 import {signUpUser} from "../firebase/firebase.js";
 
 export default function SignUp() {
     const[userEmail, setUserEmail] = useState("");
     const[userPassword, setUserPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
         setUserEmail(e.target.value);
@@ -23,7 +24,7 @@ export default function SignUp() {
         alert("Signup successfully to FB");
         setUserEmail("");
         setUserPassword("");
-
+        navigate('/login');
     };
 
     return (

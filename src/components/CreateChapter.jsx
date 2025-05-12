@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {useEffect, useState} from "react";
+import {updateDocument} from "../firebase/firebase.js";
 
 export default function CreateChapter() {
     const { storyName, arcName } = useParams();
@@ -24,7 +25,7 @@ export default function CreateChapter() {
     const story = JSON.parse(sessionStorage.getItem(storyName));
     const arrArcs = story.arcs;
 
-    const saveChapter = () => {
+    const saveChapter = async () => {
         let foundArc;
         for(let i = 0; i<arrArcs.length; i++){
             if(arrArcs[i].name === arcName){
@@ -41,6 +42,8 @@ export default function CreateChapter() {
         foundArc.chapters.push(chapter);
 
         sessionStorage.setItem(storyName, JSON.stringify(story));
+        await updateDocument("stories",story.id,story);
+
         alert("Chapter saved successfully.");
         setName("");
         setPlot("");
