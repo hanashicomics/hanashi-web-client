@@ -4,11 +4,12 @@ export default function Profile() {
 
     return (
         <>
-            <h1>Profile</h1>
             {
                 !sessionStorage.getItem("email") ? <Login /> :
                     <>
+                        <h1>Profile</h1>
                         <h2>My Details</h2>
+                        <p>Email: {sessionStorage.getItem("email")}</p>
                     </>
             }
         </>

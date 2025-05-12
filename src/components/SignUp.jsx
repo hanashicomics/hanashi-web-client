@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import '../assets/styles/App.css';
+import {signUpUser} from "../firebase/firebase.js";
 
 export default function SignUp() {
     const[userEmail, setUserEmail] = useState("");
@@ -13,11 +14,13 @@ export default function SignUp() {
         setUserPassword(e.target.value);
     }
 
-    const handleFormSubmit = (event)=>{
+    const handleFormSubmit = async (event)=>{
         event.preventDefault();
         if(userPassword.length<6){
             alert("Password must be at least 6 characters");
         }
+        await signUpUser(userEmail,userPassword);
+        alert("Signup successfully to FB");
         setUserEmail("");
         setUserPassword("");
 

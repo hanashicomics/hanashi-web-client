@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import '../assets/styles/App.css';
+import {loginUser} from "../firebase/firebase.js";
 
 export default function Login() {
     const[userEmail, setUserEmail] = useState("");
@@ -19,13 +20,11 @@ export default function Login() {
         if(userPassword.length<6){
             alert("Password must be at least 6 characters");
         }
-        sessionStorage.setItem('userid',signedInUser.uid);
-        sessionStorage.setItem('email',signedInUser.email);
-        sessionStorage.setItem('username',signedInUser.username);
+        await loginUser(userEmail,userPassword);
         alert("Login successfully");
         setUserEmail("");
         setUserPassword("");
-        navigate("/login");
+        navigate("/stories");
     };
 
     return(

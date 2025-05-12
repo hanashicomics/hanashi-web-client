@@ -1,6 +1,7 @@
 import {useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
+import {saveStoryToFirestore} from "../firebase/firebase.js";
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -38,33 +39,44 @@ export default function CreateStory() {
         }
     }
 
-    const saveStory =  ()=>{
-        if(title ==='' || plot==='' || cover ==='' || genre===''){
-            alert('Please complete all story details.');
+    const saveStoryToFb = async (storydata)=>{
+        await saveStoryToFirestore(storydata);
+    }
+
+    const saveStory =  async ()=>{
+        if(sessionStorage.getItem("userid") === null){
+            alert("Please login to create a story.");
         }
         else{
-            const story = {
-                title: title,
-                plot: plot,
-                genre: genre,
-                cover: cover,
-                characters: [],
-                arcs: [],
-                timeline:[],
-                locations:[]
+            if(title ==='' || plot==='' || cover ==='' || genre===''){
+                alert('Please complete all story details.');
             }
+            else{
+                const story = {
+                    title: title,
+                    plot: plot,
+                    genre: genre,
+                    cover: cover,
+                    characters: [],
+                    arcs: [],
+                    timeline:[],
+                    locations:[],
+                    userid: sessionStorage.getItem("userid")
+                }
 
-            const storyJson = JSON.stringify(story);
-            alert('Story Saved Successffully.');
+                const storyJson = JSON.stringify(story);
+                alert('Story Saved Successffully.');
+                await saveStoryToFb(story);
+                alert('Story Saved to FB Successffully.');
+                sessionStorage.setItem(story.title, storyJson);
 
-            sessionStorage.setItem(story.title, storyJson);
+                setTitle('');
+                setGenre('');
+                setPlot('');
+                setCover('');
+                navigate('/stories');
 
-            setTitle('');
-            setGenre('');
-            setPlot('');
-            setCover('');
-            navigate('/stories');
-
+            }
         }
     }
 

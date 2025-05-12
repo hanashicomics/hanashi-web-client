@@ -1,30 +1,41 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
+import {getDocumentsByField} from "../firebase/firebase.js";
 
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
 
-    useEffect(() => {
-        const getStories = ()=>{
-            const stories = [];
-            Object.keys(sessionStorage).forEach((key) =>{
-                const storyItem = sessionStorage.getItem(key);
-                stories.push(storyItem);
-            })
-            setStoryArr(stories);
-        };
+    const handlefbStories = async () => {
+        const stories = await getDocumentsByField("stories","userid", sessionStorage.getItem("userid"));
+        stories.forEach((story) => {
+            if(sessionStorage.getItem(story.title) != null){
+                console.log("story already exists");
+            }
+            sessionStorage.setItem(story.title, JSON.stringify(story)); // Save directly to sessionStorage
+        });
+        console.log("stopries loaded");
+    }
 
+    useEffect(() => {
+        const getStories = async () => {
+            await handlefbStories(); // Load and store stories from Firebase into sessionStorage
+
+            // Retrieve stories from sessionStorage
+            const stories = [];
+            Object.keys(sessionStorage).forEach((key) => {
+                if (key === "userid" || key === "email") return;
+                const storyItem = sessionStorage.getItem(key);
+                stories.push(JSON.parse(storyItem)); // Parse JSON string into an object
+            });
+
+            setStoryArr(stories); // Update the state
+        };
 
         getStories();
     }, []);
 
-
-    const getStoryKey = (key)=>{
-
-    }
-
-    return(
+    return (
         <>
             <div className="createStoryLine">
                 <h1>Stories</h1>
@@ -32,44 +43,22 @@ export default function Stories(){
                 <Link to={'/loadstory'} className={"LinkButton"}> Load a story from JSON +</Link>
             </div>
 
-            <br/>
+            <br />
 
-
-                <div className="cards-grid">
-                {
-                    storyArr.length < 1 ? <div>No stories found. Create one now!</div> :
-
-                        // storyArr.map((story, key) => {
-                        //     const storyJson = JSON.parse(story);
-                        //     return (
-                        //         <Link to={`/${storyJson.title}/info`} key={key}>
-                        //             <div className='StoryCard'>
-                        //                 <img src={storyJson.cover} className='StoryCover' alt={"story cover"}/>
-                        //                 <h4 className='StoryTitle'>{storyJson.title}</h4>
-                        //             </div>
-                        //         </Link>
-                        //     )
-                        // })
-
-                    storyArr.map((story, key) => {
-                    const storyJson = JSON.parse(story);
-                    return (
-                        <Link to={`/${storyJson.title}/info`} key={key}>
-                                <Link to={`/${storyJson.title}/info`} key={key}>
-                                    <div className="card">
-                                        <img src={storyJson.cover} alt="Cover Title" className="card-img"/>
-                                        <div className="card-text">
-                                            <h3 className="card-title">{storyJson.title}</h3>
-                                        </div>
-                                    </div>
-                                </Link>
-
+            <div className="cards-grid">
+                {storyArr.length < 1 ? <div>No stories found. Create one now!</div> :
+                    storyArr.map((story, key) => (
+                        <Link to={`/${story.title}/info`} key={key}>
+                            <div className="card">
+                                <img src={story.cover} alt="Cover Title" className="card-img" />
+                                <div className="card-text">
+                                    <h3 className="card-title">{story.title}</h3>
+                                </div>
+                            </div>
                         </Link>
-                    )
-            })
+                    ))
                 }
-                </div>
-
+            </div>
         </>
-    )
+    );
 }
