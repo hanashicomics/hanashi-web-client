@@ -1,6 +1,7 @@
-h1{
+h1 {
     text-align: center;
 }
+
 .container {
     max-width: 900px;
     margin: 40px auto;
@@ -11,6 +12,7 @@ h1{
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     align-items: flex-start;
+    flex-wrap: wrap; /* allow wrap for responsiveness */
 }
 
 .imageContainer {
@@ -29,6 +31,7 @@ h1{
 
 .TextContainer {
     flex: 2;
+    min-width: 280px;
 }
 
 .TextContainer p {
@@ -66,4 +69,22 @@ button {
 
 button:hover {
     background-color: #d6551a;
+}
+
+/* === Responsive Media Query === */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .TextContainer, .imageContainer {
+        flex: unset;
+        width: 100%;
+    }
+
+    .imageContainer img {
+        max-width: 100%;
+    }
 }

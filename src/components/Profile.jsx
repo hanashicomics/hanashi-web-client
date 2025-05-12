@@ -1,11 +1,13 @@
 import Login from "./Login.jsx";
 import {useNavigate} from "react-router-dom";
+import {logoutUser} from "../firebase/firebase.js";
 
 export default function Profile() {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         sessionStorage.clear();
+        await logoutUser();
         navigate("/profile")
     }
 

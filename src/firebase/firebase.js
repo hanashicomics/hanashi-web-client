@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc} from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -95,3 +95,13 @@ export async function updateDocument(collectionName, docId, updatedData) {
         console.error("Error updating document:", error);
     }
 }
+
+export const logoutUser = async () => {
+    const auth = getAuth();
+    try {
+        await signOut(auth);
+        console.log("User signed out successfully.");
+    } catch (error) {
+        console.error("Error signing out:", error);
+    }
+};
