@@ -3,6 +3,8 @@
     grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
     grid-template-rows: auto; /* Automatically size rows based on content */
     text-align: center;
+    background-color: #bdbdbd;
+    border-radius: 8px;
 }
 
 .TextContainer {

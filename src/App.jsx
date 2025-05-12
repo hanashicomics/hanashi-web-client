@@ -1,27 +1,27 @@
 import './assets/styles/App.css'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import RootNavigation from "./RootNavigation.jsx";
-import Stories from "./Stories.jsx";
-import CreateStory from "./CreateStory.jsx";
-import Account from './Account.jsx'
-import Settings from './Settings.jsx'
-import StoryInfo from './StoryInfo.jsx'
-import Timeline from './Timeline.jsx'
-import Arcs from './Arcs.jsx'
-import Characters from './Characters.jsx'
+import RootNavigation from "./components/RootNavigation.jsx";
+import Stories from "./components/Stories.jsx";
+import CreateStory from "./components/CreateStory.jsx";
+import Account from './components/Account.jsx'
+import Settings from './components/Settings.jsx'
+import StoryInfo from './components/StoryInfo.jsx'
+import Timeline from './components/Timeline.jsx'
+import Arcs from './components/Arcs.jsx'
+import Characters from './components/Characters.jsx'
 import Home from './Home.jsx'
-import EditStory from './EditStory.jsx'
-import LoadStory from "./LoadStory.jsx";
-import CreateCharacter from './CreateCharacter.jsx';
-import EditCharacter from "./EditCharacter.jsx";
-import CreateArc from './CreateArc.jsx';
-import ExportStory from "./ExportStory.jsx";
-import EditArc from "./EditArc.jsx";
-import CreateChapter from './CreateChapter.jsx';
-import EditChapter from "./EditChapter.jsx";
-import Locations from "./Locations.jsx";
-import CreateLocation from "./CreateLocation.jsx";
-import EditLocation from "./EditLocation.jsx";
+import EditStory from './components/EditStory.jsx'
+import LoadStory from "./components/LoadStory.jsx";
+import CreateCharacter from './components/CreateCharacter.jsx';
+import EditCharacter from "./components/EditCharacter.jsx";
+import CreateArc from './components/CreateArc.jsx';
+import ExportStory from "./components/ExportStory.jsx";
+import EditArc from "./components/EditArc.jsx";
+import CreateChapter from './components/CreateChapter.jsx';
+import EditChapter from "./components/EditChapter.jsx";
+import Locations from "./components/Locations.jsx";
+import CreateLocation from "./components/CreateLocation.jsx";
+import EditLocation from "./components/EditLocation.jsx";
 
 function App() {
   return (

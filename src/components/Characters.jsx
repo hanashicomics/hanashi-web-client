@@ -1,6 +1,6 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import './assets/styles/Characters.css'
+import '../assets/styles/Characters.css'
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 export default function Characters() {
     const {storyName} = useParams();

@@ -20,3 +20,18 @@
 .Logo{
     font-size: xx-large;
 }
+
+.LinkButton{
+    background-color: #cd4b17;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.Links{
+    color: white;
+}
+.Links:hover{
+    background-color: #cd4b17;
+}

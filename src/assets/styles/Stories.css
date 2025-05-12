@@ -19,4 +19,51 @@
 
 .StoryCover{
     border-radius: 15px;
+    max-width: 50%;
+    max-height: 50%;
+}
+
+.StoryTitle{
+    font-size: large;
+    color:black;
+}
+
+/*TEST AREA*/
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    justify-items: center; /* keeps cards centered if fewer */
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 180px;
+}
+
+.card-img {
+    width: 100%;
+    aspect-ratio: 2 / 3;      /* keeps width:height = 2:3 */
+    object-fit: cover;        /* fills and crops uniformly */
+}
+
+.card-text {
+    padding: 0.5rem;
+}
+
+.card-title {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.1rem;
+}
+
+.card-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
 }

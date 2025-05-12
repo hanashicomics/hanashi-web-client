@@ -1,4 +1,4 @@
-import './assets/styles/Navigation.css'
+import '../assets/styles/Navigation.css'
 import {Link} from "react-router-dom";
 
 export default function RootNavigation(){
@@ -11,7 +11,7 @@ export default function RootNavigation(){
                     </h1>
                 </li>
 
-                <Link to={'/stories'}>Stories</Link>
+                <Link to={'/stories'} className={"Links"}>Stories</Link>
                 <li><a href="#news">Account</a></li>
                 <li><a href="#contact">Settings</a></li>
            </div>

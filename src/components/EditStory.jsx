@@ -1,12 +1,24 @@
-import {useState} from "react";
-import './assets/styles/CreateStory.css';
-import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import '../assets/styles/CreateStory.css';
+import {useNavigate, useParams} from "react-router-dom";
+import StoryFooterNavigation from './StoryFooterNavigation.jsx'
 
-export default function CreateStory() {
+export default function EditStory() {
+    const {storyName} = useParams();
+    const navigate = useNavigate();
+
     const[title, setTitle] = useState('');
     const[plot, setPlot] = useState('');
     const[genre, setGenre] = useState('');
     const[cover, setCover] = useState('');
+
+    useEffect(() => {
+        const storyInfo = JSON.parse(sessionStorage.getItem(storyName));
+        setTitle(storyInfo.title);
+        setGenre(storyInfo.genre);
+        setPlot(storyInfo.plot);
+        setCover(storyInfo.cover);
+    }, []);
 
     const onTitleChange = (e) => {
         setTitle(e.target.value);
@@ -47,29 +59,21 @@ export default function CreateStory() {
                 plot: plot,
                 genre: genre,
                 cover: cover,
-                characters: [],
-                arcs: [],
-                timeline:[],
-                locations:[]
             }
 
             const storyJson = JSON.stringify(story);
             alert('Story Saved Successffully.');
 
-            sessionStorage.setItem(story.title, storyJson);
-
-            setTitle('');
-            setGenre('');
-            setPlot('');
-            setCover('');
-            useNavigate('/stories');
-
+            sessionStorage.setItem(storyName, storyJson);
+            navigate('/stories');
         }
     }
 
     return(
         <>
-            <h1>Create Story</h1>
+            <StoryFooterNavigation storyName={storyName}/>
+
+            <h1>Edit Story Info</h1>
 
             <div className='container'>
                 <div className='TextContainer'>

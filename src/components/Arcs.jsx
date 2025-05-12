@@ -1,7 +1,7 @@
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import './assets/styles/Arcs.css';
+import '../assets/styles/Arcs.css';
 
 export default function Arcs(){
     const {storyName} = useParams();

@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
-import './assets/styles/Timeline.css'
+import '../assets/styles/Timeline.css'
 import {useEffect, useState} from "react";
 export default function Timeline() {
     const {storyName} = useParams();

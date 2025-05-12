@@ -1,6 +1,6 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import './assets/styles/Chapters.css';
+import '../assets/styles/Chapters.css';
 
 export default function EditArc(){
     const {storyName} =useParams();
