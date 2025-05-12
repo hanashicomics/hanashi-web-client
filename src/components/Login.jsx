@@ -30,7 +30,9 @@ export default function Login() {
 
     return(
         <>
+
             <form onSubmit={handleFormSubmit} className={'formArea'}>
+                <h1>Login</h1>
                 <p>
                     <input type={"email"} onChange={handleEmailChange} value={userEmail} placeholder="Email" required={true} className={'inputText'}/>
                 </p>
@@ -38,9 +40,10 @@ export default function Login() {
                     <input type={"password"} onChange={handlePasswordChange} value={userPassword} placeholder="Password" required={true} className={'inputText'}/>
                 </p>
                 <input type={'submit'} value={"Login"} className={"task_addbutton"}/>
+                <br/>
+                <Link to={'/signup'} className={"LinkButton"}>No Account? Click here to sign up</Link>
             </form>
-            <br/>
-            <Link to={'/signup'} className={"LinkButton"}>No Account? Click here to sign up</Link>
+
 
         </>
     )

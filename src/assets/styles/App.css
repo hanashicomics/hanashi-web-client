@@ -7,3 +7,59 @@
 .formArea{
     background-color: #bdbdbd;
 }
+
+.formArea {
+    max-width: 350px;
+    margin: 60px auto;
+    padding: 30px 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.inputText {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.inputText:focus {
+    border-color: #ff6423;
+    outline: none;
+    box-shadow: 0 0 0 2px #c34919;
+}
+
+.task_addbutton {
+    width: 100%;
+    background-color: #ff6423;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.task_addbutton:hover {
+    background-color: #cd4b17;
+}
+
+.LinkButton {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: #ff6423;
+    text-decoration: none;
+}
+
+.LinkButton:hover {
+    text-decoration: underline;
+}

@@ -26,6 +26,7 @@ export default function SignUp() {
     return (
         <>
             <form onSubmit={handleFormSubmit} className={'formArea'}>
+                <h1>Signup</h1>
                 <p>
                     <input type={"email"} onChange={handleEmailChange} value={userEmail} placeholder="Email" required={true} className={'inputText'}/>
                 </p>
@@ -33,9 +34,9 @@ export default function SignUp() {
                     <input type={"password"} onChange={handlePasswordChange} value={userPassword} placeholder="Password" required={true} className={'inputText'}/>
                 </p>
                 <input type={'submit'} value={"Sign Up"} className={"task_addbutton"}/>
+                <br/>
+                <Link to={'/login'} className={"LinkButton"}>Already have an account? Click here to login</Link>
             </form>
-            <br/>
-            <Link to={'/login'} className={"LinkButton"}>Already have account? Click here to login</Link>
         </>
     )
 }
