@@ -12,8 +12,8 @@ export default function RootNavigation(){
                 </li>
 
                 <Link to={'/stories'} className={"Links"}>Stories</Link>
-                <li><a href="#news">Account</a></li>
-                <li><a href="#contact">Settings</a></li>
+                <Link to={'/profile'} className={"Links"}>Profile</Link>
+                <Link to={'/settings'} className={"Links"}>Settings</Link>
            </div>
         </>
     )

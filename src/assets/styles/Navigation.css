@@ -31,6 +31,7 @@
 
 .Links{
     color: white;
+    padding: 5px;
 }
 .Links:hover{
     background-color: #cd4b17;

@@ -22,6 +22,9 @@ import EditChapter from "./components/EditChapter.jsx";
 import Locations from "./components/Locations.jsx";
 import CreateLocation from "./components/CreateLocation.jsx";
 import EditLocation from "./components/EditLocation.jsx";
+import Profile from "./components/Profile.jsx";
+import Login from "./components/Login.jsx";
+import SignUp from "./components/SignUp.jsx";
 
 function App() {
   return (
@@ -37,7 +40,9 @@ function App() {
                   <Route path="/loadstory" element={<LoadStory/>}/>
                   <Route path="/:storyName/export" element={<ExportStory/>}/>
 
-                  <Route path="/account" element={<Account/>}/>
+                  <Route path="/profile" element={<Profile/>}/>
+                  <Route path="/login" element={<Login/>}/>
+                  <Route path="/signup" element={<SignUp/>}/>
                   <Route path="/settings" element={<Settings/>}/>
 
                   <Route path="/:storyName/info" element={<StoryInfo/>}/>
