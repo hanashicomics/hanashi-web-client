@@ -107,8 +107,6 @@ export default function EditStory() {
                     </p>
                 </div>
             </div>
-
-
             <p>
                 <button onClick={saveStory}>Save Story</button>
             </p>

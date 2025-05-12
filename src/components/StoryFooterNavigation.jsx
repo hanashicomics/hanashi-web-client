@@ -1,7 +1,7 @@
 import '../assets/styles/Navigation.css'
 import {Link} from "react-router-dom";
 
-export default function RootNavigation({storyName}){
+export default function StoryFooterNavigation({storyName}){
     return(
         <>
             <div className="NavigationLinks">
