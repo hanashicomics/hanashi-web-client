@@ -64,7 +64,8 @@ export default function EditStory() {
             const storyJson = JSON.stringify(story);
             alert('Story Saved Successffully.');
 
-            sessionStorage.setItem(storyName, storyJson);
+            sessionStorage.setItem(story.title, storyJson);
+            sessionStorage.removeItem(storyName);
             navigate('/stories');
         }
     }

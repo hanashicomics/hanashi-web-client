@@ -93,40 +93,46 @@ export default function LoadStory(){
             }
         }
 
-        return(
-            <>
-                <h1>Load Story from JSON</h1>
+    return (
+        <>
+            <h1>Load Story from JSON</h1>
 
-                <div className='container'>
-                    <div className='TextContainer'>
-                        <p>
-                            <label>Title </label>
-                            <input name="title" type="text" value={title} onChange={onTitleChange} required/>
-                        </p>
+            <div className='container'>
+                <div className='TextContainer'>
+                    <p>
+                        <label>Title</label>
+                        <input name="title" type="text" value={title} onChange={onTitleChange} required />
+                    </p>
 
-                        <p>
-                            <label>Plot </label>
-                            <textarea name="plot" value={plot} onChange={onPlotChange} required/>
-                        </p>
+                    <p>
+                        <label>Plot</label>
+                        <textarea name="plot" value={plot} onChange={onPlotChange} required />
+                    </p>
 
-                        <p>
-                            <label>Genre </label>
-                            <input name="genre" type="text" value={genre} onChange={onGenreChange} required/>
-                        </p>
-                    </div>
-
-
-                    <div className='imageContainer'>
-                        <p>
-                            <label>Cover </label>
-                            <br/>
-                            <img src={cover} width="50%" height="50%"/>
-                        </p>
-                    </div>
+                    <p>
+                        <label>Genre</label>
+                        <input name="genre" type="text" value={genre} onChange={onGenreChange} required />
+                    </p>
                 </div>
 
-                <input type={'file'} onChange={onStoryChange} accept={'.json'}/>
+                <div className='imageContainer'>
+                    <p>
+                        <label>Cover</label>
+                        <br />
+                        <img src={cover} alt="Story cover" />
+                    </p>
+                </div>
+            </div>
+
+            <div className='container' style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                <p>
+                    <label>Upload JSON File</label>
+                    <input type="file" onChange={onStoryChange} accept=".json"  className={"LinkButton"}/>
+                </p>
+
                 <button onClick={saveStory}>Save Story</button>
-            </>
-        )
+            </div>
+        </>
+    );
+
 }

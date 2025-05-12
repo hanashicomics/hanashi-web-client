@@ -1,17 +1,69 @@
-.container {
-    display: grid; /* Ensure grid layout is applied */
-    grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
-    grid-template-rows: auto; /* Automatically size rows based on content */
+h1{
     text-align: center;
-    background-color: #bdbdbd;
-    border-radius: 8px;
 }
-
-.TextContainer {
-    grid-column: 2 / 3; /* Place this in the second column */
-    grid-row: 1/3;
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    display: flex;
+    gap: 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    align-items: flex-start;
 }
 
 .imageContainer {
-    grid-column: 1 / 2; /* Place this in the first column */
+    flex: 1;
+    text-align: center;
+}
+
+.imageContainer img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.TextContainer {
+    flex: 2;
+}
+
+.TextContainer p {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.TextContainer label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.TextContainer input[type="text"],
+.TextContainer textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+button {
+    background-color: #ff6423;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #d6551a;
 }

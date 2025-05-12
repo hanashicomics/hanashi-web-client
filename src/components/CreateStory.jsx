@@ -72,39 +72,34 @@ export default function CreateStory() {
         <>
             <h1>Create Story</h1>
             <div className='container'>
+                <div className='imageContainer'>
+                    <p>
+                        <label>Cover</label>
+                        <img src={cover} alt="cover preview"/>
+                        <br/>
+                        <input name="cover" type="file" onChange={onCoverChange} placeholder="Add a cover image"/>
+                    </p>
+                </div>
+
                 <div className='TextContainer'>
                     <p>
-                        <label>Title </label>
+                        <label>Title</label>
                         <input name="title" type="text" value={title} onChange={onTitleChange} required/>
                     </p>
 
                     <p>
-                        <label>Plot </label>
-                        <textarea name="plot" value={plot} onChange={onPlotChange} required/>
+                        <label>Plot</label>
+                        <textarea name="plot" value={plot} onChange={onPlotChange} rows={4} required/>
                     </p>
 
                     <p>
-                        <label>Genre </label>
+                        <label>Genre</label>
                         <input name="genre" type="text" value={genre} onChange={onGenreChange} required/>
                     </p>
-                </div>
 
-
-                <div className='imageContainer'>
-                    <p>
-                        <label>Cover </label>
-                        <br/>
-                        <img src={cover} width="50%" height="50%"/>
-                        <br/>
-                        <input name="cover" type="file" onChange={onCoverChange}/>
-                    </p>
+                    <button onClick={saveStory}>Save Story</button>
                 </div>
             </div>
-
-
-            <p>
-                <button onClick={saveStory}>Save Story</button>
-            </p>
         </>
     )
 }
