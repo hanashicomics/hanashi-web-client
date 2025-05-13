@@ -1,7 +1,8 @@
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import StoryNavigation from "./StoryNavigation.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {updateDocument} from "../firebase/firebase.js";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function CreateArc() {
     const {storyName} =useParams();
@@ -49,7 +50,8 @@ export default function CreateArc() {
 
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
+            <RootNavigation />
+            <StoryNavigation storyName={storyName}/>
             <h1>Create New Arc</h1>
 
             <div className='TextContainer'>

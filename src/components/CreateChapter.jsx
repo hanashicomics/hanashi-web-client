@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import StoryNavigation from "./StoryNavigation.jsx";
 import {useEffect, useState} from "react";
 import {updateDocument} from "../firebase/firebase.js";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function CreateChapter() {
     const { storyName, arcName } = useParams();
@@ -56,7 +57,8 @@ export default function CreateChapter() {
 
     return (
         <>
-            <StoryFooterNavigation storyName={storyName} />
+            <RootNavigation />
+            <StoryNavigation storyName={storyName} />
             <h1>Create Chapter</h1>
 
             <p>

@@ -1,7 +1,8 @@
 import {useParams} from "react-router-dom";
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import StoryNavigation from "./StoryNavigation.jsx";
 import '../assets/styles/Timeline.css'
 import {useEffect, useState} from "react";
+import RootNavigation from "./RootNavigation.jsx";
 export default function Timeline() {
     const {storyName} = useParams();
     const[arcNum, setArcNum] = useState([]);
@@ -21,7 +22,8 @@ export default function Timeline() {
 
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
+            <RootNavigation />
+            <StoryNavigation storyName={storyName}/>
             <h1>Timeline</h1>
 
             <div className={'timelineContainer'}>

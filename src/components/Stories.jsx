@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
 import {deleteDocument, getDocumentsByField} from "../firebase/firebase.js";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
@@ -49,6 +50,7 @@ export default function Stories(){
 
     return (
         <>
+            <RootNavigation />
             <div className="createStoryLine">
                 <h1>Stories</h1>
                 <Link to={'/createstory'} className={"LinkButton"}> Create a story +</Link>

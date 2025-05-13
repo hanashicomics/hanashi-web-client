@@ -1,5 +1,6 @@
 import {useParams} from "react-router-dom";
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import StoryNavigation from "./StoryNavigation.jsx";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function ExportStory(){
     const {storyName} = useParams();
@@ -19,7 +20,8 @@ export default function ExportStory(){
 
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
+            <RootNavigation />
+            <StoryNavigation storyName={storyName}/>
             <p>Export Story</p>
             <button onClick={exportStory}>Export STORY</button>
         </>

@@ -1,0 +1,33 @@
+.NavigationLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ff6423;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.nav-left h1 {
+    margin: 0;
+}
+
+.Logo {
+    font-size: xx-large;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-right .get-started-button {
+    background-color: #cd4b17;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nav-right .get-started-button:hover {
+    background-color: #a13c12;
+}

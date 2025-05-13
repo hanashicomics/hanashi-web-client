@@ -2,7 +2,8 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Arcs.css';
 import {updateDocument} from "../firebase/firebase.js";
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import StoryNavigation from "./StoryNavigation.jsx";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function EditArc(){
     const {storyName} =useParams();
@@ -57,7 +58,8 @@ export default function EditArc(){
     }
     return(
         <>
-            <StoryFooterNavigation storyName={storyName} />
+            <RootNavigation />
+            <StoryNavigation storyName={storyName} />
             <h1>Edit Arc</h1>
             <div className='TextContainer'>
                 <p>

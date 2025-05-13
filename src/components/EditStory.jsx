@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate, useParams} from "react-router-dom";
-import StoryFooterNavigation from './StoryFooterNavigation.jsx'
+import StoryNavigation from './StoryNavigation.jsx'
 import {updateDocument} from "../firebase/firebase.js";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function EditStory() {
     const {storyName} = useParams();
@@ -74,7 +75,8 @@ export default function EditStory() {
 
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
+            <RootNavigation />
+            <StoryNavigation storyName={storyName}/>
 
             <h1>Edit Story Info</h1>
 

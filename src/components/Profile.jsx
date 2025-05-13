@@ -1,6 +1,7 @@
 import Login from "./Login.jsx";
 import {useNavigate} from "react-router-dom";
 import {logoutUser} from "../firebase/firebase.js";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function Profile() {
 
     return (
         <>
+            <RootNavigation />
             {
                 !sessionStorage.getItem("email") ? <Login /> :
                     <>

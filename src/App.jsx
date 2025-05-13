@@ -29,8 +29,6 @@ function App() {
   return (
       <>
           <Router>
-              <RootNavigation />
-
               <Routes>
                   <Route path="/" element={<Home/>}/>
                   <Route path="/story/:storyName" element={<EditStory/>}/>

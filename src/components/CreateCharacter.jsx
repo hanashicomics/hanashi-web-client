@@ -1,8 +1,9 @@
 import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Navigate} from 'react-router-dom';
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import StoryNavigation from "./StoryNavigation.jsx";
 import {saveStoryToFirestore, updateDocument} from "../firebase/firebase.js";
+import RootNavigation from "./RootNavigation.jsx";
 
 export default function CreateCharacter(){
     const {storyName} = useParams();
@@ -65,7 +66,8 @@ export default function CreateCharacter(){
 
     return(
         <>
-            <StoryFooterNavigation storyName={storyName}/>
+            <RootNavigation />
+            <StoryNavigation storyName={storyName}/>
 
             <div className='TextContainer'>
                 <p>
