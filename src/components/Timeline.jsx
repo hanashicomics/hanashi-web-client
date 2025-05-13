@@ -35,8 +35,8 @@ export default function Timeline() {
                                         <label>Order Number</label>
                                         <select>
                                             {
-                                                arcNum.map((num, key)=>{
-                                                    return(
+                                                arcNum.map((num, key) => {
+                                                    return (
                                                         <option key={key}>{num.order}</option>
                                                     )
                                                 })

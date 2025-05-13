@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc} from "firebase/firestore";
+import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc,deleteDoc} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -105,3 +105,15 @@ export const logoutUser = async () => {
         console.error("Error signing out:", error);
     }
 };
+
+export async function deleteDocument(collectionName, docId) {
+    const db = getFirestore();
+    const docRef = doc(db, collectionName, docId);
+
+    try {
+        await deleteDoc(docRef);
+        console.log("Document deleted successfully.");
+    } catch (error) {
+        console.error("Error deleted document:", error);
+    }
+}

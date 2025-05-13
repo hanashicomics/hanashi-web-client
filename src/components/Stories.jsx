@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
-import {getDocumentsByField} from "../firebase/firebase.js";
+import {deleteDocument, getDocumentsByField} from "../firebase/firebase.js";
 
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
@@ -35,6 +35,18 @@ export default function Stories(){
         getStories();
     }, []);
 
+    const handleDelete = async (id,storytitle) => {
+        if (confirm("Are you sure you want to delete this story?")) {
+            await deleteDocument("stories", id);
+            alert("Story deleted from fb successfully.");
+            const updatedArr = storyArr.filter(story => story.title !== storytitle);
+            setStoryArr(updatedArr);
+            sessionStorage.removeItem(storytitle);
+        } else {
+            console.log("Deletion cancelled");
+        }
+    }
+
     return (
         <>
             <div className="createStoryLine">
@@ -48,14 +60,24 @@ export default function Stories(){
             <div className="cards-grid">
                 {storyArr.length < 1 ? <div>No stories found. Create one now!</div> :
                     storyArr.map((story, key) => (
-                        <Link to={`/${story.title}/info`} key={key}>
+                        <Link to={`/${story.title}/info`} key={key} className="card-link">
                             <div className="card">
                                 <img src={story.cover} alt="Cover Title" className="card-img" />
                                 <div className="card-text">
                                     <h3 className="card-title">{story.title}</h3>
                                 </div>
+                                <button
+                                    className="delete-btn"
+                                    onClick={async (e) => {
+                                        e.preventDefault(); // prevent navigation when clicking delete
+                                        await handleDelete(story.id,story.title); // replace with your actual delete logic
+                                    }}
+                                >
+                                    Delete
+                                </button>
                             </div>
                         </Link>
+
                     ))
                 }
             </div>

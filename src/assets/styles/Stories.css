@@ -45,6 +45,7 @@
     overflow: hidden;
     width: 100%;
     max-width: 180px;
+    position: relative;
 }
 
 .card-img {
@@ -60,6 +61,7 @@
 .card-title {
     margin: 0.5rem 0 0.25rem;
     font-size: 1.1rem;
+    color: #cd4b17;
 }
 
 .card-subtitle {
