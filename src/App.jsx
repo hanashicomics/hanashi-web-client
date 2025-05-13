@@ -24,41 +24,50 @@ import EditLocation from "./components/EditLocation.jsx";
 import Profile from "./components/Profile.jsx";
 import Login from "./components/Login.jsx";
 import SignUp from "./components/SignUp.jsx";
+import AppLayout from "./app layout/AppLayout.jsx";
+import PublicLayout from "./public layout/PublicLayout.jsx";
 
 function App() {
   return (
       <>
           <Router>
-              <RootNavigation />
 
               <Routes>
-                  <Route path="/" element={<Home/>}/>
-                  <Route path="/story/:storyName" element={<EditStory/>}/>
-                  <Route path="/stories" element={<Stories/>}/>
-                  <Route path="/createstory" element={<CreateStory/>}/>
-                  <Route path="/loadstory" element={<LoadStory/>}/>
-                  <Route path="/:storyName/export" element={<ExportStory/>}/>
+                  {/* PUBLIC ROUTES */}
+                  <Route element={<PublicLayout />}>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/signup" element={<SignUp />} />
+                  </Route>
 
-                  <Route path="/profile" element={<Profile/>}/>
-                  <Route path="/login" element={<Login/>}/>
-                  <Route path="/signup" element={<SignUp/>}/>
-                  <Route path="/settings" element={<Settings/>}/>
+                  {/* APP ROUTES (after login) */}
+                  <Route element={<AppLayout />}>
+                      <Route path="/stories" element={<Stories />} />
+                      <Route path="/createstory" element={<CreateStory />} />
+                      <Route path="/loadstory" element={<LoadStory />} />
+                      <Route path="/story/:storyName" element={<EditStory />} />
+                      <Route path="/:storyName/export" element={<ExportStory />} />
 
-                  <Route path="/:storyName/info" element={<StoryInfo/>}/>
-                  <Route path="/:storyName/timeline" element={<Timeline/>}/>
-                  <Route path="/:storyName/arcs" element={<Arcs/>}/>
-                  <Route path="/:storyName/createarc" element={<CreateArc/>}/>
-                  <Route path="/:storyName/arcs/:arcName/edit" element={<EditArc/>}/>
-                  <Route path="/:storyName/arcs/:arcName/createchapter" element={<CreateChapter/>}/>
-                  <Route path="/:storyName/arcs/:arcName/chapter/:chapterName/" element={<EditChapter/>}/>
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/settings" element={<Settings />} />
 
-                  <Route path="/:storyName/createcharacter" element={<CreateCharacter/>}/>
-                  <Route path="/:storyName/characters" element={<Characters/>}/>
-                  <Route path="/:storyName/characters/:characterName" element={<EditCharacter/>}/>
+                      <Route path="/:storyName/info" element={<StoryInfo />} />
+                      <Route path="/:storyName/timeline" element={<Timeline />} />
 
-                  <Route path="/:storyName/locations" element={<Locations/>}/>
-                  <Route path="/:storyName/locations/:locationName" element={<EditLocation/>}/>
-                  <Route path="/:storyName/createlocation" element={<CreateLocation/>}/>
+                      <Route path="/:storyName/arcs" element={<Arcs />} />
+                      <Route path="/:storyName/createarc" element={<CreateArc />} />
+                      <Route path="/:storyName/arcs/:arcName/edit" element={<EditArc />} />
+                      <Route path="/:storyName/arcs/:arcName/createchapter" element={<CreateChapter />} />
+                      <Route path="/:storyName/arcs/:arcName/chapter/:chapterName" element={<EditChapter />} />
+
+                      <Route path="/:storyName/createcharacter" element={<CreateCharacter />} />
+                      <Route path="/:storyName/characters" element={<Characters />} />
+                      <Route path="/:storyName/characters/:characterName" element={<EditCharacter />} />
+
+                      <Route path="/:storyName/locations" element={<Locations />} />
+                      <Route path="/:storyName/locations/:locationName" element={<EditLocation />} />
+                      <Route path="/:storyName/createlocation" element={<CreateLocation />} />
+                  </Route>
               </Routes>
           </Router>
       </>

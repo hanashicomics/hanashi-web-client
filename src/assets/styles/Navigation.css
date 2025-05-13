@@ -1,38 +1,42 @@
-.NavigationLinks{
-    text-decoration: none;
-    list-style: none;
+.NavigationLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
     background-color: #ff6423;
-}
-
-.NavigationLinks li{
-    display: inline-block;
-    padding: 5px;
-}
-
-.NavigationLinks li a{
+    list-style: none;
     color: white;
-}
-
-.NavigationLinks li:hover{
-    background-color: #cd4b17;
-}
-
-.Logo{
-    font-size: xx-large;
-}
-
-.LinkButton{
-    background-color: #cd4b17;
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-    margin-left: 10px;
 }
 
 .Links{
     color: white;
-    padding: 5px;
 }
-.Links:hover{
+.nav-left h1 {
+    margin: 0;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navigation-link-goto {
+    color: white;
+    padding: 6px 12px;
+    border: 1px solid white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.navigation-link-goto:hover {
     background-color: #cd4b17;
+}
+
+.Logo{
+    color: white;
+}
+
+.iconlink{
+    color: white;
 }
