@@ -1,0 +1,73 @@
+/* Dark grey background and white text */
+.landing {
+    background-color: #1f1f1f; /* dark grey */
+    color: #f5f5f5; /* soft white text */
+    min-height: 100vh;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+}
+
+/* Header section */
+.landing-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ff6423;
+}
+
+.landing-header p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    color: #e0e0e0;
+}
+
+/* Call to action button */
+.get-started-button {
+    background-color: #ff6423;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.get-started-button:hover {
+    background-color: #cd4b17;
+}
+
+/* Features section */
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.feature h2 {
+    color: #ff6423;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 1rem;
+    color: #d0d0d0;
+}
+
+/* Responsive layout */
+@media (min-width: 768px) {
+    .features {
+        flex-direction: row;
+        justify-content: center;
+        gap: 60px;
+    }
+
+    .feature {
+        max-width: 300px;
+    }
+}

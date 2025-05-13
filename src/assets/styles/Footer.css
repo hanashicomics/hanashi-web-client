@@ -1,0 +1,48 @@
+.footer {
+    background-color: #ff6423;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+.footer-content {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #cd4b17;
+}
+
+.footer-socials {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* this adds spacing between each icon */
+}
+
+.footer-socials a {
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+}
+
+.footer-socials a:hover {
+    color: #cd4b17;
+}
