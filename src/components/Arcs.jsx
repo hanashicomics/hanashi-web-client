@@ -1,8 +1,7 @@
-import StoryNavigation from "./StoryNavigation.jsx";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Arcs.css';
-import RootNavigation from "./RootNavigation.jsx";
 
 export default function Arcs(){
     const {storyName} = useParams();
@@ -17,8 +16,7 @@ export default function Arcs(){
 
     return(
         <>
-            <RootNavigation />
-            <StoryNavigation storyName={storyName} />
+            <StoryFooterNavigation storyName={storyName} />
             <h1>Arcs</h1>
 
             <div className="arcHeader">

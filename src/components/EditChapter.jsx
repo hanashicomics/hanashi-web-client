@@ -1,9 +1,8 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import StoryNavigation from "./StoryNavigation.jsx";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {updateDocument} from "../firebase/firebase.js";
 import "../assets/styles/Chapters.css"
-import RootNavigation from "./RootNavigation.jsx";
 
 export default function EditChapter(){
     const { storyName, arcName, chapterName } = useParams();
@@ -70,8 +69,7 @@ export default function EditChapter(){
 
     return (
         <>
-            <RootNavigation />
-            <StoryNavigation storyName={storyName} />
+            <StoryFooterNavigation storyName={storyName} />
             <h1>Edit Chapter</h1>
 
             <div className="chapterForm">

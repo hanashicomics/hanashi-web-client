@@ -1,8 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import StoryNavigation from "./StoryNavigation.jsx";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {updateDocument} from "../firebase/firebase.js";
-import RootNavigation from "./RootNavigation.jsx";
 
 
 export default function EditCharacter(){
@@ -87,8 +86,7 @@ export default function EditCharacter(){
 
     return(
         <>
-            <RootNavigation />
-            <StoryNavigation storyName={storyName}/>
+            <StoryFooterNavigation storyName={storyName}/>
 
             <div className='TextContainer'>
                 <p>

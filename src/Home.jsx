@@ -1,12 +1,10 @@
 import "../src/assets/styles/Home.css"
 import {Link} from "react-router-dom";
 import Footer from "./components/Footer.jsx";
-import HomeNavigation from "./components/HomeNavigation.jsx";
 
 export default function Home(){
     return (
         <>
-            <HomeNavigation />
             <div className="landing">
                 <header className="landing-header">
                     <h1>All Your Stories, Anywhere, Anytime</h1>

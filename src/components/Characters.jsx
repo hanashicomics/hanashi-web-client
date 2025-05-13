@@ -1,8 +1,7 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Characters.css'
-import StoryNavigation from "./StoryNavigation.jsx";
-import RootNavigation from "./RootNavigation.jsx";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 export default function Characters() {
     const {storyName} = useParams();
     const[characters, setCharacters] = useState([]);
@@ -20,8 +19,7 @@ export default function Characters() {
     },[])
     return (
         <>
-            <RootNavigation />
-            <StoryNavigation storyName={storyName}/>
+            <StoryFooterNavigation storyName={storyName}/>
 
             <div className="createCharacterHeader">
                 <h1>Characters</h1>

@@ -1,8 +1,7 @@
 import {Link, useParams} from "react-router-dom";
-import StoryNavigation from './StoryNavigation.jsx';
+import StoryFooterNavigation from './StoryFooterNavigation.jsx';
 import {useEffect, useState} from "react";
 import "../assets/styles/App.css"
-import RootNavigation from "./RootNavigation.jsx";
 
 export default function Locations(){
     const {storyName} = useParams();
@@ -24,8 +23,7 @@ export default function Locations(){
 
     return(
         <>
-            <RootNavigation />
-            <StoryNavigation storyName={storyName}/>
+            <StoryFooterNavigation storyName={storyName}/>
 
             <h1>Locations</h1>
 

@@ -2,7 +2,6 @@ import {useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
 import {saveStoryToFirestore} from "../firebase/firebase.js";
-import RootNavigation from "./RootNavigation.jsx";
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -83,7 +82,6 @@ export default function CreateStory() {
 
     return(
         <>
-            <RootNavigation />
             <h1>Create Story</h1>
             <div className='container'>
                 <div className='imageContainer'>

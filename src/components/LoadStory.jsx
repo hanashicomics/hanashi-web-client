@@ -1,8 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import StoryNavigation from "./StoryNavigation.jsx";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {saveStoryToFirestore} from "../firebase/firebase.js";
-import RootNavigation from "./RootNavigation.jsx";
 
 
 export default function LoadStory(){
@@ -108,7 +107,6 @@ export default function LoadStory(){
 
     return (
         <>
-            <RootNavigation />
             <h1>Load Story from JSON</h1>
 
             <div className='container'>
