@@ -20,7 +20,7 @@ export default function Profile() {
     const user={
         name: sessionStorage.getItem("email") || "Hanashi User",
         email: sessionStorage.getItem("email") ||"user@example.com",
-        avatar: "https://commons.wikimedia.org/wiki/File:Profile_avatar_placeholder_large.png" };
+        avatar: "public/pfp.jpg" };
     return (
         <>
             <div className="profile-container">
