@@ -4,7 +4,6 @@ import Stories from "./components/Stories.jsx";
 import CreateStory from "./components/CreateStory.jsx";
 import Settings from './components/Settings.jsx'
 import StoryInfo from './components/StoryInfo.jsx'
-import Timeline from './components/Timeline.jsx'
 import Arcs from './components/Arcs.jsx'
 import Characters from './components/Characters.jsx'
 import Home from './Home.jsx'
@@ -51,7 +50,6 @@ function App() {
                       <Route path="/settings" element={<Settings />} />
 
                       <Route path="/:storyName/info" element={<StoryInfo />} />
-                      <Route path="/:storyName/timeline" element={<Timeline />} />
 
                       <Route path="/:storyName/arcs" element={<Arcs />} />
                       <Route path="/:storyName/createarc" element={<CreateArc />} />

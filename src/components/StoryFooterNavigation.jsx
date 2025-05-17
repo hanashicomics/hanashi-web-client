@@ -1,7 +1,7 @@
 import '../assets/styles/Navigation.css'
 import {Link} from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle, faClock, faStream, faUserFriends, faMapMarkerAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faStream, faUserFriends, faMapMarkerAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
 
 export default function StoryFooterNavigation({storyName}){
     return(
@@ -10,11 +10,6 @@ export default function StoryFooterNavigation({storyName}){
                 <li>
                     <Link to={`/${storyName}/info`} className={"iconlink"}>
                         <FontAwesomeIcon icon={faInfoCircle} /> Info
-                    </Link>
-                </li>
-                <li>
-                    <Link to={`/${storyName}/timeline`} className={"iconlink"}>
-                        <FontAwesomeIcon icon={faClock} /> Timeline
                     </Link>
                 </li>
                 <li>
