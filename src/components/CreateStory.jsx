@@ -2,7 +2,7 @@ import {useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
 import {saveStoryToFirestore} from "../firebase/firebase.js";
-import {addStory} from "../lib/db.js";
+import {addStory, getSingleUserFromIDB} from "../lib/db.js";
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -45,7 +45,9 @@ export default function CreateStory() {
     }
 
     const saveStory =  async ()=>{
-        if(sessionStorage.getItem("userid") === null){
+        const userStuff = await getSingleUserFromIDB();
+        const uid = userStuff.uid;
+        if(uid === null){
             alert("Please login to create a story.");
         }
         else{
@@ -61,7 +63,7 @@ export default function CreateStory() {
                     characters: [],
                     arcs: [],
                     locations:[],
-                    userid: sessionStorage.getItem("userid")
+                    userid: uid
                 }
 
                 const storyJson = JSON.stringify(story);

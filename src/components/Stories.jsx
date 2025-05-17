@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
 import {deleteDocument, getDocumentsByField} from "../firebase/firebase.js";
-import {getAllStories, getSingleUserFromIDB} from "../lib/db.js";
+import {deleteStory, getAllStories, getSingleUserFromIDB} from "../lib/db.js";
 
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
@@ -63,6 +63,18 @@ export default function Stories(){
         }
     }
 
+    const handleIdbDelete = async (key,title)=>{
+
+        if (confirm("Are you sure you want to delete this story?")) {
+            await deleteStory(key);
+            alert("Story deleted from fb successfully.");
+            const updatedArr = storyArr.filter(story => story.title !== title);
+            setStoryArr(updatedArr);
+        } else {
+            console.log("Deletion cancelled");
+        }
+    }
+
     return (
         <>
             <div className="createStoryLine">
@@ -85,8 +97,8 @@ export default function Stories(){
                                 <button
                                     className="delete-btn"
                                     onClick={async (e) => {
-                                        e.preventDefault(); // prevent navigation when clicking delete
-                                        await handleDelete(story.id,story.title); // replace with your actual delete logic
+                                        e.preventDefault();
+                                        await handleIdbDelete(story.id,story.title);
                                     }}
                                 >
                                     Delete
