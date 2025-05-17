@@ -2,6 +2,7 @@ import {useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
 import {saveStoryToFirestore} from "../firebase/firebase.js";
+import {addStory} from "../lib/db.js";
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -64,10 +65,11 @@ export default function CreateStory() {
                 }
 
                 const storyJson = JSON.stringify(story);
-                alert('Story Saved Successffully.');
-                await saveStoryToFb(story);
-                alert('Story Saved to FB Successffully.');
-                sessionStorage.setItem(story.title, storyJson);
+                //alert('Story Saved Successffully.');
+                await addStory(story);
+                //await saveStoryToFb(story);
+                alert('Story Saved to idb Successffully.');
+                //sessionStorage.setItem(story.title, storyJson);
 
                 setTitle('');
                 setGenre('');

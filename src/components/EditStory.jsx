@@ -3,22 +3,28 @@ import '../assets/styles/CreateStory.css';
 import {useNavigate, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx'
 import {updateDocument} from "../firebase/firebase.js";
+import {getStory, getStoryByTitle, updateStory} from "../lib/db.js";
 
 export default function EditStory() {
     const {storyName} = useParams();
     const navigate = useNavigate();
-
+    const [story, setStory] = useState({});
     const[title, setTitle] = useState('');
     const[plot, setPlot] = useState('');
     const[genre, setGenre] = useState('');
     const[cover, setCover] = useState('');
 
     useEffect(() => {
-        const storyInfo = JSON.parse(sessionStorage.getItem(storyName));
-        setTitle(storyInfo.title);
-        setGenre(storyInfo.genre);
-        setPlot(storyInfo.plot);
-        setCover(storyInfo.cover);
+        const getTheStory = async (storyName) => {
+            setStory(await getStoryByTitle(storyName));
+            const storyInfo = await getStoryByTitle(storyName);
+            setTitle(storyInfo.title);
+            setGenre(storyInfo.genre);
+            setPlot(storyInfo.plot);
+            setCover(storyInfo.cover);
+        }
+        getTheStory(storyName);
+
     }, []);
 
     const onTitleChange = (e) => {
@@ -33,7 +39,8 @@ export default function EditStory() {
         setGenre(e.target.value);
     }
 
-    const genreList = ['','Shonen', 'Romance', 'Comedy','Slice of life', 'Horror', 'Thriller','Fantasy', 'Isekai']
+    const
+        genreList = ['','Shonen', 'Romance', 'Comedy','Slice of life', 'Horror', 'Thriller','Fantasy', 'Isekai']
 
     const onCoverChange = (e) => {
         const file = e.target.files[0];
@@ -55,19 +62,21 @@ export default function EditStory() {
             alert('Please complete all story details.');
         }
         else{
-            const story = {
+            const updatedStory = {
+                ...story,
                 title: title,
                 plot: plot,
                 genre: genre,
                 cover: cover,
             }
 
-            const storyJson = JSON.stringify(story);
+            //const storyJson = JSON.stringify(story);
+            await updateStory(updatedStory)
             alert('Story Saved Successffully.');
 
-            sessionStorage.setItem(story.title, storyJson);
-            await updateDocument("stories",story.id,story);
-            sessionStorage.removeItem(storyName);
+            //sessionStorage.setItem(story.title, storyJson);
+            //await updateDocument("stories",story.id,story);
+            //sessionStorage.removeItem(storyName);
             navigate('/stories');
         }
     }

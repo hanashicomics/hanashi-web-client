@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
 import {deleteDocument, getDocumentsByField} from "../firebase/firebase.js";
+import {getAllStories} from "../lib/db.js";
 
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
@@ -17,19 +18,25 @@ export default function Stories(){
         console.log("stopries loaded");
     }
 
+    const handleIDBStories = async () => {
+        const stories = await getAllStories();
+        setStoryArr(stories);
+    }
+
     useEffect(() => {
         const getStories = async () => {
-            await handlefbStories(); // Load and store stories from Firebase into sessionStorage
+            // await handlefbStories(); // Load and store stories from Firebase into sessionStorage
+            //
+            // // Retrieve stories from sessionStorage
+            // const stories = [];
+            // Object.keys(sessionStorage).forEach((key) => {
+            //     if (key === "userid" || key === "email") return;
+            //     const storyItem = sessionStorage.getItem(key);
+            //     stories.push(JSON.parse(storyItem)); // Parse JSON string into an object
+            // });
 
-            // Retrieve stories from sessionStorage
-            const stories = [];
-            Object.keys(sessionStorage).forEach((key) => {
-                if (key === "userid" || key === "email") return;
-                const storyItem = sessionStorage.getItem(key);
-                stories.push(JSON.parse(storyItem)); // Parse JSON string into an object
-            });
-
-            setStoryArr(stories); // Update the state
+            //setStoryArr(stories); // Update the state
+            await handleIDBStories();
         };
 
         getStories();
