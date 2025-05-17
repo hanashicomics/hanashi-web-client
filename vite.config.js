@@ -35,8 +35,14 @@ export default defineConfig({
             "type": "image/png"
           },
           {
-            "src": "pwa-1024x1024.png",
-            "sizes": "1024x1024",
+            "src": "pwa-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+          },
+          {
+            "src": "pwa-512x512.png",
+            "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
           }
