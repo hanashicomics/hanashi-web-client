@@ -1,18 +1,28 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Navigate} from 'react-router-dom';
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {saveStoryToFirestore, updateDocument} from "../firebase/firebase.js";
+import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 export default function CreateCharacter(){
     const {storyName} = useParams();
-
+    const[story, setStory] = useState({});
     const[name, setName] = useState("");
     const[age,setAge] = useState(0);
     const[description, setDescription] = useState("");
     const[abilities,setAbilities] = useState("");
     const[cover,setCover] = useState("");
     const navigate = useNavigate();
+
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        setStory(storyInfo);
+    };
+
+    useEffect(() => {
+        getTheStory(storyName);
+    },[])
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -52,13 +62,16 @@ export default function CreateCharacter(){
             cover: cover
         }
 
-        const story = sessionStorage.getItem(storyName);
-        const jsonStory = JSON.parse(story);
-        jsonStory.characters.push(newCharacter);
-        sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        //const story = sessionStorage.getItem(storyName);
+        //const jsonStory = JSON.parse(story);
+        //jsonStory.characters.push(newCharacter);
+        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
 
-        await updateDocument("stories",jsonStory.id,jsonStory);
+        //await updateDocument("stories",jsonStory.id,jsonStory);
 
+         story.characters.push(newCharacter);
+         await updateStory(story);
+         alert('Character Saved Successfully.')
         navigate(`/${storyName}/characters`)
 
     }

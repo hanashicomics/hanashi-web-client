@@ -2,18 +2,22 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Characters.css'
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {getStoryByTitle} from "../lib/db.js";
 export default function Characters() {
     const {storyName} = useParams();
     const[characters, setCharacters] = useState([]);
 
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        const chars = storyInfo.characters;
+        setCharacters(chars);
+    };
+
     useEffect(() => {
-        const storyData = sessionStorage.getItem(storyName);
-        if (storyData) {
-            const storyJson = JSON.parse(storyData);
-            if(storyJson.characters)
-            setCharacters(storyJson.characters);
-        }
-        else{
+        //const storyData = sessionStorage.getItem(storyName);
+        getTheStory(storyName);
+
+        if(characters.length < 1){
             alert('Could not find character data.');
         }
     },[])

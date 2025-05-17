@@ -2,28 +2,33 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {updateDocument} from "../firebase/firebase.js";
+import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 
 export default function EditCharacter(){
     const {characterName} = useParams();
     const {storyName} = useParams();
-
+    const[story, setStory] = useState({});
     const[name, setName] = useState("");
     const[age,setAge] = useState(0);
     const[description, setDescription] = useState("");
     const[abilities,setAbilities] = useState("");
     const[cover,setCover] = useState("");
     const navigate = useNavigate();
+    const [arrCharacters, setArrCharacters] = useState([]);
 
-    const storyObj = JSON.parse(sessionStorage.getItem(storyName));
-    const arrCharacters = storyObj.characters;
+    //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
+    //const arrCharacters = storyObj.characters;
 
-    useEffect(() => {
+    const getTheStory = async (storyName) => {
+        const fetchedStory = await getStoryByTitle(storyName);
+        setStory(fetchedStory);
+        setArrCharacters(fetchedStory.characters);
+
         let foundChar;
-
-        for(let i = 0; i<arrCharacters.length; i++){
-            if(arrCharacters[i].name === characterName){
-                foundChar = arrCharacters[i];
+        for (let i = 0; i < fetchedStory.characters.length; i++) {
+            if (fetchedStory.characters[i].name === characterName) {
+                foundChar = fetchedStory.characters[i];
                 setName(foundChar.name);
                 setAge(foundChar.age);
                 setDescription(foundChar.description);
@@ -32,6 +37,11 @@ export default function EditCharacter(){
                 return;
             }
         }
+    };
+
+
+    useEffect(() => {
+        getTheStory(storyName);
     }, []);
 
     const onNameChange = (e) => {
@@ -75,9 +85,12 @@ export default function EditCharacter(){
         for(let i = 0; i<arrCharacters.length; i++){
             if(arrCharacters[i].name === characterName) {
                 arrCharacters[i] = newCharacter;
-                sessionStorage.setItem(storyName, JSON.stringify(storyObj));
+                //sessionStorage.setItem(storyName, JSON.stringify(storyObj));
+               // await updateDocument("stories",storyObj.id,storyObj);
 
-                await updateDocument("stories",storyObj.id,storyObj);
+                arrCharacters[i] = newCharacter;
+                story.characters = arrCharacters;
+                await updateStory(story)
                 alert('Character Saved Successfully.');
                 navigate(`/${storyName}/characters`);
             }
