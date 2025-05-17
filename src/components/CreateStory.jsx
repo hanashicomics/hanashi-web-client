@@ -59,7 +59,6 @@ export default function CreateStory() {
                     cover: cover,
                     characters: [],
                     arcs: [],
-                    timeline:[],
                     locations:[],
                     userid: sessionStorage.getItem("userid")
                 }

@@ -1,6 +1,5 @@
 import './assets/styles/App.css'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import RootNavigation from "./components/RootNavigation.jsx";
 import Stories from "./components/Stories.jsx";
 import CreateStory from "./components/CreateStory.jsx";
 import Settings from './components/Settings.jsx'
