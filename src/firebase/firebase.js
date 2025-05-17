@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc,deleteDoc} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
+import {saveUserToIDB} from "../lib/db.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -53,8 +54,18 @@ export async function loginUser(email, password) {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            sessionStorage.setItem('userid',user.uid);
-            sessionStorage.setItem('email',user.email);
+            console.log(user)
+            // sessionStorage.setItem('userid',user.uid);
+            // sessionStorage.setItem('email',user.email);
+            saveUserToIDB({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                isAnonymous: user.isAnonymous,
+                createdAt: user.metadata.creationTime,
+                lastLogin: user.metadata.lastSignInTime,
+            });
             console.log("Login successful:", user.email);
         })
         .catch((error) => {

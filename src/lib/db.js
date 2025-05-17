@@ -1,9 +1,12 @@
 import { openDB } from 'idb'
 
-export const dbPromise = openDB('hanashi-db', 1, {
+export const dbPromise = openDB('hanashi-db', 2, {
     upgrade(db) {
         if (!db.objectStoreNames.contains('stories')) {
-            db.createObjectStore('stories', { keyPath: 'id', autoIncrement: true})
+            db.createObjectStore('stories', { keyPath: 'id', autoIncrement: true});
+        }
+        if (!db.objectStoreNames.contains('user')) {
+            db.createObjectStore('user', { keyPath: 'uid'});
         }
     },
 })
@@ -69,3 +72,39 @@ export async function getStoryByTitle(title) {
 
     return matchingStory || null;
 }
+
+export async function saveUserToIDB(user) {
+    try {
+        console.log('Saving user to IndexedDB...');
+        const db = await dbPromise;
+        console.log(user);
+        await db.put('user', user); // 'users' must match your store name
+        console.log('✅ User saved to IndexedDB');
+    } catch (error) {
+        console.error('❌ Failed to save user to IndexedDB:', error);
+    }
+}
+
+export async function getSingleUserFromIDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('hanashi-db', 2); // Use your DB name and version
+
+        request.onerror = () => reject('Failed to open DB');
+
+        request.onsuccess = (event) => {
+            const db = event.target.result;
+            const transaction = db.transaction(['user'], 'readonly');
+            const store = transaction.objectStore('user');
+
+            const getAllRequest = store.getAll();
+
+            getAllRequest.onsuccess = () => {
+                const allUsers = getAllRequest.result;
+                resolve(allUsers.length > 0 ? allUsers[0] : null);
+            };
+
+            getAllRequest.onerror = () => reject('Error fetching user');
+        };
+    });
+}
+
