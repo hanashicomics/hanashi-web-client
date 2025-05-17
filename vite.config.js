@@ -38,7 +38,28 @@ export default defineConfig({
             purpose: 'any maskable'
           }
         ]
-      }
-    })
-  ]
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'document',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-cache',
+            },
+          },
+          {
+            urlPattern: ({ request }) =>
+                request.destination === 'script' ||
+                request.destination === 'style' ||
+                request.destination === 'worker',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'asset-cache',
+            },
+          },
+        ],
+      },
+    }),
+  ],
 })
