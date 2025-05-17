@@ -108,3 +108,32 @@ export async function getSingleUserFromIDB() {
     });
 }
 
+export async function deleteAnyUserFromIDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('hanashi-db', 2);
+
+        request.onerror = () => reject('Failed to open DB');
+
+        request.onsuccess = (event) => {
+            const db = event.target.result;
+            const transaction = db.transaction(['user'], 'readwrite');
+            const store = transaction.objectStore('user');
+
+            const keysRequest = store.getAllKeys();
+
+            keysRequest.onsuccess = () => {
+                const keys = keysRequest.result;
+                if (keys.length === 0) {
+                    resolve('No user to delete.');
+                    return;
+                }
+
+                const deleteRequest = store.delete(keys[0]);
+                deleteRequest.onsuccess = () => resolve('User deleted.');
+                deleteRequest.onerror = () => reject('Failed to delete user.');
+            };
+
+            keysRequest.onerror = () => reject('Failed to fetch keys.');
+        };
+    });
+}

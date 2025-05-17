@@ -11,7 +11,6 @@ export default function Profile() {
 
     const handleLogout = async () => {
         if (confirm("Are you sure you want to logout?") == true) {
-            sessionStorage.clear();
             await logoutUser();
             window.location.reload();
             navigate("/profile")

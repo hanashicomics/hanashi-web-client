@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
 import {deleteDocument, getDocumentsByField} from "../firebase/firebase.js";
-import {getAllStories} from "../lib/db.js";
+import {getAllStories, getSingleUserFromIDB} from "../lib/db.js";
 
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
@@ -19,8 +19,17 @@ export default function Stories(){
     }
 
     const handleIDBStories = async () => {
+        const userStuff = await getSingleUserFromIDB();
+        const uid = userStuff.uid;
         const stories = await getAllStories();
-        setStoryArr(stories);
+        const newstories = [];
+        for(let i=0;i<stories.length;i++){
+            if(stories[i].userid === uid){
+                newstories.push(stories[i]);
+            }
+
+        }
+        setStoryArr(newstories);
     }
 
     useEffect(() => {

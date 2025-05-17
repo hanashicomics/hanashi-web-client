@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc,deleteDoc} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
-import {saveUserToIDB} from "../lib/db.js";
+import {deleteAnyUserFromIDB, saveUserToIDB} from "../lib/db.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -111,6 +111,7 @@ export const logoutUser = async () => {
     const auth = getAuth();
     try {
         await signOut(auth);
+        await deleteAnyUserFromIDB();
         console.log("User signed out successfully.");
     } catch (error) {
         console.error("Error signing out:", error);
