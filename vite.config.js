@@ -16,6 +16,7 @@ export default defineConfig({
       manifest: {
         "name": "Hanashi",
         "short_name": "Hanashi",
+        "id":"/",
         "description": "Storytelling platform",
         "start_url": "/",
         "display": "standalone",
