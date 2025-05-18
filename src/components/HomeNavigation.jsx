@@ -12,7 +12,7 @@ export default function RootNavigation(){
                 </div>
 
                 <div className="nav-right">
-                    <Link to={'/login'} className="navigation-link-goto">Go to Dashboard</Link>
+                    <Link to={'/profile'} className="navigation-link-goto">Go to Dashboard</Link>
                 </div>
             </div>
         </>
