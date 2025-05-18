@@ -53,6 +53,22 @@ export default defineConfig({
             "type": "image/png",
             "purpose": "any"
           }
+        ],
+        screenshots: [
+          {
+            src: 'screenshots/stories.png',
+            sizes: '235x479',
+            type: 'image/png',
+            label: 'Story screen',
+            platform: 'narrow'
+          },
+          {
+            src: 'screenshots/editstory.png',
+            sizes: '234x481',
+            type: 'image/png',
+            label: 'Edit story',
+            platform: 'narrow'
+          }
         ]
       },
       workbox: {
