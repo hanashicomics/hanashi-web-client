@@ -27,13 +27,7 @@ export default function StoryFooterNavigation({storyName}){
                         <FontAwesomeIcon icon={faMapMarkerAlt} /> Locations
                     </Link>
                 </li>
-                <li>
-                    <Link to={`/${storyName}/export`} className={"iconlink"}>
-                        <FontAwesomeIcon icon={faFileExport} /> Export
-                    </Link>
-                </li>
             </div>
-
         </>
     )
 }

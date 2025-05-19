@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import '../assets/styles/CreateStory.css';
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx'
 import {updateDocument} from "../firebase/firebase.js";
 import {getStory, getStoryByTitle, updateStory} from "../lib/db.js";
@@ -115,10 +115,15 @@ export default function EditStory() {
                         <input name="cover" type="file" onChange={onCoverChange}/>
                     </p>
                 </div>
+                <p>
+                    <button onClick={saveStory} className={"linkButton"}>Save Story</button>
+                </p>
+                <Link to={`/${storyName}/export`} className="linkButton">
+                    Export Story
+                </Link>
             </div>
-            <p>
-                <button onClick={saveStory}>Save Story</button>
-            </p>
+
+
         </>
     )
 }
