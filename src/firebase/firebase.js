@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore, collection, addDoc,doc,  query, where, getDocs,getDoc,setDoc,updateDoc,deleteDoc} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
-import {deleteAnyUserFromIDB, saveUserToIDB} from "../lib/db.js";
+import {deleteAnyUserFromIDB, getAllStories, getSingleUserFromIDB, saveUserToIDB} from "../lib/db.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -33,6 +33,23 @@ export async function saveStoryToFirestore(storyObject) {
         console.log("Story saved with ID: ", docRef.id);
     } catch (error) {
         console.error("Error adding story: ", error);
+    }
+}
+
+export async function saveStoryToFirestoreForPro(storyObject, storyId) {
+    if (!storyId && !storyObject.id) {
+        throw new Error("Story must have an ID to save uniquely.");
+    }
+
+    // Use storyId param if given, else fallback to storyObject.id
+    const idToUse = storyId || storyObject.id;
+
+    try {
+        // Save or update the story with the specific ID (no duplicates)
+        await setDoc(doc(db, "stories", idToUse.toString()), storyObject);
+        console.log("Story saved or updated with ID:", idToUse);
+    } catch (error) {
+        console.error("Error saving story:", error);
     }
 }
 
@@ -183,3 +200,47 @@ export async function getUserPlan(userId) {
         createdAt: userData.createdAt || null,
     };
 }
+
+export async function syncIDBToFirebase() {
+    const userStuff = await getSingleUserFromIDB();
+    const uid = userStuff.uid;
+
+    if(userStuff.plan === "pro"){
+        const idbObjects = await getAllStories();
+        if (!idbObjects || idbObjects.length === 0) return;
+
+
+        if (!userStuff) {
+            console.error('No user found in IDB');
+            return;
+        }
+
+        // Filter IndexedDB stories by current user's uid only
+        const userStories = idbObjects.filter(story => story.userid === uid);
+
+        // Get all Firestore stories for this user once
+        const firestoreStories = await getDocumentsByField("stories", "userid", uid);
+
+        // Create a map for quick lookup by story id
+        const firestoreStoryMap = {};
+        firestoreStories.forEach(story => {
+            firestoreStoryMap[story.id] = story;
+        });
+
+        for (const idbStory of userStories) {
+            const matchingFirestoreStory = firestoreStoryMap[idbStory.id];
+
+            if (matchingFirestoreStory) {
+                // Update existing Firestore story with IndexedDB data
+                await updateDocument("stories", matchingFirestoreStory.id.toString(), idbStory);
+                console.log(`Updated story with ID "${idbStory.id}" in Firestore.`);
+            } else {
+                // Save new story from IndexedDB to Firestore
+                await saveStoryToFirestoreForPro(idbStory,idbStory.id);
+                console.log(`Saved new story with ID "${idbStory.id}" to Firestore.`);
+            }
+        }
+    }
+}
+
+

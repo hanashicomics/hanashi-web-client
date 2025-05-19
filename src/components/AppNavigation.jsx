@@ -1,8 +1,26 @@
 import '../assets/styles/Navigation.css'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {getSingleUserFromIDB} from "../lib/db.js";
 
 export default function AppNavigation(){
-    const isLoggedIn = sessionStorage.getItem("userid");
+    const[userData, setUserData] = useState({});
+    const navigate = useNavigate();
+    const[isLoggedIn, setIsLoggedIn] = useState("");
+
+    async function getUserData() {
+        const userStuff = await getSingleUserFromIDB();
+        setUserData(userStuff);
+        setIsLoggedIn(userStuff.uid);
+    }
+
+    useEffect(()=>{
+        getUserData();
+        // if(userData.uid !== null){
+        //     navigate("/stories");
+        // }
+    },[])
+
     return(
         <>
             <div className="NavigationLinks">

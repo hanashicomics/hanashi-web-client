@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
-import {deleteDocument, getDocumentsByField} from "../firebase/firebase.js";
+import {deleteDocument, getDocumentsByField, syncIDBToFirebase} from "../firebase/firebase.js";
 import {deleteStory, getAllStories, getSingleUserFromIDB} from "../lib/db.js";
 
 export default function Stories(){
@@ -43,7 +43,7 @@ export default function Stories(){
             //     const storyItem = sessionStorage.getItem(key);
             //     stories.push(JSON.parse(storyItem)); // Parse JSON string into an object
             // });
-
+            await syncIDBToFirebase();
             //setStoryArr(stories); // Update the state
             await handleIDBStories();
         };

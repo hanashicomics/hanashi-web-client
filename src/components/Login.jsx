@@ -2,16 +2,24 @@ import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/App.css';
 import {loginUser} from "../firebase/firebase.js";
+import {getSingleUserFromIDB} from "../lib/db.js";
 
 export default function Login() {
     const[userEmail, setUserEmail] = useState("");
     const[userPassword, setUserPassword] = useState("");
     const navigate = useNavigate();
+    const[userData, setUserData] = useState({});
+
+    async function getUserData() {
+        const userStuff = await getSingleUserFromIDB();
+        setUserData(userStuff);
+    }
 
     useEffect(()=>{
-        if(sessionStorage.getItem("userid") && sessionStorage.getItem("email")){
-            navigate("/stories");
-        }
+        getUserData();
+        // if(userData.uid !== null){
+        //     navigate("/stories");
+        // }
     })
 
     const handleEmailChange = (e) => {
