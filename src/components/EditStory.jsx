@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx'
-import {updateDocument} from "../firebase/firebase.js";
+import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStory, getStoryByTitle, updateStory} from "../lib/db.js";
 
 export default function EditStory() {
@@ -77,6 +77,7 @@ export default function EditStory() {
             //sessionStorage.setItem(story.title, storyJson);
             //await updateDocument("stories",story.id,story);
             //sessionStorage.removeItem(storyName);
+            await syncIDBToFirebasePro();
             navigate('/stories');
         }
     }

@@ -1,7 +1,7 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Arcs.css';
-import {updateDocument} from "../firebase/firebase.js";
+import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
 
@@ -81,6 +81,7 @@ export default function EditArc(){
         const updatedStory = {...story, arcs: arcs};
         await updateStory(updatedStory);
         alert('Arc Edited Successfully.');
+        await syncIDBToFirebasePro();
         navigate(`/${storyName}/arcs`)
 
     }

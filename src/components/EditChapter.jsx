@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
-import {updateDocument} from "../firebase/firebase.js";
+import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import "../assets/styles/Chapters.css"
 
 export default function EditChapter(){
@@ -46,6 +46,7 @@ export default function EditChapter(){
         await updateDocument("stories",story.id,story);
 
        alert("Chapter saved");
+        await syncIDBToFirebasePro();
     };
 
     useEffect(() => {

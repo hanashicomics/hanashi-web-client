@@ -201,7 +201,7 @@ export async function getUserPlan(userId) {
     };
 }
 
-export async function syncIDBToFirebase() {
+export async function syncIDBToFirebasePro() {
     const userStuff = await getSingleUserFromIDB();
     const uid = userStuff.uid;
 

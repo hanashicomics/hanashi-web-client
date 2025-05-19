@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Navigate} from 'react-router-dom';
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
-import {saveStoryToFirestore, updateDocument} from "../firebase/firebase.js";
+import {saveStoryToFirestore, syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 export default function CreateCharacter(){
@@ -72,6 +72,7 @@ export default function CreateCharacter(){
          story.characters.push(newCharacter);
          await updateStory(story);
          alert('Character Saved Successfully.')
+        await syncIDBToFirebasePro();
         navigate(`/${storyName}/characters`)
 
     }

@@ -1,7 +1,7 @@
 import {useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
-import {saveStoryToFirestore} from "../firebase/firebase.js";
+import {saveStoryToFirestore, syncIDBToFirebasePro} from "../firebase/firebase.js";
 import {addStory, getSingleUserFromIDB} from "../lib/db.js";
 
 export default function CreateStory() {
@@ -72,7 +72,7 @@ export default function CreateStory() {
                 //await saveStoryToFb(story);
                 alert('Story Saved to idb Successffully.');
                 //sessionStorage.setItem(story.title, storyJson);
-
+                await syncIDBToFirebasePro();
                 setTitle('');
                 setGenre('');
                 setPlot('');

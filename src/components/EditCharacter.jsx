@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
-import {updateDocument} from "../firebase/firebase.js";
+import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 
@@ -92,6 +92,7 @@ export default function EditCharacter(){
                 story.characters = arrCharacters;
                 await updateStory(story)
                 alert('Character Saved Successfully.');
+                await syncIDBToFirebasePro();
                 navigate(`/${storyName}/characters`);
             }
         }

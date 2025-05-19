@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
-import {updateDocument} from "../firebase/firebase.js";
+import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 
@@ -63,6 +63,7 @@ export default function CreateLocation() {
         //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
         //await updateDocument("stories",jsonStory.id,jsonStory);
         alert('Location Saved Successfully.');
+        await syncIDBToFirebasePro();
         navigate(`/${storyName}/locations`)
 
     }
