@@ -1,11 +1,19 @@
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {useEffect, useState} from "react";
-import {updateDocument} from "../firebase/firebase.js";
+import {syncIDBToFirebasePro} from "../firebase/firebase.js";
+import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 export default function CreateChapter() {
     const { storyName, arcName } = useParams();
-
+    const[story, setStory] = useState({});
+    const[arcs, setArcs] = useState([]);
+    const navigate = useNavigate();
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        setStory(storyInfo);
+        setArcs(storyInfo.arcs);
+    };
     const [name, setName] = useState("");
     const [plot, setPlot] = useState("");
     const [script, setScript] = useState("");
@@ -22,14 +30,14 @@ export default function CreateChapter() {
         setScript(e.target.value);
     };
 
-    const story = JSON.parse(sessionStorage.getItem(storyName));
-    const arrArcs = story.arcs;
+    //const story = JSON.parse(sessionStorage.getItem(storyName));
+   // const arrArcs = story.arcs;
 
     const saveChapter = async () => {
         let foundArc;
-        for(let i = 0; i<arrArcs.length; i++){
-            if(arrArcs[i].name === arcName){
-                foundArc = arrArcs[i];
+        for(let i = 0; i<arcs.length; i++){
+            if(arcs[i].name === arcName){
+                foundArc = arcs[i];
                 break;
             }
         }
@@ -40,19 +48,21 @@ export default function CreateChapter() {
         };
 
         foundArc.chapters.push(chapter);
-
-        sessionStorage.setItem(storyName, JSON.stringify(story));
-        await updateDocument("stories",story.id,story);
-
+        const updatedStory = {...story, arcs: arcs};
+        //sessionStorage.setItem(storyName, JSON.stringify(story));
+        //await updateDocument("stories",story.id,story);
+        await updateStory(updatedStory);
         alert("Chapter saved successfully.");
+        await syncIDBToFirebasePro();
+        navigate(`/${storyName}/arcs`);
         setName("");
         setPlot("");
         setScript("");
     };
 
     useEffect(() => {
-
-    }, []);
+        getTheStory(storyName);
+    },[])
 
     return (
         <>
