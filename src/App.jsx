@@ -24,6 +24,8 @@ import Login from "./components/Login.jsx";
 import SignUp from "./components/SignUp.jsx";
 import AppLayout from "./app layout/AppLayout.jsx";
 import PublicLayout from "./public layout/PublicLayout.jsx";
+import Pricing from "./components/Pricing.jsx";
+import Upgrade from "./components/Upgrade.jsx";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<SignUp />} />
+                      <Route path="/pricing" element={<Pricing/>}/>
+                      <Route path="/upgrade" element={<Upgrade />} />
                   </Route>
 
                   {/* APP ROUTES (after login) */}
