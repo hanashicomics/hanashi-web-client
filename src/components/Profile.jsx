@@ -51,7 +51,8 @@ export default function Profile() {
                                     <h2 className="profile-name">{email}</h2>
                                     <p className="profile-email">{email}</p>
                                     <p className="profile-email">User Subscription: {plan}</p>
-                                    <p className="profile-email">Last Upgraded At: {new Date(upgradedAt.seconds * 1000).toLocaleDateString()}</p>
+                                    {/*<p className="profile-email">Last Upgraded At: {new Date(upgradedAt.seconds * 1000).toLocaleDateString()}</p>*/}
+                                    <p className="profile-email">Last Upgraded At: {upgradedAt}</p>
                                     <button className="profile-btn">Edit Profile</button>
                                     <br/>
                                     <button className={"profile-btn"} onClick={handleLogout}>Logout</button>

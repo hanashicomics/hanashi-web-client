@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getFirestore, collection, addDoc,doc,  query, where, getDocs,getDoc,setDoc,updateDoc,deleteDoc} from "firebase/firestore";
+import {getFirestore, collection, addDoc,doc,  query, where, getDocs,getDoc,setDoc,updateDoc,deleteDoc,Timestamp} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
 import {deleteAnyUserFromIDB, getAllStories, getSingleUserFromIDB, saveUserToIDB} from "../lib/db.js";
 
@@ -36,6 +36,20 @@ export async function saveStoryToFirestore(storyObject) {
     }
 }
 
+export async function saveUserPlanToFirestore(uid) {
+    try {
+        const docRef = await addDoc(collection(db, "users"), {
+            uid:uid,
+            plan: 'free',
+            upgradedAt: Timestamp.fromDate(new Date()),
+            createdAt:Timestamp.fromDate(new Date()),
+        });
+        console.log("Story saved with ID: ", docRef.id);
+    } catch (error) {
+        console.error("Error adding story: ", error);
+    }
+}
+
 export async function saveStoryToFirestoreForPro(storyObject, storyId) {
     if (!storyId && !storyObject.id) {
         throw new Error("Story must have an ID to save uniquely.");
@@ -58,6 +72,7 @@ export async function signUpUser(email, password) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log("User created:", user.uid);
+        await saveUserPlanToFirestore(user.uid);
         return user;
     } catch (error) {
         console.error("Error signing up:", error.code, error.message);
@@ -66,41 +81,31 @@ export async function signUpUser(email, password) {
 }
 
 export async function loginUser(email, password) {
-    const auth = getAuth();
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user)
-            // sessionStorage.setItem('userid',user.uid);
-            // sessionStorage.setItem('email',user.email);
-            //markUserAsPro(user.uid);
-            async function func(){
-                const userPlanInfo = await getUserPlan(user.uid);
+        const userPlanInfo = await getUserPlan(user.uid);
 
-                console.log("USER PLAN: "+ userPlanInfo);
-                await saveUserToIDB({
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL,
-                    isAnonymous: user.isAnonymous,
-                    createdAt: user.metadata.creationTime,
-                    lastLogin: user.metadata.lastSignInTime,
-                    plan: userPlanInfo.plan,
-                    upgradedAt: userPlanInfo.upgradedAt,
-                });
-                console.log("Login successful:", user.email);
-            }
-
-            func();
-
-        })
-        .catch((error) => {
-            console.error("Error logging in:", error.code, error.message);
-            alert("Login failed: " + error.message);
+        await saveUserToIDB({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            isAnonymous: user.isAnonymous,
+            createdAt: user.metadata.creationTime,
+            lastLogin: user.metadata.lastSignInTime,
+            plan: userPlanInfo?.plan || "free",
+            upgradedAt: userPlanInfo?.upgradedAt || null,
         });
+
+        console.log("Login successful:", user.email);
+    } catch (error) {
+        console.error("Error logging in:", error.code, error.message);
+        alert("Login failed: " + error.message);
+    }
 }
+
 
 export async function getDocumentsByField(collectionName, fieldName, value) {
     const db = getFirestore();
