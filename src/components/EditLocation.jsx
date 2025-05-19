@@ -2,6 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {updateDocument} from "../firebase/firebase.js";
+import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 
 export default function EditLocation(){
@@ -10,8 +11,21 @@ export default function EditLocation(){
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const[cover,setCover] = useState("");
+    const[locations, setLocations] = useState([]);
+    const[story,setStory] = useState({});
 
     const navigate = useNavigate();
+
+
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        setStory(storyInfo);
+        setLocations(storyInfo.locations);
+    };
+
+    useEffect(() => {
+        getTheStory(storyName);
+    },[])
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -36,14 +50,14 @@ export default function EditLocation(){
         }
     }
 
-    const storyObj = JSON.parse(sessionStorage.getItem(storyName));
-    const arrLocations = storyObj.locations;
+    //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
+    //const arrLocations = storyObj.locations;
 
     useEffect(() => {
         let foundLoc;
-        for(let i = 0; i<arrLocations.length; i++){
-            if(arrLocations[i].name === locationName){
-                foundLoc = arrLocations[i];
+        for(let i = 0; i<locations.length; i++){
+            if(locations[i].name === locationName){
+                foundLoc = locations[i];
                 setName(foundLoc.name);
                 setDescription(foundLoc.description);
                 setCover(foundLoc.cover);
@@ -58,15 +72,23 @@ export default function EditLocation(){
             description: description,
             cover: cover
         }
+        for(let i = 0; i<locations.length; i++){
+            if(locations[i].name === locationName){
+                locations[i] = newCharacter;
+                break;
+            }
+        }
+        const updatedStory = {...story, locations: locations};
+        await updateStory(updatedStory);
+        //const story = sessionStorage.getItem(storyName);
+        //const jsonStory = JSON.parse(story);
+        //jsonStory.characters.push(newCharacter);
+        //console.log(jsonStory);
+        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        //await updateDocument("stories",jsonStory.id,jsonStory);
 
-        const story = sessionStorage.getItem(storyName);
-        const jsonStory = JSON.parse(story);
-        jsonStory.characters.push(newCharacter);
-        console.log(jsonStory);
-        sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        await updateDocument("stories",jsonStory.id,jsonStory);
-        alert('Character Saved Successfully.');
-        navigate(`/${storyName}/characters`)
+        alert('Location Edited Successfully.');
+        navigate(`/${storyName}/locations`)
 
     }
 

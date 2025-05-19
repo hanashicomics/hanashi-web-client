@@ -1,7 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {updateDocument} from "../firebase/firebase.js";
+import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 
 export default function CreateLocation() {
@@ -9,8 +10,19 @@ export default function CreateLocation() {
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const[cover,setCover] = useState("");
-
+    const[story, setStory] = useState({});
+    const[locations,setLocations] = useState([]);
     const navigate = useNavigate();
+
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        setStory(storyInfo);
+        setLocations(storyInfo.locations);
+    };
+
+    useEffect(() => {
+        getTheStory(storyName);
+    },[])
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -42,11 +54,14 @@ export default function CreateLocation() {
             cover: cover
         }
 
-        const story = sessionStorage.getItem(storyName);
-        const jsonStory = JSON.parse(story);
-        jsonStory.locations.push(newLocation);
-        sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        await updateDocument("stories",jsonStory.id,jsonStory);
+        locations.push(newLocation);
+        const updatedStory = {...story, locations: locations};
+        updateStory(updatedStory);
+        //const story = sessionStorage.getItem(storyName);
+        //const jsonStory = JSON.parse(story);
+        //jsonStory.locations.push(newLocation);
+        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        //await updateDocument("stories",jsonStory.id,jsonStory);
         alert('Location Saved Successfully.');
         navigate(`/${storyName}/locations`)
 

@@ -2,23 +2,21 @@ import {Link, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx';
 import {useEffect, useState} from "react";
 import "../assets/styles/App.css"
+import {getStoryByTitle} from "../lib/db.js";
 
 export default function Locations(){
     const {storyName} = useParams();
     const[locations, setLocations] = useState([]);
+    const[story,setStory] = useState({});
+
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        setStory(storyInfo);
+        setLocations(storyInfo.locations);
+    }
 
     useEffect(() => {
-        const storyData = sessionStorage.getItem(storyName);
-        if (storyData) {
-            const storyJson = JSON.parse(storyData);
-
-            if(storyJson.locations){
-                setLocations(storyJson.locations);
-            }
-        }
-        else{
-            alert('Could not find location data.');
-        }
+        getTheStory(storyName);
     },[])
 
     return(
