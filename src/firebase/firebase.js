@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getFirestore, collection, addDoc,doc,  query, where, getDocs,updateDoc,deleteDoc} from "firebase/firestore";
+import {getFirestore, collection, addDoc,doc,  query, where, getDocs,getDoc,setDoc,updateDoc,deleteDoc} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
 import {deleteAnyUserFromIDB, saveUserToIDB} from "../lib/db.js";
 
@@ -57,16 +57,27 @@ export async function loginUser(email, password) {
             console.log(user)
             // sessionStorage.setItem('userid',user.uid);
             // sessionStorage.setItem('email',user.email);
-            saveUserToIDB({
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                photoURL: user.photoURL,
-                isAnonymous: user.isAnonymous,
-                createdAt: user.metadata.creationTime,
-                lastLogin: user.metadata.lastSignInTime,
-            });
-            console.log("Login successful:", user.email);
+            //markUserAsPro(user.uid);
+            async function func(){
+                const userPlanInfo = await getUserPlan(user.uid);
+
+                console.log("USER PLAN: "+ userPlanInfo);
+                await saveUserToIDB({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    isAnonymous: user.isAnonymous,
+                    createdAt: user.metadata.creationTime,
+                    lastLogin: user.metadata.lastSignInTime,
+                    plan: userPlanInfo.plan,
+                    upgradedAt: userPlanInfo.upgradedAt,
+                });
+                console.log("Login successful:", user.email);
+            }
+
+            func();
+
         })
         .catch((error) => {
             console.error("Error logging in:", error.code, error.message);
@@ -128,4 +139,47 @@ export async function deleteDocument(collectionName, docId) {
     } catch (error) {
         console.error("Error deleted document:", error);
     }
+}
+
+export async function markUserAsPro(userId) {
+    if (!userId) throw new Error('No user ID provided');
+
+    const userRef = doc(db, 'users', userId);
+    const userSnap = await getDoc(userRef);
+
+    const now = new Date();
+
+    if (!userSnap.exists()) {
+        // If the user doc doesn't exist, create it with default + Pro info
+        await setDoc(userRef, {
+            uid:userId,
+            plan: 'pro',
+            createdAt: now,
+            upgradedAt: now,
+        });
+    } else {
+        // If the user exists, just update the plan
+        await updateDoc(userRef, {
+            plan: 'pro',
+            upgradedAt: now,
+        });
+    }
+}
+
+export async function getUserPlan(userId) {
+    if (!userId) throw new Error('No user ID provided');
+
+    const userRef = doc(db, 'users', userId);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+        return null; // No user doc found
+    }
+
+    const userData = userSnap.data();
+    return {
+        plan: userData.plan || 'free',
+        upgradedAt: userData.upgradedAt || null,
+        createdAt: userData.createdAt || null,
+    };
 }

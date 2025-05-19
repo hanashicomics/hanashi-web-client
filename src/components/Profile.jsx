@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 export default function Profile() {
     const navigate = useNavigate();
     const[email, setEmail] = useState("");
+    const[plan, setPlan] = useState("");
+    const[upgradedAt, setUpgradedAt] = useState("");
 
     const handleLogout = async () => {
         if (confirm("Are you sure you want to logout?") == true) {
@@ -21,7 +23,10 @@ export default function Profile() {
     async function getUserData() {
         const userStuff = await getSingleUserFromIDB();
         setEmail(userStuff.email);
+        setPlan(userStuff.plan);
+        setUpgradedAt(userStuff.upgradedAt);
     }
+
     useEffect(() => {
         getUserData();
     },[])
@@ -45,6 +50,8 @@ export default function Profile() {
                                     />
                                     <h2 className="profile-name">{email}</h2>
                                     <p className="profile-email">{email}</p>
+                                    <p className="profile-email">User Subscription: {plan}</p>
+                                    <p className="profile-email">Last Upgraded At: {new Date(upgradedAt.seconds * 1000).toLocaleDateString()}</p>
                                     <button className="profile-btn">Edit Profile</button>
                                     <br/>
                                     <button className={"profile-btn"} onClick={handleLogout}>Logout</button>
