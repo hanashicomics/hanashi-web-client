@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import '../assets/styles/Arcs.css';
 import {updateDocument} from "../firebase/firebase.js";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import {getStoryByTitle, updateStory} from "../lib/db.js";
 
 export default function EditArc(){
     const {storyName} =useParams();
@@ -11,8 +12,29 @@ export default function EditArc(){
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const navigate = useNavigate();
-
+    const[story,setStory] = useState({});
     const[chapters, setChapters] = useState([]);
+    const[arcs, setArcs] = useState([]);
+
+    const getTheStory = async (storyName) => {
+        const storyInfo = await getStoryByTitle(storyName);
+        setStory(storyInfo);
+        setArcs(storyInfo.arcs);
+
+        for(let i = 0; i<storyInfo.arcs.length; i++){
+            if(storyInfo.arcs[i].name === arcName){
+                let foundArc = storyInfo.arcs[i];
+                setChapters(foundArc.chapters);
+                setName(foundArc.name);
+                setDescription(foundArc.description);
+                return;
+            }
+        }
+    };
+
+    useEffect(() => {
+        getTheStory(storyName);
+    },[])
 
     const onNameChange = (e) => {
         setName(e.target.value);
@@ -22,20 +44,20 @@ export default function EditArc(){
         setDescription(e.target.value);
     }
 
-    const storyObj = JSON.parse(sessionStorage.getItem(storyName));
-    const arrArcs = storyObj.arcs;
+    //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
+    //const arrArcs = storyObj.arcs;
 
-    useEffect(() => {
-        for(let i = 0; i<arrArcs.length; i++){
-            if(arrArcs[i].name === arcName){
-                let foundArc = arrArcs[i];
-                setChapters(foundArc.chapters);
-                setName(foundArc.name);
-                setDescription(foundArc.description);
-                return;
-            }
-        }
-    }, []);
+    // useEffect(() => {
+    //     for(let i = 0; i<arrArcs.length; i++){
+    //         if(arrArcs[i].name === arcName){
+    //             let foundArc = arrArcs[i];
+    //             setChapters(foundArc.chapters);
+    //             setName(foundArc.name);
+    //             setDescription(foundArc.description);
+    //             return;
+    //         }
+    //     }
+    // }, []);
 
     const saveArc =async  ()=>{
         const newArc = {
@@ -44,14 +66,21 @@ export default function EditArc(){
             chapters: []
         }
 
-        const story = sessionStorage.getItem(storyName);
-        const jsonStory = JSON.parse(story);
-        jsonStory.arcs.push(newArc);
+        //const story = sessionStorage.getItem(storyName);
+        //const jsonStory = JSON.parse(story);
+        //jsonStory.arcs.push(newArc);
 
-        sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        await updateDocument("stories",jsonStory.id,jsonStory);
-
-        alert('Arc Saved Successfully.');
+        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
+        //await updateDocument("stories",jsonStory.id,jsonStory);
+        for(let i = 0; i<arcs.length; i++){
+            if(arcs[i].name === arcName){
+                arcs[i] = newArc;
+                break;
+            }
+        }
+        const updatedStory = {...story, arcs: arcs};
+        await updateStory(updatedStory);
+        alert('Arc Edited Successfully.');
         navigate(`/${storyName}/arcs`)
 
     }
