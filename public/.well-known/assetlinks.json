@@ -1,9 +1,8 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "web",
-      "site": "https://hanashi.site"
-    }
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "site.hanashi.twa",
+    "sha256_cert_fingerprints": ["E0:56:16:E5:C4:B0:B1:41:C7:6F:E0:96:F1:A0:F5:0C:49:79:F4:9E:89:D0:20:A4:D1:37:9B:DF:D7:53:D5:DE"]
   }
-]
+}]
