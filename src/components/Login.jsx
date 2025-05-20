@@ -17,9 +17,6 @@ export default function Login() {
 
     useEffect(()=>{
         getUserData();
-        // if(userData.uid !== null){
-        //     navigate("/stories");
-        // }
     })
 
     const handleEmailChange = (e) => {

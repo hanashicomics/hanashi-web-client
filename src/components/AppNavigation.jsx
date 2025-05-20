@@ -33,7 +33,6 @@ export default function AppNavigation(){
                 <div className="nav-right">
                     <Link to="/stories" className="Links">Stories</Link>
                     <Link to="/profile" className="Links">Profile</Link>
-                    <Link to="/settings" className="Links">Settings</Link>
                 </div>
             </div>
 

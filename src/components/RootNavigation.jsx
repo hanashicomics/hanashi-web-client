@@ -13,7 +13,6 @@ export default function RootNavigation(){
 
                 <Link to={'/stories'} className={"Links"}>Stories</Link>
                 <Link to={'/profile'} className={"Links"}>Profile</Link>
-                <Link to={'/settings'} className={"Links"}>Settings</Link>
            </div>
         </>
     )

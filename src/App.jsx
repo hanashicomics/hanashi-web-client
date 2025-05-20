@@ -2,7 +2,6 @@ import './assets/styles/App.css'
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Stories from "./components/Stories.jsx";
 import CreateStory from "./components/CreateStory.jsx";
-import Settings from './components/Settings.jsx'
 import StoryInfo from './components/StoryInfo.jsx'
 import Arcs from './components/Arcs.jsx'
 import Characters from './components/Characters.jsx'
@@ -51,7 +50,6 @@ function App() {
                       <Route path="/:storyName/export" element={<ExportStory />} />
 
                       <Route path="/profile" element={<Profile />} />
-                      <Route path="/settings" element={<Settings />} />
 
                       <Route path="/:storyName/info" element={<StoryInfo />} />
 

@@ -24,7 +24,14 @@ export default function Profile() {
         const userStuff = await getSingleUserFromIDB();
         setEmail(userStuff.email);
         setPlan(userStuff.plan);
-        setUpgradedAt(userStuff.upgradedAt);
+
+        if (userStuff.upgradedAt && typeof userStuff.upgradedAt.toDate === 'function') {
+            const jsDate = userStuff.upgradedAt.toDate();
+            setUpgradedAt(jsDate.toLocaleDateString());
+        } else {
+            const fallbackDate = new Date(userStuff.upgradedAt);
+            setUpgradedAt(isNaN(fallbackDate) ? "Unknown" : fallbackDate.toLocaleString());
+        }
     }
 
     useEffect(() => {
@@ -32,9 +39,7 @@ export default function Profile() {
     },[])
 
     const user={
-        // name: sessionStorage.getItem("email") || "Hanashi User",
-        // email: sessionStorage.getItem("email") ||"user@example.com",
-        avatar: "public/pfp.jpg" };
+        avatar: "/pfp.jpg" };
     return (
         <>
             <div className="profile-container">
@@ -51,8 +56,8 @@ export default function Profile() {
                                     <h2 className="profile-name">{email}</h2>
                                     <p className="profile-email">{email}</p>
                                     <p className="profile-email">User Subscription: {plan}</p>
-                                    {/*<p className="profile-email">Last Upgraded At: {new Date(upgradedAt.seconds * 1000).toLocaleDateString()}</p>*/}
                                     <p className="profile-email">Last Upgraded At: {upgradedAt}</p>
+                                    {/*<p className="profile-email">Last Upgraded At: {upgradedAt}</p>*/}
                                     <button className="profile-btn">Edit Profile</button>
                                     <br/>
                                     <button className={"profile-btn"} onClick={handleLogout}>Logout</button>

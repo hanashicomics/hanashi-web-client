@@ -61,7 +61,6 @@ export async function saveStoryToFirestoreForPro(storyObject, storyId) {
     try {
         // Save or update the story with the specific ID (no duplicates)
         await setDoc(doc(db, "stories", idToUse.toString()), storyObject);
-        console.log("Story saved or updated with ID:", idToUse);
     } catch (error) {
         console.error("Error saving story:", error);
     }
@@ -71,7 +70,6 @@ export async function signUpUser(email, password) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        console.log("User created:", user.uid);
         await saveUserPlanToFirestore(user.uid);
         return user;
     } catch (error) {

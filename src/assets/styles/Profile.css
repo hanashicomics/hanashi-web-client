@@ -32,6 +32,8 @@
     color: #666;
     font-size: 0.95rem;
     margin-bottom: 1rem;
+    text-after-overflow: ellipsis;
+    text-wrap: auto;
 }
 
 .profile-btn {

@@ -116,7 +116,7 @@ export default function CreateCharacter(){
             </div>
 
             <p>
-                <button onClick={saveCharacter}>Save Story</button>
+                <button onClick={saveCharacter}>Save Character</button>
             </p>
         </>
     )
