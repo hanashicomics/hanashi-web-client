@@ -33,16 +33,19 @@ function App() {
 
               <Routes>
                   {/* PUBLIC ROUTES */}
-                  <Route element={<PublicLayout />}>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route path="/pricing" element={<Pricing/>}/>
-                      <Route path="/upgrade" element={<Upgrade />} />
-                  </Route>
+                  {/*<Route element={<PublicLayout />}>*/}
+                  {/*    <Route path="/" element={<Home />} />*/}
+                  {/*    <Route path="/login" element={<Login />} />*/}
+                  {/*    <Route path="/signup" element={<SignUp />} />*/}
+                  {/*    <Route path="/pricing" element={<Pricing/>}/>*/}
+                  {/*    <Route path="/upgrade" element={<Upgrade />} />*/}
+                  {/*</Route>*/}
 
                   {/* APP ROUTES (after login) */}
                   <Route element={<AppLayout />}>
+                      <Route path="/" element={<Stories />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/signup" element={<SignUp />} />
                       <Route path="/stories" element={<Stories />} />
                       <Route path="/createstory" element={<CreateStory />} />
                       <Route path="/loadstory" element={<LoadStory />} />
