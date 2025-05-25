@@ -36,17 +36,19 @@ export async function saveStoryToFirestore(storyObject) {
     }
 }
 
-export async function saveUserPlanToFirestore(uid) {
+export async function saveUserPlanToFirestore(uid,username) {
     try {
-        const docRef = await addDoc(collection(db, "users"), {
-            uid:uid,
+        const docRef = doc(db, "users", uid); // create a document reference with uid as the ID
+        await setDoc(docRef, {
+            uid: uid,
+            username: username,
             plan: 'free',
             upgradedAt: Timestamp.fromDate(new Date()),
-            createdAt:Timestamp.fromDate(new Date()),
+            createdAt: Timestamp.fromDate(new Date()),
         });
-        // console.log("Story saved with ID: ", docRef.id);
+        // console.log("User plan saved successfully.");
     } catch (error) {
-        console.error("Error adding story: ", error);
+        console.error("Error saving user plan: ", error);
     }
 }
 
@@ -66,11 +68,11 @@ export async function saveStoryToFirestoreForPro(storyObject, storyId) {
     }
 }
 
-export async function signUpUser(email, password) {
+export async function signUpUser(email,userName, password) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        await saveUserPlanToFirestore(user.uid);
+        await saveUserPlanToFirestore(user.uid,userName);
         return user;
     } catch (error) {
         console.error("Error signing up:", error.code, error.message);
@@ -93,11 +95,12 @@ export async function loginUser(email, password) {
             isAnonymous: user.isAnonymous,
             createdAt: user.metadata.creationTime,
             lastLogin: user.metadata.lastSignInTime,
-            plan: userPlanInfo?.plan || "free",
-            upgradedAt: userPlanInfo?.upgradedAt || null,
+            plan: userPlanInfo.plan,
+            username: userPlanInfo.username,
+            upgradedAt: userPlanInfo.upgradedAt,
         });
 
-        // console.log("Login successful:", user.email);
+         console.log("Login successful:", user.email);
     } catch (error) {
         console.error("Error logging in:", error.code, error.message);
         alert("Login failed: " + error.message);
@@ -198,9 +201,10 @@ export async function getUserPlan(userId) {
 
     const userData = userSnap.data();
     return {
-        plan: userData.plan || 'free',
-        upgradedAt: userData.upgradedAt || null,
-        createdAt: userData.createdAt || null,
+        plan: userData.plan,
+        username: userData.username,
+        upgradedAt: userData.upgradedAt,
+        createdAt: userData.createdAt,
     };
 }
 

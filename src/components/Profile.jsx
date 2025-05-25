@@ -11,6 +11,7 @@ export default function Profile() {
     const[plan, setPlan] = useState("");
     const[upgradedAt, setUpgradedAt] = useState("");
 
+
     const handleLogout = async () => {
         if (confirm("Are you sure you want to logout?") == true) {
             await logoutUser();
@@ -20,18 +21,19 @@ export default function Profile() {
             console.log("logout cancelled")
         }
     }
+
+    const formatUpgradedAt = (timestamp) => {
+        if (!timestamp || !timestamp.seconds) return "";
+
+        const ms = timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1e6);
+        return new Date(ms).toLocaleString();
+    };
+
     async function getUserData() {
         const userStuff = await getSingleUserFromIDB();
         setEmail(userStuff.email);
         setPlan(userStuff.plan);
-
-        if (userStuff.upgradedAt && typeof userStuff.upgradedAt.toDate === 'function') {
-            const jsDate = userStuff.upgradedAt.toDate();
-            setUpgradedAt(jsDate.toLocaleDateString());
-        } else {
-            const fallbackDate = new Date(userStuff.upgradedAt);
-            setUpgradedAt(isNaN(fallbackDate) ? "Unknown" : fallbackDate.toLocaleString());
-        }
+        setUpgradedAt(formatUpgradedAt(userStuff.upgradedAt));
     }
 
     useEffect(() => {
@@ -56,7 +58,7 @@ export default function Profile() {
                                     <h2 className="profile-name">{email}</h2>
                                     <p className="profile-email">{email}</p>
                                     <p className="profile-email">User Subscription: {plan}</p>
-                                    <p className="profile-email">Last Upgraded At: {upgradedAt}</p>
+                                    {plan === "pro" ? <p className="profile-email">Last Upgraded At: {upgradedAt}</p>:""}
                                     {/*<p className="profile-email">Last Upgraded At: {upgradedAt}</p>*/}
                                     <button className="profile-btn">Edit Profile</button>
                                     <br/>
