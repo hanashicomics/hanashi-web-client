@@ -7,16 +7,16 @@ import {deleteStory, getAllStories, getSingleUserFromIDB} from "../lib/db.js";
 export default function Stories(){
     const[storyArr, setStoryArr] = useState([]);
 
-    const handlefbStories = async () => {
-        const stories = await getDocumentsByField("stories","userid", sessionStorage.getItem("userid"));
-        stories.forEach((story) => {
-            if(sessionStorage.getItem(story.title) != null){
-                console.log("story already exists");
-            }
-            sessionStorage.setItem(story.title, JSON.stringify(story)); // Save directly to sessionStorage
-        });
-        console.log("stopries loaded");
-    }
+    // const handlefbStories = async () => {
+    //     const stories = await getDocumentsByField("stories","userid", sessionStorage.getItem("userid"));
+    //     stories.forEach((story) => {
+    //         if(sessionStorage.getItem(story.title) != null){
+    //             console.log("story already exists");
+    //         }
+    //         sessionStorage.setItem(story.title, JSON.stringify(story)); // Save directly to sessionStorage
+    //     });
+    //     console.log("stopries loaded");
+    // }
 
     const handleIDBStories = async () => {
         const userStuff = await getSingleUserFromIDB();
@@ -51,17 +51,17 @@ export default function Stories(){
         getStories();
     }, []);
 
-    const handleDelete = async (id,storytitle) => {
-        if (confirm("Are you sure you want to delete this story?")) {
-            await deleteDocument("stories", id);
-            alert("Story deleted from fb successfully.");
-            const updatedArr = storyArr.filter(story => story.title !== storytitle);
-            setStoryArr(updatedArr);
-            sessionStorage.removeItem(storytitle);
-        } else {
-            console.log("Deletion cancelled");
-        }
-    }
+    // const handleDelete = async (id,storytitle) => {
+    //     if (confirm("Are you sure you want to delete this story?")) {
+    //         await deleteDocument("stories", id);
+    //         alert("Story deleted from fb successfully.");
+    //         const updatedArr = storyArr.filter(story => story.title !== storytitle);
+    //         setStoryArr(updatedArr);
+    //         sessionStorage.removeItem(storytitle);
+    //     } else {
+    //         console.log("Deletion cancelled");
+    //     }
+    // }
 
     const handleIdbDelete = async (key,title)=>{
 

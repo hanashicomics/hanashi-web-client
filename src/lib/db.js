@@ -33,7 +33,7 @@ export async function updateStory(updatedStory) {
     const db = await dbPromise;
     try {
         await db.put('stories', updatedStory);
-        console.log('Story updated successfully:', updatedStory.id);
+        // console.log('Story updated successfully:', updatedStory.id);
     } catch (e) {
         console.error('Error updating story:', e);
     }
@@ -44,9 +44,9 @@ export async function getStory(id) {
     try {
         const story = await db.get('stories', id);
         if (story) {
-            console.log('Story found:', story);
+            // console.log('Story found:', story);
         } else {
-            console.log('No story found with id:', id);
+            // console.log('No story found with id:', id);
         }
         return story;
     } catch (e) {
@@ -65,7 +65,7 @@ export async function getStoryByTitle(title) {
     const matchingStory = allStories.find(story => story.title === title);
 
     if (matchingStory) {
-        console.log("Found story:", matchingStory);
+        // console.log("Found story:", matchingStory);
     } else {
         console.log("No story found with title:", title);
     }
@@ -77,9 +77,9 @@ export async function saveUserToIDB(user) {
     try {
         console.log('Saving user to IndexedDB...');
         const db = await dbPromise;
-        console.log(user);
+        // console.log(user);
         await db.put('user', user); // 'users' must match your store name
-        console.log('✅ User saved to IndexedDB');
+        // console.log('✅ User saved to IndexedDB');
     } catch (error) {
         console.error('❌ Failed to save user to IndexedDB:', error);
     }

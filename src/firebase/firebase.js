@@ -30,7 +30,7 @@ const auth = getAuth(app);
 export async function saveStoryToFirestore(storyObject) {
     try {
         const docRef = await addDoc(collection(db, "stories"), storyObject);
-        console.log("Story saved with ID: ", docRef.id);
+        // console.log("Story saved with ID: ", docRef.id);
     } catch (error) {
         console.error("Error adding story: ", error);
     }
@@ -44,7 +44,7 @@ export async function saveUserPlanToFirestore(uid) {
             upgradedAt: Timestamp.fromDate(new Date()),
             createdAt:Timestamp.fromDate(new Date()),
         });
-        console.log("Story saved with ID: ", docRef.id);
+        // console.log("Story saved with ID: ", docRef.id);
     } catch (error) {
         console.error("Error adding story: ", error);
     }
@@ -97,7 +97,7 @@ export async function loginUser(email, password) {
             upgradedAt: userPlanInfo?.upgradedAt || null,
         });
 
-        console.log("Login successful:", user.email);
+        // console.log("Login successful:", user.email);
     } catch (error) {
         console.error("Error logging in:", error.code, error.message);
         alert("Login failed: " + error.message);
@@ -117,7 +117,7 @@ export async function getDocumentsByField(collectionName, fieldName, value) {
             results.push({ id: doc.id, ...doc.data() });
         });
 
-        console.log("Documents found:", results);
+        // console.log("Documents found:", results);
 
         return results;
     } catch (error) {
@@ -132,7 +132,7 @@ export async function updateDocument(collectionName, docId, updatedData) {
 
     try {
         await updateDoc(docRef, updatedData);
-        console.log("Document updated successfully.");
+        // console.log("Document updated successfully.");
     } catch (error) {
         console.error("Error updating document:", error);
     }
@@ -236,11 +236,11 @@ export async function syncIDBToFirebasePro() {
             if (matchingFirestoreStory) {
                 // Update existing Firestore story with IndexedDB data
                 await updateDocument("stories", matchingFirestoreStory.id.toString(), idbStory);
-                console.log(`Updated story with ID "${idbStory.id}" in Firestore.`);
+                // console.log(`Updated story with ID "${idbStory.id}" in Firestore.`);
             } else {
                 // Save new story from IndexedDB to Firestore
                 await saveStoryToFirestoreForPro(idbStory,idbStory.id);
-                console.log(`Saved new story with ID "${idbStory.id}" to Firestore.`);
+                // console.log(`Saved new story with ID "${idbStory.id}" to Firestore.`);
             }
         }
     }
