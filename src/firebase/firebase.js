@@ -36,12 +36,11 @@ export async function saveStoryToFirestore(storyObject) {
     }
 }
 
-export async function saveUserPlanToFirestore(uid,username) {
+export async function saveUserPlanToFirestore(uid) {
     try {
         const docRef = doc(db, "users", uid); // create a document reference with uid as the ID
         await setDoc(docRef, {
             uid: uid,
-            username: username,
             plan: 'free',
             upgradedAt: Timestamp.fromDate(new Date()),
             createdAt: Timestamp.fromDate(new Date()),
@@ -68,11 +67,11 @@ export async function saveStoryToFirestoreForPro(storyObject, storyId) {
     }
 }
 
-export async function signUpUser(email,userName, password) {
+export async function signUpUser(email, password) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        await saveUserPlanToFirestore(user.uid,userName);
+        await saveUserPlanToFirestore(user.uid);
         return user;
     } catch (error) {
         console.error("Error signing up:", error.code, error.message);
@@ -99,8 +98,6 @@ export async function loginUser(email, password) {
             username: userPlanInfo.username,
             upgradedAt: userPlanInfo.upgradedAt,
         });
-
-         console.log("Login successful:", user.email);
     } catch (error) {
         console.error("Error logging in:", error.code, error.message);
         alert("Login failed: " + error.message);

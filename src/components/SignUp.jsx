@@ -21,7 +21,7 @@ export default function SignUp() {
             alert("Password must be at least 6 characters");
         }
         await signUpUser(userEmail,userPassword);
-        alert("Signup successfully to FB");
+        alert("Signup successfully");
         setUserEmail("");
         setUserPassword("");
         navigate('/login');

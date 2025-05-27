@@ -15,7 +15,6 @@ export default function Pricing() {
                         <li>Offline access ✅</li>
                         <li>Cloud backup 🚫</li>
                         <li>Sync across devices 🚫</li>
-                        <li>Priority support 🚫</li>
                     </ul>
                     <div className="pricing-price pricing-price-free">R0</div>
                     <Link to={"/signup"} className="pricing-button">Use for free</Link>
@@ -29,7 +28,6 @@ export default function Pricing() {
                         <li>Offline access ✅</li>
                         <li>Cloud backup ✅</li>
                         <li>Sync across devices ✅</li>
-                        <li>Priority support ✅</li>
                     </ul>
                     <div className="pricing-price">R49 / month</div>
                     <Link to={"/upgrade"} className="pricing-button">Go Pro</Link>

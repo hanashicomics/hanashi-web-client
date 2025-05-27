@@ -18,14 +18,43 @@ export default function Upgrade() {
                 </ul>
             </div>
 
-            <div className="upgrade-price-box">
-                <p className="upgrade-price">R49 / month</p>
-                <Link to="/pay" className="upgrade-button">Continue to Payment</Link>
-            </div>
+            {/*<div className="upgrade-price-box">*/}
+            {/*    <p className="upgrade-price">R49 / month</p>*/}
+            {/*    <p className="pricing-desc">Pro does not support recurring purchases,and as such requires manual monthly payments to continue using Pro features.</p>*/}
+            {/*    <Link to="/pay" className="upgrade-button">Continue to Payment</Link>*/}
+            {/*</div>*/}
 
-            <p className="upgrade-note">
-                You can continue using Hanashi for free with offline features.
-            </p>
+            <div className="upgrade-price-box">
+                <p className="upgrade-price">R5 / month</p>
+                <p className="pricing-desc">Pro does not support recurring purchases,and as such requires manual monthly
+                    payments to continue using Pro features.</p>
+                <p className="pricing-desc">You will be directed to an external payment portal; to complete your
+                    purchase</p>
+                <form name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post" className={"Payfas-btn"}>
+                    <input required type="hidden" name="cmd" value="_paynow"/>
+                    <input required type="hidden" name="receiver" pattern="[0-9]" value="30104223"/>
+                    <input type="hidden" name="return_url" value="https://hanashi.website/profile"/>
+                    <input type="hidden" name="cancel_url" value="https://hanashi.website/pricing"/>
+                    <input required type="hidden" name="amount" value="5"/>
+                    <input required type="hidden" name="item_name" maxLength="255" value="Hanashi Pro 1 Month"/>
+                    <input type="hidden" name="item_description" maxLength="255" value="With Hanashi Pro, you can save
+ and sync all your stories across devices to enhance your creative experience."/>
+                    <table>
+                        <tr>
+                            <td colSpan={2} align="center">
+                            <input type="image"
+                                   src="https://my.payfast.io/images/buttons/PayNow/Primary-Large-PayNow.png"
+                                   alt="Pay Now" title="Pay Now with Payfast"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
-    );
+
+    <p className="upgrade-note">
+        You can continue using Hanashi for free with offline features.
+    </p>
+</div>
+)
+    ;
 }

@@ -80,7 +80,7 @@ export default function Stories(){
             <div className="createStoryLine">
                 <h1>Stories</h1>
                 <Link to={'/createstory'} className={"LinkButton"}> Create a story +</Link>
-                <Link to={'/loadstory'} className={"LinkButton"}> Load a story from JSON +</Link>
+                {/*<Link to={'/loadstory'} className={"LinkButton"}> Load a story from JSON +</Link>*/}
             </div>
 
             <br />
