@@ -31,6 +31,7 @@ export default function Upgrade() {
                 <p className="pricing-desc">You will be directed to an external payment portal to complete your
                     purchase</p>
                 <form name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post">
+                    <input type="hidden" name="custom_str1" value="FIREBASE_UID" />
                     <input required type="hidden" name="cmd" value="_paynow"/>
                     <input required type="hidden" name="receiver" pattern="[0-9]" value="30104223"/>
                     <input type="hidden" name="return_url" value="https://hanashi.website/profile"/>
