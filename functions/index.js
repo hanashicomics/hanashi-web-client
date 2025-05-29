@@ -25,7 +25,7 @@ export const payfastNotify = functions.https.onRequest(async (req, res) => {
 
     const pfData = req.body;
 
-    const verifyUrl = "https://sandbox.payfast.co.za/eng/query/validate";
+    const verifyUrl = "https://www.payfast.co.za/eng/query/validate";
 
     try {
         const response = await axios.post(verifyUrl, qs.stringify(pfData), {
