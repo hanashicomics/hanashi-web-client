@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore, collection, addDoc,doc,  query, where, getDocs,getDoc,setDoc,updateDoc,deleteDoc,Timestamp} from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut,sendPasswordResetEmail} from "firebase/auth";
 import {deleteAnyUserFromIDB, getAllStories, getSingleUserFromIDB, saveUserToIDB} from "../lib/db.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -65,6 +65,18 @@ export async function saveStoryToFirestoreForPro(storyObject, storyId) {
         await setDoc(doc(db, "stories", idToUse.toString()), storyObject);
     } catch (error) {
         console.error("Error saving story:", error);
+    }
+}
+
+export async function resetPassword(email) {
+    const auth = getAuth();
+
+    try {
+        await sendPasswordResetEmail(auth, email);
+        console.log(`Reset email sent to ${email}`);
+    } catch (error) {
+        console.error("Error sending reset email:", error.message);
+        throw error;
     }
 }
 

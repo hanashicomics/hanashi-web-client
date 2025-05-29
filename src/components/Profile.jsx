@@ -5,12 +5,17 @@ import '../assets/styles/Profile.css';
 import {getSingleUserFromIDB} from "../lib/db.js";
 import {useEffect, useState} from "react";
 
+
+
 export default function Profile() {
     const navigate = useNavigate();
     const[email, setEmail] = useState("");
     const[plan, setPlan] = useState("");
     const[upgradedAt, setUpgradedAt] = useState("");
 
+    function goToEdit() {
+        navigate("/editprofile");
+    }
 
     const handleLogout = async () => {
         if (confirm("Are you sure you want to logout?") == true) {
@@ -60,7 +65,7 @@ export default function Profile() {
                                     <p className="profile-email">User Subscription: {plan}</p>
                                     {plan === "pro" ? <p className="profile-email">Last Upgraded At: {upgradedAt}</p>:""}
                                     {/*<p className="profile-email">Last Upgraded At: {upgradedAt}</p>*/}
-                                    <button className="profile-btn">Edit Profile</button>
+                                    <button className="profile-btn" onClick={goToEdit}>Edit Profile</button>
                                     <br/>
                                     <button className={"profile-btn"} onClick={handleLogout}>Logout</button>
                                 </div>

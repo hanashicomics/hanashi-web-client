@@ -24,6 +24,7 @@ import SignUp from "./components/SignUp.jsx";
 import AppLayout from "./app layout/AppLayout.jsx";
 import Pricing from "./components/Pricing.jsx";
 import Upgrade from "./components/Upgrade.jsx";
+import EditProfile from "./components/EditProfile.jsx";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
                       <Route path="/" element={<Stories />} />
                       <Route path="/login" element={<Login />} />
                       <Route path="/signup" element={<SignUp />} />
+                      <Route path="/editprofile" element={<EditProfile />} />
 
                       <Route path="/pricing" element={<Pricing/>}/>
                       <Route path="/upgrade" element={<Upgrade />} />
