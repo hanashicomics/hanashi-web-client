@@ -2,7 +2,6 @@ import functions from 'firebase-functions';
 import {applicationDefault, initializeApp} from 'firebase-admin/app';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import axios from 'axios';
-import qs from 'qs';
 
 
 
