@@ -24,7 +24,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 const auth = getAuth(app);
 
 export async function saveStoryToFirestore(storyObject) {
@@ -36,11 +36,12 @@ export async function saveStoryToFirestore(storyObject) {
     }
 }
 
-export async function saveUserPlanToFirestore(uid) {
+export async function saveUserPlanToFirestore(uid,email) {
     try {
         const docRef = doc(db, "users", uid); // create a document reference with uid as the ID
         await setDoc(docRef, {
             uid: uid,
+            email: email,
             plan: 'free',
             upgradedAt: Timestamp.fromDate(new Date()),
             createdAt: Timestamp.fromDate(new Date()),
@@ -71,10 +72,11 @@ export async function signUpUser(email, password) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        await saveUserPlanToFirestore(user.uid);
+        await saveUserPlanToFirestore(user.uid,email);
         return user;
     } catch (error) {
-        console.error("Error signing up:", error.code, error.message);
+        //console.error("Error signing up:", error.code, error.message);
+        alert("Sign up failed: " + error.message);
         throw error;
     }
 }
@@ -247,4 +249,18 @@ export async function syncIDBToFirebasePro() {
     }
 }
 
+export async function saveTransaction(uid, transactionData) {
+    try {
+        const docRef = await db.collection("transactions").add({
+            uid,
+            transactionData: transactionData,
+            createdAt: Timestamp.fromDate(new Date()),
+        });
+        console.log("Transaction saved with ID:", docRef.id);
+        return docRef.id;
+    } catch (error) {
+        console.error("Error saving transaction:", error);
+        throw error;
+    }
+}
 

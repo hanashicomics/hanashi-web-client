@@ -77,7 +77,7 @@ export async function saveUserToIDB(user) {
     try {
         console.log('Saving user to IndexedDB...');
         const db = await dbPromise;
-         console.log(user);
+        // console.log(user);
         await db.put('user', user); // 'users' must match your store name
         // console.log('✅ User saved to IndexedDB');
     } catch (error) {
