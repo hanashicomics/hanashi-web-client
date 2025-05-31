@@ -4,6 +4,9 @@ import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {syncIDBToFirebasePro} from "../firebase/firebase.js";
 import "../assets/styles/Chapters.css"
 import {getStoryByTitle, updateStory} from "../lib/db.js";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import EditorState from "draft-js/lib/EditorState.js";
 
 export default function EditChapter(){
     const { storyName, arcName, chapterName } = useParams();
@@ -11,6 +14,7 @@ export default function EditChapter(){
     const [name, setName] = useState("");
     const [plot, setPlot] = useState("");
     const [script, setScript] = useState("");
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const[arcs, setArcs] = useState([]);
     const navigate = useNavigate();
 
@@ -35,6 +39,10 @@ export default function EditChapter(){
             }
         }
     };
+    const handleEditorStateChange = (newState) => {
+        setEditorState(newState);
+        setScript(newState.getCurrentContent());
+    }
 
     useEffect(() => {
         getTheStory(storyName);
@@ -123,6 +131,14 @@ export default function EditChapter(){
                             onChange={onScriptChange}
                             rows={15}
                             required
+                        />
+                        <Editor
+                            editorState={editorState}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                            onEditorStateChange={handleEditorStateChange}
+                            imageUploadEnabled={false}
                         />
                     </div>
                     <button className="task_addbutton" onClick={saveChapter}>Save Chapter</button>

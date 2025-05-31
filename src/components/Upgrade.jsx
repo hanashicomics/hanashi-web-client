@@ -30,31 +30,44 @@ export default function Upgrade() {
                     payments to continue using Pro features.</p>
                 <p className="pricing-desc">You will be directed to an external payment portal to complete your
                     purchase</p>
-                <form name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post">
-                    <input type="hidden" name="custom_str1" value="FIREBASE_UID" />
-                    <input required type="hidden" name="cmd" value="_paynow"/>
-                    <input required type="hidden" name="receiver" pattern="[0-9]" value="30104223"/>
+
+ {/*               <form name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post">*/}
+ {/*                   <input type="hidden" name="custom_str1" value="FIREBASE_UID" />*/}
+ {/*                   <input required type="hidden" name="cmd" value="_paynow"/>*/}
+ {/*                   <input required type="hidden" name="receiver" pattern="[0-9]" value="30104223"/>*/}
+ {/*                   <input type="hidden" name="return_url" value="https://hanashi.website/profile"/>*/}
+ {/*                   <input type="hidden" name="cancel_url" value="https://hanashi.website/pricing"/>*/}
+ {/*                   <input type="hidden" name="notify_url" value="https://hanashi-node.onrender.com/notify"/>*/}
+ {/*                   <input required type="hidden" name="amount" value="5"/>*/}
+ {/*                   <input required type="hidden" name="item_name" maxLength="255" value="Hanashi Pro 1 Month"/>*/}
+ {/*                   <input type="hidden" name="item_description" maxLength="255" value="With Hanashi Pro, you can save*/}
+ {/*and sync all your stories across devices to enhance your creative experience."/>*/}
+ {/*                   <table>*/}
+ {/*                       <tbody>*/}
+ {/*                       <tr>*/}
+ {/*                           <td colSpan={2} style={{textAlign: "center"}}>*/}
+ {/*                               <input*/}
+ {/*                                   type="image"*/}
+ {/*                                   src="https://my.payfast.io/images/buttons/PayNow/Primary-Large-PayNow.png"*/}
+ {/*                                   alt="Pay Now"*/}
+ {/*                                   title="Pay Now with Payfast"*/}
+ {/*                               />*/}
+ {/*                           </td>*/}
+ {/*                       </tr>*/}
+ {/*                       </tbody>*/}
+ {/*                   </table>*/}
+ {/*               </form>*/}
+
+                <form action="https://sandbox.payfast.co.za/eng/process" method="post">
+                    <input type="hidden" name="merchant_id" value="10039376"/>
+                    <input type="hidden" name="merchant_key" value="1055i11vkwz9r"/>
+                    <input type="hidden" name="amount" value="5.00"/>
+                    <input type="hidden" name="item_name" value="hanashi-1-month"/>
                     <input type="hidden" name="return_url" value="https://hanashi.website/profile"/>
-                    <input type="hidden" name="cancel_url" value="https://hanashi.website/pricing"/>
-                    <input type="hidden" name="notify_url" value="https://payfastnotify-g4il3u4oxa-uc.a.run.app"/>
-                    <input required type="hidden" name="amount" value="5"/>
-                    <input required type="hidden" name="item_name" maxLength="255" value="Hanashi Pro 1 Month"/>
-                    <input type="hidden" name="item_description" maxLength="255" value="With Hanashi Pro, you can save
- and sync all your stories across devices to enhance your creative experience."/>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td colSpan={2} style={{textAlign: "center"}}>
-                                <input
-                                    type="image"
-                                    src="https://my.payfast.io/images/buttons/PayNow/Primary-Large-PayNow.png"
-                                    alt="Pay Now"
-                                    title="Pay Now with Payfast"
-                                />
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <input type="hidden" name="cancel_url" value="https://hanashi.website/upgrade"/>
+                    <input type="hidden" name="notify_url" value="https://hanashi-node.onrender.com/api/notify"/>
+
+                    <input type="submit"/>
                 </form>
             </div>
 
