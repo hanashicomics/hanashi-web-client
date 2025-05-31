@@ -11,6 +11,9 @@ export default function Upgrade() {
         const userStuff = await getSingleUserFromIDB();
         setEmail(userStuff.email);
         setUid(userStuff.uid);
+
+        console.log("Email:", email);
+        console.log("UID:", uid);
     }
 
     useEffect(() => {
