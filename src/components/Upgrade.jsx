@@ -1,7 +1,22 @@
 import '../assets/styles/Upgrade.css';
 import { Link } from 'react-router-dom';
+import {getSingleUserFromIDB} from "../lib/db.js";
+import {useEffect, useState} from "react";
 
 export default function Upgrade() {
+    const[email, setEmail] = useState("");
+    const[uid, setUid] = useState("");
+
+    async function getUserData() {
+        const userStuff = await getSingleUserFromIDB();
+        setEmail(userStuff.email);
+        setUid(userStuff.uid);
+    }
+
+    useEffect(() => {
+        getUserData();
+    },[])
+
     return (
         <div className="upgrade-container">
             <h1 className="upgrade-title">Upgrade to Pro</h1>
@@ -66,6 +81,9 @@ export default function Upgrade() {
                     <input type="hidden" name="return_url" value="https://hanashi.website/profile"/>
                     <input type="hidden" name="cancel_url" value="https://hanashi.website/upgrade"/>
                     <input type="hidden" name="notify_url" value="https://hanashi-node.onrender.com/api/notify"/>
+
+                    <input type="hidden" name="user_email" value={email} />
+                    <input type="hidden" name="user_uid" value={uid} />
 
                     <input type="submit"/>
                 </form>
