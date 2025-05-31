@@ -82,8 +82,8 @@ export default function Upgrade() {
                     <input type="hidden" name="cancel_url" value="https://hanashi.website/upgrade"/>
                     <input type="hidden" name="notify_url" value="https://hanashi-node.onrender.com/api/notify"/>
 
-                    <input type="hidden" name="user_email" value={email} />
-                    <input type="hidden" name="user_uid" value={uid} />
+                    <input type="hidden" name="custom_str1" value={email} />
+                    <input type="hidden" name="custom_str2" value={uid} />
 
                     <input type="submit"/>
                 </form>
