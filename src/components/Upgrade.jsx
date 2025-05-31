@@ -81,6 +81,8 @@ export default function Upgrade() {
                     <input type="hidden" name="merchant_key" value="1055i11vkwz9r"/>
                     <input type="hidden" name="amount" value="5.00"/>
                     <input type="hidden" name="item_name" value="hanashi-1-month"/>
+                    <input type="hidden" name="item_description" value="With Hanashi Pro, you can save
+ {/*and sync all your stories across devices to enhance your creative experience."/>
                     <input type="hidden" name="return_url" value="https://hanashi.website/profile"/>
                     <input type="hidden" name="cancel_url" value="https://hanashi.website/upgrade"/>
                     <input type="hidden" name="notify_url" value="https://hanashi-node.onrender.com/api/notify"/>

@@ -12,6 +12,7 @@ export default function Profile() {
     const[email, setEmail] = useState("");
     const[plan, setPlan] = useState("");
     const[upgradedAt, setUpgradedAt] = useState("");
+    const[expiresAt,setExpiresAt] = useState("");
 
     function goToEdit() {
         navigate("/editprofile");
@@ -39,6 +40,7 @@ export default function Profile() {
         setEmail(userStuff.email);
         setPlan(userStuff.plan);
         setUpgradedAt(formatUpgradedAt(userStuff.upgradedAt));
+        setExpiresAt(formatUpgradedAt(userStuff.pro_expires_at));
     }
 
     useEffect(() => {
@@ -64,6 +66,7 @@ export default function Profile() {
                                     <p className="profile-email">{email}</p>
                                     <p className="profile-email">User Subscription: {plan}</p>
                                     {plan === "pro" ? <p className="profile-email">Last Upgraded At: {upgradedAt}</p>:""}
+                                    {plan === "pro" ? <p className="profile-email">Expires on: {expiresAt}</p>:""}
                                     {/*<p className="profile-email">Last Upgraded At: {upgradedAt}</p>*/}
                                     <button className="profile-btn" onClick={goToEdit}>Edit Profile</button>
                                     <br/>
