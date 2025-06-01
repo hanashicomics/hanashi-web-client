@@ -111,6 +111,7 @@ export async function loginUser(email, password) {
             plan: userPlanInfo.plan,
             username: userPlanInfo.username,
             upgradedAt: userPlanInfo.upgradedAt,
+            pro_expires_at: userPlanInfo.pro_expires_at,
         });
     } catch (error) {
         console.error("Error logging in:", error.code, error.message);
