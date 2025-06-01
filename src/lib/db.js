@@ -75,7 +75,6 @@ export async function getStoryByTitle(title) {
 
 export async function saveUserToIDB(user) {
     try {
-        console.log('Saving user to IndexedDB...');
         const db = await dbPromise;
         // console.log(user);
         await db.put('user', user); // 'users' must match your store name
@@ -83,6 +82,22 @@ export async function saveUserToIDB(user) {
     } catch (error) {
         alert("Error logging in.")
         console.error('❌ Failed to save user to IndexedDB:', error);
+    }
+}
+
+export async function saveUserToIDBAfterUpgrade(user) {
+    try {
+        if (!user.uid) {
+            throw new Error('The user object is missing the "uid" field or it is invalid.');
+        }
+
+        const db = await dbPromise;
+        await db.clear("user")
+        await db.add('user', user); // Ensure 'user' matches your store name
+        console.log('✅ User saved to IndexedDB successfully!');
+    } catch (error) {
+        console.error('❌ Failed to save user to IndexedDB:', error);
+        alert('Error saving user to IndexedDB. Check console for details.');
     }
 }
 

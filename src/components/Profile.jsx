@@ -1,8 +1,8 @@
 import Login from "./Login.jsx";
 import {useNavigate} from "react-router-dom";
-import {getUserPlan, logoutUser} from "../firebase/firebase.js";
+import {getDataAfterUpgrade, getUserPlan, logoutUser} from "../firebase/firebase.js";
 import '../assets/styles/Profile.css';
-import {getSingleUserFromIDB, saveUserToIDB} from "../lib/db.js";
+import {getSingleUserFromIDB, saveUserToIDB, saveUserToIDBAfterUpgrade} from "../lib/db.js";
 import {useEffect, useState} from "react";
 
 
@@ -20,19 +20,7 @@ export default function Profile() {
 
     async function handleUpgradeUpdate() {
         try {
-            // Fetch the user details from IDB
-            const userDetails = await getSingleUserFromIDB();
-
-            const upgraded = await getUserPlan(userDetails.uid);
-
-            if (upgraded) {
-                // Update user details locally in IDB
-                //const updatedUserDetails = { ...userDetails, plan: "pro",expiresAt:"" }; // Mark the user as upgraded
-
-                await saveUserToIDB(upgraded)
-
-                console.log("User details updated in IDB after upgrade!", upgraded);
-            }
+            await getDataAfterUpgrade();
         } catch (error) {
             console.error("Failed to update IDB after upgrade:", error);
         }
@@ -40,7 +28,7 @@ export default function Profile() {
 
 
     const handleLogout = async () => {
-        if (confirm("Are you sure you want to logout?") == true) {
+        if (confirm("Are you sure you want to logout?") === true) {
             await logoutUser();
             window.location.reload();
             navigate("/profile")
