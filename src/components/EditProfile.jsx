@@ -32,9 +32,9 @@ export default function EditProfile() {
             <button className="action-button reset" onClick={handleResetPassword}>
                 Reset Password
             </button>
-            <button className="action-button change" onClick={handleChangeEmail}>
-                Change Email
-            </button>
+            {/*<button className="action-button change" onClick={handleChangeEmail}>*/}
+            {/*    Change Email*/}
+            {/*</button>*/}
         </div>
     );
 };
