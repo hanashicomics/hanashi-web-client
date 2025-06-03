@@ -1,112 +1,66 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
-import {syncIDBToFirebasePro} from "../firebase/firebase.js";
-import "../assets/styles/Chapters.css"
-import {getStoryByTitle, updateStory} from "../lib/db.js";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import EditorState from "draft-js/lib/EditorState.js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import "../assets/styles/Chapters.css";
+import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
+import { getStoryByTitle, updateStory } from "../lib/db.js";
+import { syncIDBToFirebasePro } from "../firebase/firebase.js";
 
-export default function EditChapter(){
+export default function EditChapter() {
     const { storyName, arcName, chapterName } = useParams();
     const [story, setStory] = useState({});
+    const [arcs, setArcs] = useState([]);
+    const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+
     const [name, setName] = useState("");
     const [plot, setPlot] = useState("");
-    const [script, setScript] = useState("");
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const[arcs, setArcs] = useState([]);
+
     const navigate = useNavigate();
 
-    const getTheStory = async (storyName) => {
-        const storyInfo = await getStoryByTitle(storyName);
-        setStory(storyInfo);
-        setArcs(storyInfo.arcs);
-
-        for (let i = 0; i < storyInfo.arcs.length; i++) {
-            if (storyInfo.arcs[i].name === arcName) {
-                let foundArc = storyInfo.arcs[i];
-                for (let j = 0; j < foundArc.chapters.length; j++) {
-                    if (foundArc.chapters[j].name === chapterName) {
-                        const foundChapter = foundArc.chapters[j];
-                        setName(foundChapter.name);
-                        setPlot(foundChapter.plot);
-                        setScript(foundChapter.script);
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-    };
-    const handleEditorStateChange = (newState) => {
-        setEditorState(newState);
-        setScript(newState.getCurrentContent());
-    }
-
     useEffect(() => {
-        getTheStory(storyName);
-    },[])
+        const fetchStory = async () => {
+            const storyInfo = await getStoryByTitle(storyName);
+            setStory(storyInfo);
+            setArcs(storyInfo.arcs);
 
-    const onNameChange = (e) => {
-        setName(e.target.value);
-    };
+            const arc = storyInfo.arcs.find(a => a.name === arcName);
+            const chapter = arc?.chapters.find(c => c.name === chapterName);
 
-    const onPlotChange = (e) => {
-        setPlot(e.target.value);
-    };
+            if (!chapter) return alert("Chapter not found");
 
-    const onScriptChange = (e) => {
-        setScript(e.target.value);
-    };
+            setName(chapter.name);
+            setPlot(chapter.plot);
+
+            const contentState = convertFromRaw(chapter.script);
+            setEditorState(EditorState.createWithContent(contentState));
+        };
+        fetchStory();
+    }, [storyName, arcName, chapterName]);
 
     const saveChapter = async () => {
-        let foundArc;
-        for(let i = 0; i<arcs.length; i++){
-            if(arcs[i].name === arcName){
-                foundArc = arcs[i];
-                break;
-            }
-        }
-        const chapter = {
-            name: name,
-            plot: plot,
-            script: script
+        const arcIndex = arcs.findIndex(arc => arc.name === arcName);
+        if (arcIndex === -1) return alert("Arc not found");
+
+        const chapterIndex = arcs[arcIndex].chapters.findIndex(ch => ch.name === chapterName);
+        if (chapterIndex === -1) return alert("Chapter not found");
+
+        const updatedChapter = {
+            name,
+            plot,
+            script: convertToRaw(editorState.getCurrentContent()),
         };
 
-        for(let i = 0; i<foundArc.chapters.length; i++){
-            if(foundArc.chapters[i].name === chapterName){
-                foundArc.chapters[i] = chapter;
-            }
-        }
+        arcs[arcIndex].chapters[chapterIndex] = updatedChapter;
 
-        //sessionStorage.setItem(storyName, JSON.stringify(story));
-        //await updateDocument("stories",story.id,story);
-        const updatedStory = {...story, arcs: arcs};
+        const updatedStory = { ...story, arcs };
         await updateStory(updatedStory);
-       alert("Chapter saved");
         await syncIDBToFirebasePro();
+
+        alert("Chapter updated successfully.");
         navigate(`/${storyName}/arcs/${arcName}/edit`);
     };
-
-    // useEffect(() => {
-    //     for(let i = 0; i<arrArcs.length; i++){
-    //         if(arrArcs[i].name === arcName){
-    //             let foundArc = arrArcs[i];
-    //
-    //             for(let i = 0; i<foundArc.chapters.length; i++){
-    //                 if(foundArc.chapters[i].name === chapterName){
-    //                     const foundChapter = foundArc.chapters[i];
-    //
-    //                     setName(foundChapter.name);
-    //                     setPlot(foundChapter.plot);
-    //                     setScript(foundChapter.script)
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }, []);
 
     return (
         <>
@@ -117,36 +71,35 @@ export default function EditChapter(){
                 <div className="chapterInputs">
                     <div className="formGroup">
                         <label>Title</label>
-                        <input type="text" value={name} onChange={onNameChange} />
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
 
                     <div className="formGroup">
                         <label>Plot</label>
-                        <input type="text" value={plot} onChange={onPlotChange} />
+                        <input type="text" value={plot} onChange={(e) => setPlot(e.target.value)} />
                     </div>
+
                     <div className="chapterScript">
                         <label>Script</label>
-                        <textarea
-                            value={script}
-                            onChange={onScriptChange}
-                            rows={15}
-                            required
-                        />
                         <Editor
                             editorState={editorState}
+                            onEditorStateChange={setEditorState}
                             toolbarClassName="toolbarClassName"
                             wrapperClassName="wrapperClassName"
                             editorClassName="editorClassName"
-                            onEditorStateChange={handleEditorStateChange}
-                            imageUploadEnabled={false}
+                            toolbar={{
+                                options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'remove', 'history'],
+                                inline: {
+                                    inDropdown: false,
+                                    options: ['bold', 'italic', 'underline', 'strikethrough'],
+                                },
+                            }}
                         />
                     </div>
+
                     <button className="task_addbutton" onClick={saveChapter}>Save Chapter</button>
                 </div>
-
-
             </div>
         </>
-
     );
 }
