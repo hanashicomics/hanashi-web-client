@@ -3,6 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function CreateArc() {
     const {storyName} =useParams();
@@ -11,6 +12,7 @@ export default function CreateArc() {
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const getTheStory = async (storyName) => {
         const storyInfo = await getStoryByTitle(storyName);
@@ -59,9 +61,9 @@ export default function CreateArc() {
         //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
         //await updateDocument("stories",jsonStory.id,jsonStory);
         updateStory(updatedStory);
-        alert('Arc Saved Successfully.');
-        navigate(`/${storyName}/arcs`)
 
+        setModalOpen(true)
+        //alert('Arc Saved Successfully.');
     }
 
     return(
@@ -81,6 +83,14 @@ export default function CreateArc() {
                 </p>
 
                 <h2>Chapters</h2>
+                <MessageModal
+                    isOpen={modalOpen}
+                    onClose={() => {
+                        setModalOpen(false)
+                        navigate(`/${storyName}/arcs`)
+                    }}
+                    message="Arc Saved Successfully."
+                />
                 <ul>
 
                 </ul>

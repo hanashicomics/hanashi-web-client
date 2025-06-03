@@ -4,6 +4,7 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import StoryFooterNavigation from './StoryFooterNavigation.jsx'
 import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStory, getStoryByTitle, updateStory} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function EditStory() {
     const {storyName} = useParams();
@@ -13,6 +14,7 @@ export default function EditStory() {
     const[plot, setPlot] = useState('');
     const[genre, setGenre] = useState('');
     const[cover, setCover] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const getTheStory = async (storyName) => {
@@ -72,20 +74,26 @@ export default function EditStory() {
 
             //const storyJson = JSON.stringify(story);
             await updateStory(updatedStory)
-            alert('Story Saved Successffully.');
-
             //sessionStorage.setItem(story.title, storyJson);
             //await updateDocument("stories",story.id,story);
             //sessionStorage.removeItem(storyName);
             await syncIDBToFirebasePro();
-            navigate('/stories');
+
+            setModalOpen(true);
         }
     }
 
     return(
         <>
             <StoryFooterNavigation storyName={storyName}/>
-
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate('/stories');
+                }}
+                message="Chapter Saved Successfully."
+            />
             <h1>Edit Story Info</h1>
 
             <div className='container'>

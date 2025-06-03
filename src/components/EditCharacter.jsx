@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 
 export default function EditCharacter(){
@@ -16,6 +17,7 @@ export default function EditCharacter(){
     const[cover,setCover] = useState("");
     const navigate = useNavigate();
     const [arrCharacters, setArrCharacters] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
 
     //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
     //const arrCharacters = storyObj.characters;
@@ -91,9 +93,8 @@ export default function EditCharacter(){
                 arrCharacters[i] = newCharacter;
                 story.characters = arrCharacters;
                 await updateStory(story)
-                alert('Character Saved Successfully.');
                 await syncIDBToFirebasePro();
-                navigate(`/${storyName}/characters`);
+                setModalOpen(true)
             }
         }
     }
@@ -101,7 +102,14 @@ export default function EditCharacter(){
     return(
         <>
             <StoryFooterNavigation storyName={storyName}/>
-
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate(`/${storyName}/characters`);
+                }}
+                message="Character Saved Successfully."
+            />
             <div className='TextContainer'>
                 <p>
                     <label>Name </label>

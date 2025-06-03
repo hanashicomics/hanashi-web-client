@@ -4,11 +4,12 @@ import '../assets/styles/Arcs.css';
 import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function EditArc(){
     const {storyName} =useParams();
     const{arcName} = useParams();
-
+    const [modalOpen, setModalOpen] = useState(false);
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const navigate = useNavigate();
@@ -80,15 +81,22 @@ export default function EditArc(){
         }
         const updatedStory = {...story, arcs: arcs};
         await updateStory(updatedStory);
-        alert('Arc Edited Successfully.');
         await syncIDBToFirebasePro();
-        navigate(`/${storyName}/arcs`)
 
+        setModalOpen(true)
     }
     return(
         <>
             <StoryFooterNavigation storyName={storyName} />
             <h1>Edit Arc</h1>
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate(`/${storyName}/arcs`)
+                }}
+                message="Arc Edited Successfully."
+            />
             <div className='TextContainer'>
                 <p>
                     <label>Name </label>

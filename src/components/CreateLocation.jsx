@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 
 export default function CreateLocation() {
@@ -13,6 +14,7 @@ export default function CreateLocation() {
     const[story, setStory] = useState({});
     const[locations,setLocations] = useState([]);
     const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const getTheStory = async (storyName) => {
         const storyInfo = await getStoryByTitle(storyName);
@@ -64,14 +66,21 @@ export default function CreateLocation() {
         //await updateDocument("stories",jsonStory.id,jsonStory);
         alert('Location Saved Successfully.');
         await syncIDBToFirebasePro();
-        navigate(`/${storyName}/locations`)
-
+        
+        setModalOpen(true)
     }
 
     return(
         <>
             <StoryFooterNavigation storyName={storyName}/>
-
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate(`/${storyName}/characters`)
+                }}
+                message="Location Saved Successfully."
+            />
             <div className='TextContainer'>
                 <p>
                     <label>Name </label>

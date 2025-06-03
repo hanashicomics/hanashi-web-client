@@ -3,12 +3,14 @@ import {useEffect, useState} from "react";
 import '../assets/styles/App.css';
 import {loginUser} from "../firebase/firebase.js";
 import {getSingleUserFromIDB} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function Login() {
     const[userEmail, setUserEmail] = useState("");
     const[userPassword, setUserPassword] = useState("");
     const navigate = useNavigate();
     const[userData, setUserData] = useState({});
+    const [modalOpen, setModalOpen] = useState(false);
 
     async function getUserData() {
         const userStuff = await getSingleUserFromIDB();
@@ -32,10 +34,10 @@ export default function Login() {
             alert("Password must be at least 6 characters");
         }
         await loginUser(userEmail,userPassword);
-        alert("Login successfully");
         setUserEmail("");
         setUserPassword("");
-        navigate("/stories");
+
+        setModalOpen(true)
     };
 
     return(
@@ -43,6 +45,14 @@ export default function Login() {
 
             <form onSubmit={handleFormSubmit} className={'formArea'}>
                 <h1>Login</h1>
+                <MessageModal
+                    isOpen={modalOpen}
+                    onClose={() => {
+                        setModalOpen(false)
+                        navigate("/stories");
+                    }}
+                    message="Login successfully"
+                />
                 <p>
                     <input type={"email"} onChange={handleEmailChange} value={userEmail} placeholder="Email" required={true} className={'inputText'}/>
                 </p>

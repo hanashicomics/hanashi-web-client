@@ -4,6 +4,7 @@ import {Navigate} from 'react-router-dom';
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {saveStoryToFirestore, syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function CreateCharacter(){
     const {storyName} = useParams();
@@ -14,6 +15,7 @@ export default function CreateCharacter(){
     const[abilities,setAbilities] = useState("");
     const[cover,setCover] = useState("");
     const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const getTheStory = async (storyName) => {
         const storyInfo = await getStoryByTitle(storyName);
@@ -71,16 +73,21 @@ export default function CreateCharacter(){
 
          story.characters.push(newCharacter);
          await updateStory(story);
-         alert('Character Saved Successfully.')
         await syncIDBToFirebasePro();
-        navigate(`/${storyName}/characters`)
-
+        setModalOpen(true)
     }
 
     return(
         <>
             <StoryFooterNavigation storyName={storyName}/>
-
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate(`/${storyName}/characters`)
+                }}
+                message="Chapter Saved Successfully."
+            />
             <div className='TextContainer'>
                 <p>
                     <label>Name </label>

@@ -2,11 +2,13 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import '../assets/styles/App.css';
 import {signUpUser} from "../firebase/firebase.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function SignUp() {
     const[userEmail, setUserEmail] = useState("");
     const[userPassword, setUserPassword] = useState("");
     const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const handleEmailChange = (e) => {
         setUserEmail(e.target.value);
@@ -21,16 +23,24 @@ export default function SignUp() {
             alert("Password must be at least 6 characters");
         }
         await signUpUser(userEmail,userPassword);
-        alert("Signup successfully");
         setUserEmail("");
         setUserPassword("");
-        navigate('/login');
+
+        setModalOpen(true)
     };
 
     return (
         <>
             <form onSubmit={handleFormSubmit} className={'formArea'}>
                 <h1>Signup</h1>
+                <MessageModal
+                    isOpen={modalOpen}
+                    onClose={() => {
+                        setModalOpen(false)
+                        navigate('/login');
+                    }}
+                    message="Signup successfully"
+                />
                 <p>
                     <input type={"email"} onChange={handleEmailChange} value={userEmail} placeholder="Email" required={true} className={'inputText'}/>
                 </p>

@@ -8,13 +8,14 @@ import "../assets/styles/Chapters.css";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import { getStoryByTitle, updateStory } from "../lib/db.js";
 import { syncIDBToFirebasePro } from "../firebase/firebase.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function CreateChapter() {
     const { storyName, arcName } = useParams();
     const [story, setStory] = useState({});
     const [arcs, setArcs] = useState([]);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+    const [modalOpen, setModalOpen] = useState(false);
     const [name, setName] = useState("");
     const [plot, setPlot] = useState("");
 
@@ -44,16 +45,21 @@ export default function CreateChapter() {
 
         await updateStory(updatedStory);
         await syncIDBToFirebasePro();
-
-        alert("Chapter saved successfully.");
-        navigate(`/${storyName}/arcs`);
+        setModalOpen(true)
     };
 
     return (
         <>
             <StoryFooterNavigation storyName={storyName} />
             <h1>Create Chapter</h1>
-
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate(`/${storyName}/arcs`)
+                }}
+                message="Chapter Saved Successfully."
+            />
             <div className="chapterForm">
                 <div className="chapterInputs">
                     <div className="formGroup">

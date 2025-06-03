@@ -3,6 +3,7 @@ import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
 import {saveStoryToFirestore, syncIDBToFirebasePro} from "../firebase/firebase.js";
 import {addStory, getSingleUserFromIDB} from "../lib/db.js";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function CreateStory() {
     const[title, setTitle] = useState('');
@@ -10,6 +11,7 @@ export default function CreateStory() {
     const[genre, setGenre] = useState('');
     const[cover, setCover] = useState('');
     const navigate = useNavigate();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const onTitleChange = (e) => {
         setTitle(e.target.value);
@@ -69,16 +71,14 @@ export default function CreateStory() {
                 const storyJson = JSON.stringify(story);
                 //alert('Story Saved Successffully.');
                 await addStory(story);
-                //await saveStoryToFb(story);
-                alert('Story Saved to idb Successffully.');
-                //sessionStorage.setItem(story.title, storyJson);
+
                 await syncIDBToFirebasePro();
                 setTitle('');
                 setGenre('');
                 setPlot('');
                 setCover('');
-                navigate('/stories');
 
+                setModalOpen(true)
             }
         }
     }
@@ -86,6 +86,14 @@ export default function CreateStory() {
     return(
         <>
             <h1>Create Story</h1>
+            <MessageModal
+                isOpen={modalOpen}
+                onClose={() => {
+                    setModalOpen(false)
+                    navigate('/stories')
+                }}
+                message="Story Saved Successfully."
+            />
             <div className='container'>
                 <div className='imageContainer'>
                     <p>

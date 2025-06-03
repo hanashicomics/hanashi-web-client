@@ -73,7 +73,6 @@ export async function resetPassword(email) {
 
     try {
         await sendPasswordResetEmail(auth, email);
-        console.log(`Reset email sent to ${email}`);
     } catch (error) {
         console.error("Error sending reset email:", error.message);
         throw error;
