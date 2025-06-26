@@ -3,11 +3,29 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Arcs.css';
 import {getStoryByTitle} from "../lib/db.js";
+import ConfirmModal from "../modals/ConfirmModal.jsx";
+import MessageModal from "../modals/MessageModal.jsx";
 
 export default function Arcs(){
     const {storyName} = useParams();
     const[arcs, setArcs] = useState([]);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const[keyTitle, setKeyTitle] = useState({});
+    const [modalOpen, setModalOpen] = useState(false);
 
+    const handleDelete = () => {
+        setShowConfirm(true);
+    };
+
+    const handleConfirm = async () => {
+        setShowConfirm(false);
+        //await handleIdbDelete(keyTitle.id,keyTitle.title);
+        setModalOpen(true)
+    };
+
+    const handleCancel = () => {
+        setShowConfirm(false);
+    };
    // const storyObj = JSON.parse(sessionStorage.getItem(storyName));
     //const arrArcs = storyObj.arcs;
 

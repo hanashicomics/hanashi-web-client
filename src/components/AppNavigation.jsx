@@ -31,7 +31,7 @@ export default function AppNavigation(){
 
                 <div className="nav-right">
                     {
-                        plan ==="free"? <Link to={'/pricing'} className={"UpgradeLinks"}>Upgrade</Link> : ""
+                        //plan ==="free"? <Link to={'/pricing'} className={"UpgradeLinks"}>Upgrade</Link> : ""
                     }
                     <Link to="/stories" className="Links">Stories</Link>
                     <Link to="/profile" className="Links">Profile</Link>

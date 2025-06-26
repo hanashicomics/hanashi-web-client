@@ -53,8 +53,8 @@ export default function CreateStory() {
             alert("Please login to create a story.");
         }
         else{
-            if(title ==='' || plot==='' || cover ==='' || genre===''){
-                alert('Please complete all story details.');
+            if(title ===''){
+                alert('Add a title to your story.');
             }
             else{
                 const story = {
@@ -107,17 +107,17 @@ export default function CreateStory() {
                 <div className='TextContainer'>
                     <p>
                         <label>Title</label>
-                        <input name="title" type="text" value={title} onChange={onTitleChange} required/>
+                        <input name="title" type="text" value={title} onChange={onTitleChange} />
                     </p>
 
                     <p>
                         <label>Plot</label>
-                        <textarea name="plot" value={plot} onChange={onPlotChange} rows={4} required/>
+                        <textarea name="plot" value={plot} onChange={onPlotChange} rows={4} />
                     </p>
 
                     <p>
                         <label>Genre</label>
-                        <input name="genre" type="text" value={genre} onChange={onGenreChange} required/>
+                        <input name="genre" type="text" value={genre} onChange={onGenreChange} />
                     </p>
 
                     <button onClick={saveStory}>Save Story</button>
