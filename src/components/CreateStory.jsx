@@ -1,8 +1,8 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import '../assets/styles/CreateStory.css';
 import {useNavigate} from "react-router-dom";
 import {saveStoryToFirestore, syncIDBToFirebasePro} from "../firebase/firebase.js";
-import {addStory, getSingleUserFromIDB} from "../lib/db.js";
+import {addStory, getAllStories, getSingleUserFromIDB} from "../lib/db.js";
 import MessageModal from "../modals/MessageModal.jsx";
 
 export default function CreateStory() {
@@ -12,6 +12,32 @@ export default function CreateStory() {
     const[cover, setCover] = useState('');
     const navigate = useNavigate();
     const [modalOpen, setModalOpen] = useState(false);
+    const [duplicatemodalOpen, setduplicateModalOpen] = useState(false);
+    const[storyArr, setStoryArr] = useState([]);
+
+    const handleIDBStories = async () => {
+        const userStuff = await getSingleUserFromIDB();
+        const uid = userStuff.uid;
+        const stories = await getAllStories();
+        const newstories = [];
+        for(let i=0;i<stories.length;i++){
+            if(stories[i].userid === uid){
+                newstories.push(stories[i]);
+            }
+
+        }
+        setStoryArr(newstories);
+    }
+
+    useEffect(() => {
+        const getStories = async () => {
+            //await syncIDBToFirebasePro();
+            //setStoryArr(stories); // Update the state
+            await handleIDBStories();
+        };
+
+        getStories();
+    }, []);
 
     const onTitleChange = (e) => {
         setTitle(e.target.value);
@@ -49,6 +75,7 @@ export default function CreateStory() {
     const saveStory =  async ()=>{
         const userStuff = await getSingleUserFromIDB();
         const uid = userStuff.uid;
+
         if(uid === null){
             alert("Please login to create a story.");
         }
@@ -68,8 +95,13 @@ export default function CreateStory() {
                     userid: uid
                 }
 
+                const duplicate = storyArr.some((storyToBeSaved) => story.title === storyToBeSaved.title);
+                if (duplicate) {
+                    setduplicateModalOpen(true);
+                    return;
+                }
+
                 const storyJson = JSON.stringify(story);
-                //alert('Story Saved Successffully.');
                 await addStory(story);
 
                 await syncIDBToFirebasePro();
@@ -93,6 +125,13 @@ export default function CreateStory() {
                     navigate('/stories')
                 }}
                 message="Story Saved Successfully."
+            />
+            <MessageModal
+                isOpen={duplicatemodalOpen}
+                onClose={() => {
+                    setduplicateModalOpen(false)
+                }}
+                message="Story with this title already exists. Please choose a different title."
             />
             <div className='container'>
                 <div className='imageContainer'>
