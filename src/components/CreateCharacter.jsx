@@ -64,13 +64,6 @@ export default function CreateCharacter(){
             cover: cover
         }
 
-        //const story = sessionStorage.getItem(storyName);
-        //const jsonStory = JSON.parse(story);
-        //jsonStory.characters.push(newCharacter);
-        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-
-        //await updateDocument("stories",jsonStory.id,jsonStory);
-
          story.characters.push(newCharacter);
          await updateStory(story);
         await syncIDBToFirebasePro();
@@ -86,7 +79,7 @@ export default function CreateCharacter(){
                     setModalOpen(false)
                     navigate(`/${storyName}/characters`)
                 }}
-                message="Chapter Saved Successfully."
+                message="Character Saved Successfully."
             />
             <div className='TextContainer'>
                 <p>
