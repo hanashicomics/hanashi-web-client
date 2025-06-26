@@ -23,6 +23,13 @@ export default function EditLocation(){
         const storyInfo = await getStoryByTitle(storyName);
         setStory(storyInfo);
         setLocations(storyInfo.locations);
+
+        const foundLocation = storyInfo.locations.find(loc => loc.name === locationName);
+        if (foundLocation) {
+            setName(foundLocation.name);
+            setDescription(foundLocation.description);
+            setCover(foundLocation.cover);
+        }
     };
 
     useEffect(() => {
@@ -52,21 +59,6 @@ export default function EditLocation(){
         }
     }
 
-    //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
-    //const arrLocations = storyObj.locations;
-
-    useEffect(() => {
-        let foundLoc;
-        for(let i = 0; i<locations.length; i++){
-            if(locations[i].name === locationName){
-                foundLoc = locations[i];
-                setName(foundLoc.name);
-                setDescription(foundLoc.description);
-                setCover(foundLoc.cover);
-                return;
-            }
-        }
-    }, []);
 
     const saveLocation = async ()=>{
         const newCharacter = {

@@ -64,7 +64,6 @@ export default function CreateLocation() {
         //jsonStory.locations.push(newLocation);
         //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
         //await updateDocument("stories",jsonStory.id,jsonStory);
-        alert('Location Saved Successfully.');
         await syncIDBToFirebasePro();
         
         setModalOpen(true)
