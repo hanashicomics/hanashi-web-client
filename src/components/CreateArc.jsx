@@ -13,6 +13,7 @@ export default function CreateArc() {
     const[description, setDescription] = useState("");
     const navigate = useNavigate();
     const [modalOpen, setModalOpen] = useState(false);
+    const [duplicatemodalOpen, setduplicateModalOpen] = useState(false);
 
     const getTheStory = async (storyName) => {
         const storyInfo = await getStoryByTitle(storyName);
@@ -52,18 +53,15 @@ export default function CreateArc() {
             chapters: []
         }
 
-        //const story = sessionStorage.getItem(storyName);
-        //const jsonStory = JSON.parse(story);
-
-        //jsonStory.arcs.push(newArc);
+        const duplicate = arcs.some((arc) => arc.name === name);
+        if (duplicate) {
+            setduplicateModalOpen(true);
+            return;
+        }
         arcs.push(newArc);
         const updatedStory = {...story, arcs: arcs};
-        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        //await updateDocument("stories",jsonStory.id,jsonStory);
         updateStory(updatedStory);
-
         setModalOpen(true)
-        //alert('Arc Saved Successfully.');
     }
 
     return(
@@ -90,6 +88,13 @@ export default function CreateArc() {
                         navigate(`/${storyName}/arcs`)
                     }}
                     message="Arc Saved Successfully."
+                />
+                <MessageModal
+                    isOpen={duplicatemodalOpen}
+                    onClose={() => {
+                        setduplicateModalOpen(false)
+                    }}
+                    message="Arc with this title already exists. Please choose a different title."
                 />
                 <ul>
 
