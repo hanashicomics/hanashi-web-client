@@ -70,17 +70,17 @@ export default function Arcs(){
                             <Link to={`/${storyName}/arcs/${arc.name}/edit`} key={index} className="arcItem">
                                 <div className="arcCard">
                                     <h4>{arc.name}</h4>
-                                </div>
-                                <button
-                                    className="delete-btn"
-                                    onClick={async (e) => {
-                                        e.preventDefault();
-                                        setarcNameToBeDeleted(arc.name);
-                                        handleDelete();
-                                    }}
-                                >
+                                    <button
+                                        className="delete-btn"
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            setarcNameToBeDeleted(arc.name);
+                                            handleDelete();
+                                        }}>
                                     Delete
                                 </button>
+                                </div>
+
                             </Link>
 
                         ))

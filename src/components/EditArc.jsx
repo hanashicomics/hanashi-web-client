@@ -5,6 +5,7 @@ import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import {getStoryByTitle, updateStory} from "../lib/db.js";
 import MessageModal from "../modals/MessageModal.jsx";
+import ConfirmModal from "../modals/ConfirmModal.jsx";
 
 export default function EditArc(){
     const {storyName} =useParams();
@@ -16,6 +17,10 @@ export default function EditArc(){
     const[story,setStory] = useState({});
     const[chapters, setChapters] = useState([]);
     const[arcs, setArcs] = useState([]);
+
+    const[chapterNameToBeDeleted, setchapterNameToBeDeleted] = useState("");
+    const [showConfirm, setShowConfirm] = useState(false);
+    const[keyTitle, setKeyTitle] = useState({});
 
     const getTheStory = async (storyName) => {
         const storyInfo = await getStoryByTitle(storyName);
@@ -45,20 +50,33 @@ export default function EditArc(){
         setDescription(e.target.value);
     }
 
-    //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
-    //const arrArcs = storyObj.arcs;
+    const handleDelete = () => {
+        setShowConfirm(true);
+    };
 
-    // useEffect(() => {
-    //     for(let i = 0; i<arrArcs.length; i++){
-    //         if(arrArcs[i].name === arcName){
-    //             let foundArc = arrArcs[i];
-    //             setChapters(foundArc.chapters);
-    //             setName(foundArc.name);
-    //             setDescription(foundArc.description);
-    //             return;
-    //         }
-    //     }
-    // }, []);
+    const handleConfirm = async () => {
+        setShowConfirm(false);
+        const updatedChapters = chapters.filter(chapter => chapter.name !== chapterNameToBeDeleted);
+        setChapters(updatedChapters);
+
+        // Update the chapters for the correct arc
+        const updatedArcs = arcs.map(arc =>
+            arc.name === arcName
+                ? { ...arc, chapters: updatedChapters }
+                : arc
+        );
+
+        await updateStory({
+            ...story,
+            arcs: updatedArcs
+        });
+
+        alert("Chapter Deleted Successfully");
+    };
+
+    const handleCancel = () => {
+        setShowConfirm(false);
+    };
 
     const saveArc =async  ()=>{
         const newArc = {
@@ -67,12 +85,6 @@ export default function EditArc(){
             chapters: []
         }
 
-        //const story = sessionStorage.getItem(storyName);
-        //const jsonStory = JSON.parse(story);
-        //jsonStory.arcs.push(newArc);
-
-        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        //await updateDocument("stories",jsonStory.id,jsonStory);
         for(let i = 0; i<arcs.length; i++){
             if(arcs[i].name === arcName){
                 arcs[i] = newArc;
@@ -96,6 +108,12 @@ export default function EditArc(){
                     navigate(`/${storyName}/arcs`)
                 }}
                 message="Arc Edited Successfully."
+            />
+            <ConfirmModal
+                isOpen={showConfirm}
+                message="Are you sure you want to delete this arc? This action cannot be undone.!"
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
             />
             <div className='TextContainer'>
                 <p>
@@ -124,6 +142,15 @@ export default function EditArc(){
                                 <li key={key} className="chapterItem">
                                     <Link to={`/${storyName}/arcs/${arcName}/chapter/${chapter.name}`}>
                                         {chapter.name}
+                                        <button
+                                            className="delete-btn"
+                                            onClick={async (e) => {
+                                                e.preventDefault();
+                                                setchapterNameToBeDeleted(chapter.name);
+                                                handleDelete();
+                                            }}>
+                                            Delete
+                                        </button>
                                     </Link>
                                 </li>
                             ))}
