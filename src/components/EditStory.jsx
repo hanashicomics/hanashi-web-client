@@ -5,6 +5,7 @@ import StoryFooterNavigation from './StoryFooterNavigation.jsx'
 import {syncIDBToFirebasePro, updateDocument} from "../firebase/firebase.js";
 import {getStory, getStoryByTitle, updateStory} from "../lib/db.js";
 import MessageModal from "../modals/MessageModal.jsx";
+import ExportStory from "./ExportStory.jsx";
 
 export default function EditStory() {
     const {storyName} = useParams();
@@ -127,9 +128,8 @@ export default function EditStory() {
                 <p>
                     <button onClick={saveStory} className={"linkButton"}>Save Story</button>
                 </p>
-                <Link to={`/${storyName}/export`} className="linkButton">
-                    Export Story
-                </Link>
+
+                <ExportStory/>
             </div>
 
 
