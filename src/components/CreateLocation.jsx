@@ -49,25 +49,27 @@ export default function CreateLocation() {
         }
     }
 
-    const saveLocation = async ()=>{
+    const saveLocation = async () => {
+        const duplicate = locations.some(loc => loc.name === name);
+        if (duplicate) {
+            alert("A location with this name already exists. Please choose a different name.");
+            return;
+        }
+
         const newLocation = {
             name: name,
             description: description,
             cover: cover
-        }
+        };
 
         locations.push(newLocation);
-        const updatedStory = {...story, locations: locations};
+        const updatedStory = { ...story, locations: locations };
         updateStory(updatedStory);
-        //const story = sessionStorage.getItem(storyName);
-        //const jsonStory = JSON.parse(story);
-        //jsonStory.locations.push(newLocation);
-        //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
-        //await updateDocument("stories",jsonStory.id,jsonStory);
+
         await syncIDBToFirebasePro();
-        
-        setModalOpen(true)
-    }
+
+        setModalOpen(true);
+    };
 
     return(
         <>
@@ -76,7 +78,7 @@ export default function CreateLocation() {
                 isOpen={modalOpen}
                 onClose={() => {
                     setModalOpen(false)
-                    navigate(`/${storyName}/characters`)
+                    navigate(`/${storyName}/locations`)
                 }}
                 message="Location Saved Successfully."
             />

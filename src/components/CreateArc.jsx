@@ -34,15 +34,6 @@ export default function CreateArc() {
         setDescription(e.target.value);
     }
 
-    //const storyObj = JSON.parse(sessionStorage.getItem(storyName));
-    //const arrArcs = storyObj.arcs;
-
-
-    //const story = sessionStorage.getItem(storyName);
-    //const jsonStory = JSON.parse(story);
-    //const arcListLength = jsonStory.arcs.length;
-    //const orderNum = arcListLength +1;
-
     const saveArc = async ()=>{
         const arcOrderNum = arcs.length +1;
 
