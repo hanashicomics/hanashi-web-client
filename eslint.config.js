@@ -6,6 +6,27 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
   { ignores: ['dist'] },
+
+  // ✅ Service Worker override for public/sw.js
+  {
+    files: ['public/sw.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.serviceworker, // ✅ enables self, caches, clients, etc.
+      },
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'script', // SWs are usually classic scripts, not ES modules
+      },
+    },
+    rules: {
+      // You can put basic recommended rules or leave empty
+      ...js.configs.recommended.rules,
+    },
+  },
+
+  // Your regular app config
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

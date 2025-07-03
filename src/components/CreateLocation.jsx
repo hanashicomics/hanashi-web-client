@@ -66,7 +66,6 @@ export default function CreateLocation() {
         const updatedStory = { ...story, locations: locations };
         updateStory(updatedStory);
 
-        await syncIDBToFirebasePro();
 
         setModalOpen(true);
     };

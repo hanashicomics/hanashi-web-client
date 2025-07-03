@@ -57,7 +57,6 @@ export default function EditChapter() {
 
         const updatedStory = { ...story, arcs };
         await updateStory(updatedStory);
-        await syncIDBToFirebasePro();
 
         setModalOpen(true)
     };

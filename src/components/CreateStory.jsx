@@ -104,7 +104,6 @@ export default function CreateStory() {
                 const storyJson = JSON.stringify(story);
                 await addStory(story);
 
-                await syncIDBToFirebasePro();
                 setTitle('');
                 setGenre('');
                 setPlot('');

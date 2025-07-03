@@ -93,8 +93,6 @@ export default function EditArc(){
         }
         const updatedStory = {...story, arcs: arcs};
         await updateStory(updatedStory);
-        await syncIDBToFirebasePro();
-
         setModalOpen(true)
     }
     return(

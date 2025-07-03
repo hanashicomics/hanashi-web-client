@@ -93,7 +93,6 @@ export default function EditCharacter(){
                 arrCharacters[i] = newCharacter;
                 story.characters = arrCharacters;
                 await updateStory(story)
-                await syncIDBToFirebasePro();
                 setModalOpen(true)
             }
         }

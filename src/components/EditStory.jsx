@@ -78,7 +78,6 @@ export default function EditStory() {
             //sessionStorage.setItem(story.title, storyJson);
             //await updateDocument("stories",story.id,story);
             //sessionStorage.removeItem(storyName);
-            await syncIDBToFirebasePro();
 
             setModalOpen(true);
         }

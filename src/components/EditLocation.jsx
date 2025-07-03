@@ -81,7 +81,6 @@ export default function EditLocation(){
         //sessionStorage.setItem(storyName, JSON.stringify(jsonStory));
         //await updateDocument("stories",jsonStory.id,jsonStory);
 
-        await syncIDBToFirebasePro();
         setModalOpen(true)
 
     }

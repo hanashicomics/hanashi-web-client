@@ -44,7 +44,6 @@ export default function CreateChapter() {
         const updatedStory = { ...story, arcs };
 
         await updateStory(updatedStory);
-        await syncIDBToFirebasePro();
         setModalOpen(true)
     };
 

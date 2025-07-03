@@ -66,7 +66,6 @@ export default function CreateCharacter(){
 
          story.characters.push(newCharacter);
          await updateStory(story);
-        await syncIDBToFirebasePro();
         setModalOpen(true)
     }
 
