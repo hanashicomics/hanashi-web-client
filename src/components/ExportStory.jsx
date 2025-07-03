@@ -7,7 +7,7 @@ export default function ExportStory(){
     const {storyName} = useParams();
 
     const exportStory = async ()=>{
-        const jsonData = await getStoryByTitle(storyName);
+        const jsonData = JSON.stringify(await getStoryByTitle(storyName));
         const blob = new Blob([jsonData],{type: "application/json"});
         const url = URL.createObjectURL(blob);
 
