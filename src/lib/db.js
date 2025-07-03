@@ -1,4 +1,5 @@
 import { openDB } from 'idb'
+import { triggerSync } from './sync.js';
 
 export const dbPromise = openDB('hanashi-db', 2, {
     upgrade(db) {
@@ -14,7 +15,9 @@ export const dbPromise = openDB('hanashi-db', 2, {
 // Add a story
 export async function addStory(story) {
     const db = await dbPromise
-    return await db.add('stories', story)
+    const addstory = await db.add('stories', story);
+    await triggerSync();
+    return addstory;
 }
 
 // Get all stories
@@ -26,14 +29,17 @@ export async function getAllStories() {
 // Delete a story
 export async function deleteStory(id) {
     const db = await dbPromise
-    return await db.delete('stories', id)
+    const deletestory = await db.delete('stories', id)
+    await triggerSync();
+    return deletestory
+
 }
 
 export async function updateStory(updatedStory) {
     const db = await dbPromise;
     try {
         await db.put('stories', updatedStory);
-        // console.log('Story updated successfully:', updatedStory.id);
+        await triggerSync();
     } catch (e) {
         console.error('Error updating story:', e);
     }
