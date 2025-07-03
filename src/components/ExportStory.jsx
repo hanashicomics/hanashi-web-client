@@ -1,12 +1,13 @@
 import {useParams} from "react-router-dom";
 import StoryFooterNavigation from "./StoryFooterNavigation.jsx";
 import '../assets/styles/CreateStory.css';
+import {getStoryByTitle} from "../lib/db.js";
 
 export default function ExportStory(){
     const {storyName} = useParams();
 
-    const exportStory = ()=>{
-        const jsonData = sessionStorage.getItem(storyName);
+    const exportStory = async ()=>{
+        const jsonData = await getStoryByTitle(storyName);
         const blob = new Blob([jsonData],{type: "application/json"});
         const url = URL.createObjectURL(blob);
 
