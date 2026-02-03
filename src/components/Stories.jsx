@@ -1,7 +1,7 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import '../assets/styles/Stories.css';
-import {deleteDocument, getDocumentsByField, syncIDBToFirebasePro} from "../firebase/firebase.js";
+import {deleteDocument, getDocumentsByField, syncIDBToFirebasePro, syncFirebaseToIDB} from "../firebase/firebase.js";
 import {deleteStory, getAllStories, getSingleUserFromIDB} from "../lib/db.js";
 import ConfirmModal from "../modals/ConfirmModal.jsx";
 import MessageModal from "../modals/MessageModal.jsx";
@@ -41,8 +41,7 @@ export default function Stories(){
 
     useEffect(() => {
         const getStories = async () => {
-            //await syncIDBToFirebasePro();
-            //setStoryArr(stories); // Update the state
+            await syncFirebaseToIDB();
             await handleIDBStories();
         };
 

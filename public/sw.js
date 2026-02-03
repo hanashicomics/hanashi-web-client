@@ -85,7 +85,7 @@ async function syncIDBToFirebasePro() {
             }
         }
 
-        console.log("✅ Background sync to Firestore completed!");
+        console.log("✅ Background sync completed");
     } catch (error) {
         console.error("❌ Sync error:", error);
     }

@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getFirestore, collection, addDoc,doc,  query, where, getDocs,getDoc,setDoc,updateDoc,deleteDoc,Timestamp} from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut,sendPasswordResetEmail} from "firebase/auth";
-import {deleteAnyUserFromIDB, getAllStories, getSingleUserFromIDB, saveUserToIDB} from "../lib/db.js";
+import {deleteAnyUserFromIDB, getAllStories, getSingleUserFromIDB, saveUserToIDB, addStory, getStory} from "../lib/db.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -157,6 +157,11 @@ export async function loginUser(email, password) {
             upgradedAt: userPlanInfo.upgradedAt,
             pro_expires_at: userPlanInfo.pro_expires_at,
         });
+
+        // Sync stories from Firestore to IDB for pro users
+        if (userPlanInfo.plan === 'pro') {
+            await syncFirebaseToIDB();
+        }
     } catch (error) {
         console.error("Error logging in:", error.code, error.message);
         alert("Login failed: " + error.message);
@@ -302,6 +307,26 @@ export async function syncIDBToFirebasePro() {
                 // Save new story from IndexedDB to Firestore
                 await saveStoryToFirestoreForPro(idbStory,idbStory.id);
                 // console.log(`Saved new story with ID "${idbStory.id}" to Firestore.`);
+            }
+        }
+    }
+}
+
+export async function syncFirebaseToIDB() {
+    const userStuff = await getSingleUserFromIDB();
+    const uid = userStuff.uid;
+
+    if(userStuff.plan === "pro"){
+        // Get all Firestore stories for this user
+        const firestoreStories = await getDocumentsByField("stories", "userid", uid);
+
+        for (const firestoreStory of firestoreStories) {
+            // Check if story already exists in IDB
+            const existingStory = await getStory(firestoreStory.id);
+            if (!existingStory) {
+                // Add to IDB
+                await addStory(firestoreStory);
+                console.log(`Added story "${firestoreStory.title}" from Firestore to IDB.`);
             }
         }
     }
