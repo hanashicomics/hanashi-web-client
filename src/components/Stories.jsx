@@ -49,9 +49,15 @@ export default function Stories(){
     }, []);
 
     const handleIdbDelete = async (key,title)=>{
-            await deleteStory(key);
-            const updatedArr = storyArr.filter(story => story.title !== title);
-            setStoryArr(updatedArr);
+        await deleteStory(key);
+        const updatedArr = storyArr.filter(story => story.title !== title);
+        setStoryArr(updatedArr);
+
+        // Also delete from Firebase if user is pro
+        const userStuff = await getSingleUserFromIDB();
+        if (userStuff && userStuff.plan === 'pro') {
+            await deleteDocument("stories", key.toString());
+        }
     }
 
     return (
